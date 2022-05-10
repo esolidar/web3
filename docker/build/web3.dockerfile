@@ -5,7 +5,7 @@ ARG NODE_ENV=${NODE_ENV}
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
-COPY package.json yarn.lock .npmrc ./
+COPY package.json yarn.lock ./
 RUN yarn --pure-lockfile --production=false
 
 # Rebuild the source code only when needed
