@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  esolidar_web3:
+    container_name: esolidar-web3
+    build:
+      context: ../..
+      dockerfile: docker/build/web3.dockerfile
+      args:
+        - NODE_ENV=testing
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - net
+
+  esolidar_nginx:
+    container_name: esolidar-nginx
+    build:
+      context: ../..
+      dockerfile: docker/build/nginx.dockerfile
+    links:
+      - esolidar_web3:esolidar_web3
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:80
+      - 8081:443
+    restart: always
+    depends_on:
+      - esolidar_web3
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
