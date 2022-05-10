@@ -6,7 +6,8 @@ import {
   Alfajores,
   // Mainnet,
 } from '@celo-tools/use-contractkit';
-import '../styles/globals.scss';
+import '../styles/index.scss';
+import '@celo-tools/use-contractkit/lib/styles.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
