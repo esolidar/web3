@@ -1,15 +1,22 @@
 import { useContractKit } from '@celo-tools/use-contractkit';
+import { dehydrate, QueryClient } from 'react-query';
 import Link from 'next/link';
-import styles from '../styles/Home.module.scss';
+import useGetInstitutionList, {
+  useGetInstitutionListPrefetch,
+} from '../api/hooks/useGetInstitutionList';
+import styles from '../assets/styles/components/Home.module.scss';
 
 // TODO: gas price
 // TODO: success / error das transactions
 
-export default function Home() {
+const Home = () => {
   const toAccount = '0x7F38B1585d55A9bc881da27e2FB927d0db30fD41';
   const { address, connect, destroy, performActions } = useContractKit();
 
-  async function transfer() {
+  const { data: institutionList } = useGetInstitutionList({});
+  console.log(institutionList);
+
+  const transfer = async () => {
     await performActions(async kit => {
       let account: string = '';
       const stableToken = await kit.contracts.getStableToken();
@@ -38,9 +45,9 @@ export default function Home() {
       if (receipt.status) alert('success');
       else alert('error');
     });
-  }
+  };
 
-  async function getBalances() {
+  const getBalances = async () => {
     await performActions(async kit => {
       let account: string = '';
       const celotoken = await kit.contracts.getGoldToken();
@@ -52,7 +59,7 @@ export default function Home() {
       console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
     });
-  }
+  };
 
   const valora = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=celo://wallet/pay?address=0x7F38B1585d55A9bc881da27e2FB927d0db30fD41&displayName=esolidar&chld=L%7C0`;
   const metamask = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=wc:099df4c1-8d6d-4432-b6b1-f8fe5e243efe@1?bridge=https%3A%2F%2Fz.bridge.walletconnect.org&key=2625629f0670a8a5d660471621a727effbdaf28d32b23fa7a34ccfa143779bb7
@@ -62,8 +69,21 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1>Home page</h1>
-        <Link href="/institution/12">
-          <p>Go to institution detail</p>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 51 },
+          }}
+        >
+          <p>Go to institution 51</p>
+        </Link>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 54 },
+          }}
+        >
+          <p>Go to institution 54</p>
         </Link>
         {address ? (
           <>
@@ -91,4 +111,19 @@ export default function Home() {
       </main>
     </div>
   );
-}
+};
+
+export const getStaticProps = async () => {
+  const queryClient = new QueryClient();
+
+  await useGetInstitutionListPrefetch(queryClient);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 10,
+  };
+};
+
+export default Home;
