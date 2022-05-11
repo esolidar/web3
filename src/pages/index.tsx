@@ -11,12 +11,14 @@ export default function Home() {
 
   async function transfer() {
     await performActions(async kit => {
+      let account: string = '';
       const stableToken = await kit.contracts.getStableToken();
       const amount = kit.web3.utils.toWei('1', 'ether');
 
+      if (address) account = address;
       const gasLimit = await kit.connection.estimateGas({
         to: toAccount,
-        from: address,
+        from: account,
         value: amount,
       });
 
@@ -29,7 +31,7 @@ export default function Home() {
 
       const tx = await stableToken
         .transfer(toAccount, amount)
-        .send({ from: address, feeCurrency: stableToken.address, gas: adjustedGasLimit, gasPrice });
+        .send({ from: account, feeCurrency: stableToken.address, gas: adjustedGasLimit, gasPrice });
 
       // const hash = await tx.getHash();
       const receipt = await tx.waitReceipt();
@@ -40,11 +42,13 @@ export default function Home() {
 
   async function getBalances() {
     await performActions(async kit => {
+      let account: string = '';
       const celotoken = await kit.contracts.getGoldToken();
       const cUSDtoken = await kit.contracts.getStableToken();
 
-      const celoBalance = await celotoken.balanceOf(address);
-      const cUSDBalance = await cUSDtoken.balanceOf(address);
+      if (address) account = address;
+      const celoBalance = await celotoken.balanceOf(account);
+      const cUSDBalance = await cUSDtoken.balanceOf(account);
       console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
     });
@@ -59,7 +63,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Home page</h1>
         <Link href="/institution/12">
-          <a>Go to institution detail</a>
+          <p>Go to institution detail</p>
         </Link>
         {address ? (
           <>
