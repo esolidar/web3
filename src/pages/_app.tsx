@@ -1,15 +1,31 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   ContractKitProvider,
   SupportedProviders,
   Alfajores,
-  // Mainnet,
+  Mainnet,
 } from '@celo-tools/use-contractkit';
-import '../styles/index.scss';
+import '../assets/styles/_index.scss';
 import '@celo-tools/use-contractkit/lib/styles.css';
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
+
+  const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
+
   return (
     <>
       <Head>
@@ -49,12 +65,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             ],
           },
         }}
-        network={Alfajores}
-        // network={Mainnet}
-        // networks={[Mainnet, Alfajores]}
+        network={contractkitNetwork}
       >
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Component {...pageProps} />
+            {process.env.NEXT_PUBLIC_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
+          </Hydrate>
+        </QueryClientProvider>
       </ContractKitProvider>
     </>
   );
-}
+};
+
+export default App;
