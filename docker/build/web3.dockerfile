@@ -6,7 +6,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn --pure-lockfile --production=false
 
 # Rebuild the source code only when needed
 FROM node:12 AS builder
