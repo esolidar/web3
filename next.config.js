@@ -7,6 +7,11 @@ module.exports = withPWA({
     dest: 'public',
     runtimeCaching,
   },
+  i18n: {
+    locales: ['en', 'pt', 'br'],
+    defaultLocale: 'en',
+    localeDetection: true,
+  },
   webpack: config => {
     config.resolve.fallback = {
       ...config.resolve.fallback,

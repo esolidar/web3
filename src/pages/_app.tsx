@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider, Hydrate } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { IntlProvider } from 'react-intl';
 import {
   ContractKitProvider,
   SupportedProviders,
@@ -12,7 +13,21 @@ import {
 import '../assets/styles/_index.scss';
 import '@celo-tools/use-contractkit/lib/styles.css';
 
-const App = ({ Component, pageProps }: AppProps) => {
+// const defaultRichTextElements = {
+//   br: <br />,
+//   b: (chunks: any) => <b>{chunks}</b>,
+//   p: (chunks: any) => <p>{chunks}</p>,
+//   i: (chunks: any) => <i>{chunks}</i>,
+//   strong: (chunks: any) => <strong>{chunks}</strong>,
+// };
+
+const messages = {
+  br: { 'home-page': 'Página inicial' },
+  en: { 'home-page': 'Home page' },
+  pt: { 'home-page': 'Página inicial' },
+};
+
+const MyApp = ({ Component, pageProps, initialProps }: AppProps) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -23,6 +38,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         },
       })
   );
+  const { locale } = initialProps;
 
   const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
 
@@ -69,10 +85,16 @@ const App = ({ Component, pageProps }: AppProps) => {
       >
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Component {...pageProps} />
-            {process.env.NEXT_PUBLIC_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
+            <IntlProvider
+              locale="pt"
+              messages={messages[locale] || messages.en}
+              // defaultRichTextElements={defaultRichTextElements}
+            >
+              <Component {...pageProps} />
+              {process.env.NEXT_PUBLIC_ENV === 'development' && (
+                <ReactQueryDevtools initialIsOpen={false} />
+              )}
+            </IntlProvider>
           </Hydrate>
         </QueryClientProvider>
       </ContractKitProvider>
@@ -80,4 +102,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default App;
+MyApp.getInitialProps = async (appContext: any) => {
+  const { locale } = appContext.ctx;
+
+  return {
+    initialProps: {
+      locale,
+    },
+  };
+};
+
+export default MyApp;
