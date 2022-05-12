@@ -1,3 +1,3 @@
-const ROOT_URL: string = `${process.env.NEXT_PUBLIC_app_url}${process.env.NEXT_PUBLIC_app_version}/`;
+const ROOT_URL: string = `${process.env.NEXT_PUBLIC_APP_URL}${process.env.NEXT_PUBLIC_APP_VERSION}/`;
 
 export default ROOT_URL;
