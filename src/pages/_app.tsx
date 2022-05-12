@@ -96,20 +96,20 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         }}
         network={contractkitNetwork}
       >
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <IntlProvider
-              locale="pt"
-              messages={messages[locale] || messages.en}
-              // defaultRichTextElements={defaultRichTextElements}
-            >
+        <IntlProvider
+          locale="pt"
+          messages={messages[locale] || messages.en}
+          // defaultRichTextElements={defaultRichTextElements}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
               <Component {...pageProps} />
               {process.env.NEXT_PUBLIC_ENV === 'development' && (
                 <ReactQueryDevtools initialIsOpen={false} />
               )}
-            </IntlProvider>
-          </Hydrate>
-        </QueryClientProvider>
+            </Hydrate>
+          </QueryClientProvider>
+        </IntlProvider>
       </ContractKitProvider>
     </>
   );
