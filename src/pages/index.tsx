@@ -1,3 +1,4 @@
+import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { dehydrate, QueryClient } from 'react-query';
 import Link from 'next/link';
@@ -10,6 +11,7 @@ import styles from '../assets/styles/components/Home.module.scss';
 // TODO: success / error das transactions
 
 const Home = () => {
+  const intl = useIntl();
   const toAccount = '0x7F38B1585d55A9bc881da27e2FB927d0db30fD41';
   const { address, connect, destroy, performActions } = useContractKit();
 
@@ -68,7 +70,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>Home page</h1>
+        <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
         <Link
           href={{
             pathname: '/institution/[id]',
