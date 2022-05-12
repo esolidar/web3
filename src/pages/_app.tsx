@@ -13,6 +13,26 @@ import {
 import '../assets/styles/_index.scss';
 import '@celo-tools/use-contractkit/lib/styles.css';
 
+export type ILocale = {
+  [key in string]: string;
+};
+
+export type IMessages = {
+  [key in string]: ILocale;
+};
+interface InitialProps {
+  locale: string;
+}
+interface Props extends AppProps {
+  initialProps: InitialProps;
+}
+
+const messages: IMessages = {
+  br: { 'home-page': 'Página inicial' },
+  en: { 'home-page': 'Home page' },
+  pt: { 'home-page': 'Página inicial' },
+};
+
 // const defaultRichTextElements = {
 //   br: <br />,
 //   b: (chunks: any) => <b>{chunks}</b>,
@@ -21,13 +41,7 @@ import '@celo-tools/use-contractkit/lib/styles.css';
 //   strong: (chunks: any) => <strong>{chunks}</strong>,
 // };
 
-const messages = {
-  br: { 'home-page': 'Página inicial' },
-  en: { 'home-page': 'Home page' },
-  pt: { 'home-page': 'Página inicial' },
-};
-
-const MyApp = ({ Component, pageProps, initialProps }: AppProps) => {
+const App = ({ Component, pageProps, initialProps }: Props) => {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -41,7 +55,6 @@ const MyApp = ({ Component, pageProps, initialProps }: AppProps) => {
   const { locale } = initialProps;
 
   const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
-
   return (
     <>
       <Head>
@@ -102,7 +115,7 @@ const MyApp = ({ Component, pageProps, initialProps }: AppProps) => {
   );
 };
 
-MyApp.getInitialProps = async (appContext: any) => {
+App.getInitialProps = async (appContext: any) => {
   const { locale } = appContext.ctx;
 
   return {
@@ -112,4 +125,4 @@ MyApp.getInitialProps = async (appContext: any) => {
   };
 };
 
-export default MyApp;
+export default App;
