@@ -5,8 +5,8 @@ import { dehydrate, QueryClient } from 'react-query';
 import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
-} from '../api/hooks/useGetInstitutionList';
-import styles from '../assets/styles/components/Home.module.scss';
+} from '../../api/hooks/useGetInstitutionList';
+import styles from '../../assets/styles/components/Home.module.scss';
 
 // TODO: gas price
 // TODO: success / error das transactions

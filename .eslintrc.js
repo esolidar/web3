@@ -3,7 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'prettier',
+    // 'plugin:@typescript-eslint/eslint-recommended',
+    // 'plugin:@typescript-eslint/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -20,6 +26,8 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
     'import/extensions': [
       'error',
       'ignorePackages',
