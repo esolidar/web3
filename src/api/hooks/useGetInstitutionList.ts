@@ -4,20 +4,18 @@ import queryString from 'query-string';
 import ROOT_URL from '../../constants/apiUrl';
 
 interface Args {
-  // eslint-disable-next-line no-unused-vars
   onSuccess?(data: any): void;
 }
 
-const queryKey = 'getInstitutionList';
-const params = queryString.stringify({});
-const url = `${ROOT_URL}institutions${params}`;
+const queryKey: string = 'getInstitutionList';
+const params: string = queryString.stringify({ has_celo_wallet: Number(true) });
+const url: string = `${ROOT_URL}institutions${params && `?${params}`}`;
 
 const useGetInstitutionList = ({ onSuccess }: Args) =>
   useQuery(
     queryKey,
     async () => {
       const { data: response } = await axios.get(url);
-
       return response.data;
     },
     {
@@ -28,7 +26,6 @@ const useGetInstitutionList = ({ onSuccess }: Args) =>
 export const useGetInstitutionListPrefetch = async (queryClient: QueryClient) => {
   await queryClient.prefetchQuery(queryKey, async () => {
     const { data: response } = await axios.get(url);
-
     return response.data;
   });
 };
