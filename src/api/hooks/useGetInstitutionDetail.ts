@@ -5,12 +5,11 @@ import ROOT_URL from '../../constants/apiUrl';
 interface Args {
   institutionId: string;
   enabled?: boolean;
-  // eslint-disable-next-line no-unused-vars
   onSuccess?(data: any): void;
 }
 
-const queryKey = 'getInstitutionDetail';
-const url = (institutionId: string) => `${ROOT_URL}institutions/${institutionId}/public`;
+const queryKey: string = 'getInstitutionDetail';
+const url = (institutionId: string): string => `${ROOT_URL}institutions/${institutionId}/public`;
 
 const useGetInstitutionDetail = ({ institutionId, enabled = true, onSuccess }: Args) =>
   useQuery(
@@ -31,7 +30,6 @@ export const useGetInstitutionDetailPrefetch = async (
 ) => {
   await queryClient.prefetchQuery(queryKey, async () => {
     const { data: response } = await axios.get(url(institutionId));
-
     return response.data;
   });
 };
