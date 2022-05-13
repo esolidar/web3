@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
+const withTM = require('next-transpile-modules')(['@esolidar/toolkit']);
 const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 
-module.exports = withPWA({
+const moduleExports = withTM({
   pwa: {
     dest: 'public',
     runtimeCaching,
@@ -13,6 +14,12 @@ module.exports = withPWA({
     localeDetection: true,
   },
   webpack: config => {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
@@ -23,3 +30,5 @@ module.exports = withPWA({
     return config;
   },
 });
+
+module.exports = withPWA(moduleExports);
