@@ -5,7 +5,7 @@ import { dehydrate, QueryClient } from 'react-query';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
-import useTransfer from '../hooks/useTransfer/useTransfer';
+import useDonateCeloCUSD from '../hooks/useDonate/useDonate';
 import useGetBalance from '../hooks/useGetBalance/useGetBalance';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
@@ -18,7 +18,7 @@ const Home = () => {
   const intl = useIntl();
   const router = useRouter();
   const { address, connect, destroy } = useContractKit();
-  const transfer = useTransfer();
+  const donateCeloCUSD = useDonateCeloCUSD();
   const getBalance = useGetBalance();
 
   const {
@@ -31,7 +31,7 @@ const Home = () => {
       (item: any) => item.default
     ).wallet_address;
 
-    transfer(institutionWalletAddress);
+    donateCeloCUSD(institutionWalletAddress, '1');
   };
 
   const handleClickThumb = (institution: any) => {
