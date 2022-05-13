@@ -1,8 +1,20 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+const withTM = require('next-transpile-modules')(['@esolidar/toolkit']);
 const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 
-module.exports = withPWA({
+const getProcessEnvVars = () => {
+  const envs = {};
+
+  Object.keys(process.env).forEach(key => {
+    if (key.startsWith('NEXT_PUBLIC_')) envs[key] = process.env[key];
+  });
+
+  return envs;
+};
+
+const moduleExports = withTM({
   pwa: {
     dest: 'public',
     runtimeCaching,
@@ -12,7 +24,20 @@ module.exports = withPWA({
     defaultLocale: 'en',
     localeDetection: true,
   },
-  webpack: config => {
+  webpack: (config, { webpack, isServer }) => {
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env': JSON.stringify(getProcessEnvVars()),
+        })
+      );
+    }
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
@@ -22,4 +47,9 @@ module.exports = withPWA({
     };
     return config;
   },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
 });
+
+module.exports = withPWA(moduleExports);
