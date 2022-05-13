@@ -3,6 +3,7 @@ import { useContractKit } from '@celo-tools/use-contractkit';
 import { ContractKit } from '@celo/contractkit';
 import { dehydrate, QueryClient } from 'react-query';
 import Link from 'next/link';
+import Title from '@esolidar/toolkit/build/unreleased/title';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../api/hooks/useGetInstitutionList';
@@ -64,29 +65,20 @@ const Home = () => {
     });
   };
 
-  const valora = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=celo://wallet/pay?address=0x7F38B1585d55A9bc881da27e2FB927d0db30fD41&displayName=esolidar&chld=L%7C0`;
-  const metamask = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=wc:099df4c1-8d6d-4432-b6b1-f8fe5e243efe@1?bridge=https%3A%2F%2Fz.bridge.walletconnect.org&key=2625629f0670a8a5d660471621a727effbdaf28d32b23fa7a34ccfa143779bb7
-  &displayName=esolidar&chld=L%7C0`;
-
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
+        <Title
+          subtitle={intl.formatMessage({ id: 'web3.institution.list.subtitle' })}
+          title={intl.formatMessage({ id: 'web3.institution.list.title' })}
+        />
         <Link
           href={{
             pathname: '/institution/[id]',
-            query: { id: 51 },
+            query: { id: 106 },
           }}
         >
-          <p>Go to institution 51</p>
-        </Link>
-        <Link
-          href={{
-            pathname: '/institution/[id]',
-            query: { id: 54 },
-          }}
-        >
-          <p>Go to institution 54</p>
+          <p>Go to institution 106</p>
         </Link>
         {address ? (
           <>
@@ -101,10 +93,6 @@ const Home = () => {
             <button type="button" onClick={destroy}>
               Disconnect
             </button>
-            <h2>Opens valora</h2>
-            <img alt={address} src={valora} />
-            <h2>Opens metamask</h2>
-            <img alt={address} src={metamask} />
           </>
         ) : (
           <button type="button" onClick={() => connect().catch(e => console.log(e))}>
