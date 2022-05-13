@@ -33,7 +33,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image for web3...
-      - docker build -t $REPOSITORY_URI:latest -f docker/build/web3.dockerfile --build-arg NODE_ENV=$NODE_ENV .
+      - docker build -t $REPOSITORY_URI:latest -f docker/build/web3.dockerfile --build-arg NODE_ENV=$NODE_ENV --build-arg NPM_TOKEN=$NPM_TOKEN .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       - echo Building the Docker image for Nnginx reverse proxy...
       - docker build -t $NGINX_REPOSITORY_URI:latest -f docker/build/nginx.dockerfile .

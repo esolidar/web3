@@ -1,11 +1,15 @@
 # Install dependencies only when needed
 FROM node:12 AS deps
 
+ARG NPM_TOKEN=${NPM_TOKEN}
+ENV NPM_TOKEN=${NPM_TOKEN}
+
 ARG NODE_ENV=${NODE_ENV}
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
-COPY package.json yarn.lock .env.${NODE_ENV}  ./
+COPY package.json yarn.lock .env.${NODE_ENV} ./
+RUN echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 RUN yarn --pure-lockfile --production=false
 
 # Rebuild the source code only when needed
