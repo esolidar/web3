@@ -7,6 +7,9 @@ import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../../api/hooks/useGetInstitutionList';
 import styles from '../../assets/styles/components/Home.module.scss';
+import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
+import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
+import truncateAddress from '../../utils/truncateAddress';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -14,41 +17,25 @@ import styles from '../../assets/styles/components/Home.module.scss';
 const Home = () => {
   const intl = useIntl();
   const toAccount = '0x7F38B1585d55A9bc881da27e2FB927d0db30fD41';
-  const { address, connect, destroy, performActions } = useContractKit();
+  const toMitch = '0x7335966f30FC589347793e3C2FE378549b8604B4';
+
+  const { address, connect, destroy, performActions, } = useContractKit();
+
+  const donateWithCUSD = useDonateCeloCUSD();
 
   const { data: institutionList } = useGetInstitutionList({});
   console.log(institutionList);
 
-  const transfer = async () => {
-    await performActions(async (kit: ContractKit) => {
-      let account: string = '';
-      const stableToken = await kit.contracts.getStableToken();
-      const amount = kit.web3.utils.toWei('1', 'ether');
+  const { data: nonprofitBalance } = useCeloWalletBalance({ wallet: toMitch, balanceOf: 'cusd'});
+  console.log(nonprofitBalance);
 
-      if (address) account = address;
-      const gasLimit = await kit.connection.estimateGas({
-        to: toAccount,
-        from: account,
-        value: amount,
-      });
+  const getTotalBalance = async () => {
+    await performActions(async (kit) => {
+      const totalBalance = await kit.getTotalBalance(toMitch);
 
-      const gasPrice = '500000000';
-      const adjustedGasLimit = gasLimit * 2;
-
-      // try {
-      //   gasPrice = await kit.connection.gasPrice.toString();
-      // } catch (_) {}
-
-      const tx = await stableToken
-        .transfer(toAccount, amount)
-        .send({ from: account, feeCurrency: stableToken.address, gas: adjustedGasLimit, gasPrice });
-
-      // const hash = await tx.getHash();
-      const receipt = await tx.waitReceipt();
-      if (receipt.status) alert('success');
-      else alert('error');
+      console.log(totalBalance);
     });
-  };
+  }
 
   const getBalances = async () => {
     await performActions(async kit => {
@@ -95,21 +82,26 @@ const Home = () => {
             <button type="button" onClick={getBalances}>
               getBalances
             </button>
-            <button type="button" onClick={transfer}>
+            <button type="button" onClick={() => donateWithCUSD(toMitch, "1")}>
               Transfer
             </button>
             <button type="button" onClick={destroy}>
               Disconnect
             </button>
-            <h2>Opens valora</h2>
-            <img alt={address} src={valora} />
-            <h2>Opens metamask</h2>
-            <img alt={address} src={metamask} />
+            <h2>Address truncated:</h2>
+            <p>{truncateAddress(toMitch, 5)}</p>
+            <h2>Account summary:</h2>
           </>
         ) : (
+          <>
           <button type="button" onClick={() => connect().catch(e => console.log(e))}>
             Connect wallet
           </button>
+          <h3> Total balance of an account:</h3>
+          <button type="button" onClick={getTotalBalance}>
+            Total balance of: ${toMitch}
+          </button>
+          </>
         )}
       </main>
     </div>
