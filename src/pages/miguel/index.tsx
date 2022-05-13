@@ -14,26 +14,25 @@ import truncateAddress from '../../utils/truncateAddress';
 
 const Home = () => {
   const intl = useIntl();
-  const toAccount = '0x7F38B1585d55A9bc881da27e2FB927d0db30fD41';
   const toMitch = '0x7335966f30FC589347793e3C2FE378549b8604B4';
 
-  const { address, connect, destroy, performActions, } = useContractKit();
+  const { address, connect, destroy, performActions } = useContractKit();
 
   const donateWithCUSD = useDonateCeloCUSD();
 
   const { data: institutionList } = useGetInstitutionList({});
   console.log(institutionList);
 
-  const { data: nonprofitBalance } = useCeloWalletBalance({ wallet: toMitch, balanceOf: 'cusd'});
+  const { data: nonprofitBalance } = useCeloWalletBalance({ wallet: toMitch, balanceOf: 'cusd' });
   console.log(nonprofitBalance);
 
   const getTotalBalance = async () => {
-    await performActions(async (kit) => {
+    await performActions(async kit => {
       const totalBalance = await kit.getTotalBalance(toMitch);
 
       console.log(totalBalance);
     });
-  }
+  };
 
   const getBalances = async () => {
     await performActions(async kit => {
@@ -48,10 +47,6 @@ const Home = () => {
       console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
     });
   };
-
-  const valora = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=celo://wallet/pay?address=0x7F38B1585d55A9bc881da27e2FB927d0db30fD41&displayName=esolidar&chld=L%7C0`;
-  const metamask = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=wc:099df4c1-8d6d-4432-b6b1-f8fe5e243efe@1?bridge=https%3A%2F%2Fz.bridge.walletconnect.org&key=2625629f0670a8a5d660471621a727effbdaf28d32b23fa7a34ccfa143779bb7
-  &displayName=esolidar&chld=L%7C0`;
 
   return (
     <div className="container">
@@ -80,7 +75,7 @@ const Home = () => {
             <button type="button" onClick={getBalances}>
               getBalances
             </button>
-            <button type="button" onClick={() => donateWithCUSD(toMitch, "1")}>
+            <button type="button" onClick={() => donateWithCUSD(toMitch, '1')}>
               Transfer
             </button>
             <button type="button" onClick={destroy}>
@@ -92,13 +87,13 @@ const Home = () => {
           </>
         ) : (
           <>
-          <button type="button" onClick={() => connect().catch(e => console.log(e))}>
-            Connect wallet
-          </button>
-          <h3> Total balance of an account:</h3>
-          <button type="button" onClick={getTotalBalance}>
-            Total balance of: ${toMitch}
-          </button>
+            <button type="button" onClick={() => connect().catch(e => console.log(e))}>
+              Connect wallet
+            </button>
+            <h3> Total balance of an account:</h3>
+            <button type="button" onClick={getTotalBalance}>
+              Total balance of: ${toMitch}
+            </button>
           </>
         )}
       </main>
