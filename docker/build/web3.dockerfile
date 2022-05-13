@@ -8,7 +8,7 @@ ARG NODE_ENV=${NODE_ENV}
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
-COPY package.json yarn.lock .env.${NODE_ENV} ./
+COPY package.json yarn.lock .env.${NODE_ENV} .npmrc ./
 RUN echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 RUN yarn --pure-lockfile --production=false
 
