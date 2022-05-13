@@ -1,12 +1,10 @@
 import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
-import { ContractKit } from '@celo/contractkit';
 import { dehydrate, QueryClient } from 'react-query';
 import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../../api/hooks/useGetInstitutionList';
-import styles from '../../assets/styles/components/Home.module.scss';
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
@@ -56,8 +54,8 @@ const Home = () => {
   &displayName=esolidar&chld=L%7C0`;
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
+    <div className="container">
+      <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
         <Link
           href={{
