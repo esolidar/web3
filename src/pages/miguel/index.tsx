@@ -6,7 +6,6 @@ import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../../api/hooks/useGetInstitutionList';
-import styles from '../../assets/styles/components/Home.module.scss';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -69,8 +68,8 @@ const Home = () => {
   &displayName=esolidar&chld=L%7C0`;
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
+    <div className="container">
+      <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
         <Link
           href={{

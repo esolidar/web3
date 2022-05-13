@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
 const withTM = require('next-transpile-modules')(['@esolidar/toolkit']);
 const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
+
+const getProcessEnvVars = () => {
+  const envs = {};
+
+  Object.keys(process.env).forEach(key => {
+    if (key.startsWith('NEXT_PUBLIC_')) envs[key] = process.env[key];
+  });
+
+  return envs;
+};
 
 const moduleExports = withTM({
   pwa: {
@@ -13,7 +24,14 @@ const moduleExports = withTM({
     defaultLocale: 'en',
     localeDetection: true,
   },
-  webpack: config => {
+  webpack: (config, { webpack, isServer }) => {
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env': JSON.stringify(getProcessEnvVars()),
+        })
+      );
+    }
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
@@ -28,6 +46,9 @@ const moduleExports = withTM({
       readline: false,
     };
     return config;
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
   },
 });
 

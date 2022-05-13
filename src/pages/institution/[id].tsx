@@ -1,13 +1,13 @@
-import Link from 'next/link';
 import { dehydrate, QueryClient } from 'react-query';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { ContractKit } from '@celo/contractkit';
 import { useRouter } from 'next/router';
+import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
+import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
 } from '../../api/hooks/useGetInstitutionDetail';
-import styles from '../../assets/styles/components/InstitutionDetail.module.scss';
 
 const InstitutionDetail = () => {
   const { address, performActions } = useContractKit();
@@ -57,21 +57,40 @@ const InstitutionDetail = () => {
   &displayName=esolidar&chld=L%7C0`;
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <Title subtitle={institutionDetail.location} title={institutionDetail.name} />
-        <p>{institutionWalletAddress}</p>
-        <button type="button" onClick={transfer}>
-          Donate $cUSD
-        </button>
-        <Link href="/">
-          <p>Go to home page</p>
-        </Link>
-        <h2>Opens valora</h2>
-        <img alt={String(address)} src={valora} />
-        <h2>Opens metamask</h2>
-        <img alt={String(address)} src={metamask} />
-      </main>
+    <div className="nonprofit-detail">
+      <Breadcrumbs
+        breadcrumbs={[
+          {
+            handleClick: () => router.push('/'),
+            title: 'Home',
+          },
+          {
+            handleClick: () => router.push('/'),
+            title: 'Discover',
+          },
+          {
+            title: institutionDetail.name,
+          },
+        ]}
+      />
+      <Title subtitle={institutionDetail.location} title={institutionDetail.name} />
+      <CarouselLightbox
+        listItems={[
+          {
+            url: `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institutionDetail.s3_cover_key}`,
+            altTag: institutionDetail.name,
+            type: 'photo',
+          },
+        ]}
+      />
+      <p>{institutionWalletAddress}</p>
+      <button type="button" onClick={transfer}>
+        Donate $cUSD
+      </button>
+      <h2>Opens valora</h2>
+      <img alt={String(address)} src={valora} />
+      <h2>Opens metamask</h2>
+      <img alt={String(address)} src={metamask} />
     </div>
   );
 };
