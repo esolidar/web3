@@ -10,6 +10,8 @@ import {
   Alfajores,
   Mainnet,
 } from '@celo-tools/use-contractkit';
+import { SUPPORTED_LOCALES } from '../constants/locales';
+import getLocaleTranslations from '../utils/locales';
 import '../assets/styles/_index.scss';
 import '@celo-tools/use-contractkit/lib/styles.css';
 
@@ -28,9 +30,9 @@ interface Props extends AppProps {
 }
 
 const messages: IMessages = {
-  br: { 'home-page': 'Página inicial' },
-  en: { 'home-page': 'Home page' },
-  pt: { 'home-page': 'Página inicial' },
+  br: getLocaleTranslations(SUPPORTED_LOCALES.BR),
+  en: getLocaleTranslations(SUPPORTED_LOCALES.EN),
+  pt: getLocaleTranslations(SUPPORTED_LOCALES.PT),
 };
 
 // const defaultRichTextElements = {
