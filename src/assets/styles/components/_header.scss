@@ -1,0 +1,55 @@
+.header {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 99;
+
+  .home-logo {
+    margin-right: auto;
+
+    .logo {
+      margin-left: $distance-4;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    gap: $distance-2;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      a {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        text-decoration: none;
+        color: map-get($base, Black);
+        padding: $distance-4 $distance-2;
+      }
+
+      &.active,
+      &:hover {
+        &::after {
+          position: absolute;
+          content: '';
+          bottom: 0;
+          left: 0;
+          right: 0;
+          border-bottom: 5px solid map-get($turquoise, 500);
+        }
+      }
+    }
+
+    &-connect-button {
+      display: flex;
+      align-items: center;
+      padding-right: $distance-4;
+    }
+  }
+}
