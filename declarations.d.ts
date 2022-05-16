@@ -9,3 +9,5 @@ declare module '@esolidar/toolkit/build/components/noMatch';
 declare module '@esolidar/toolkit/build/components/viewport';
 declare module '@esolidar/toolkit/build/elements/icon';
 declare module '@esolidar/toolkit/build/elements/dropdown';
+declare module '@esolidar/toolkit/build/elements/popover';
+declare module '@esolidar/toolkit/build/utils/getOdsList';

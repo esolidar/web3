@@ -8,7 +8,9 @@
 
 .web3 {
   &__connect-modal {
-    z-index: 1000;
+    & > div:first-of-type {
+      z-index: 1000;
+    }
   }
 }
 

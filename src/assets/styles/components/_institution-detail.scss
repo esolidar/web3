@@ -12,6 +12,9 @@
     gap: $distance-5;
 
     & > div:last-child {
+      display: flex;
+      flex-direction: column;
+      gap: $distance-3;
       width: 100%;
       max-width: 400px;
     }
@@ -27,13 +30,6 @@
         flex-direction: column;
 
         > div {
-          &:first-of-type {
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 400;
-            color: map-get($neutrals, 700);
-          }
-
           &:last-of-type {
             font-size: 18px;
             line-height: 24px;
