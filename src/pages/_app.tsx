@@ -58,47 +58,45 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
 
   const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
   return (
-    <>
-      <ContractKitProvider
-        dapp={{
-          name: 'use-contractkit demo',
-          description: 'A demo DApp to showcase functionality',
-          url: 'https://use-contractkit.vercel.app',
-          icon: 'https://use-contractkit.vercel.app/favicon.ico',
-        }}
-        connectModal={{
-          providersOptions: {
-            hideFromDefaults: [
-              SupportedProviders.CeloDance,
-              SupportedProviders.CeloExtensionWallet,
-              SupportedProviders.CeloTerminal,
-              SupportedProviders.CeloWallet,
-              SupportedProviders.Injected,
-              SupportedProviders.Ledger,
-              SupportedProviders.PrivateKey,
-            ],
-          },
-        }}
-        network={contractkitNetwork}
+    <ContractKitProvider
+      dapp={{
+        name: 'use-contractkit demo',
+        description: 'A demo DApp to showcase functionality',
+        url: 'https://use-contractkit.vercel.app',
+        icon: 'https://use-contractkit.vercel.app/favicon.ico',
+      }}
+      connectModal={{
+        providersOptions: {
+          hideFromDefaults: [
+            SupportedProviders.CeloDance,
+            SupportedProviders.CeloExtensionWallet,
+            SupportedProviders.CeloTerminal,
+            SupportedProviders.CeloWallet,
+            SupportedProviders.Injected,
+            SupportedProviders.Ledger,
+            SupportedProviders.PrivateKey,
+          ],
+        },
+      }}
+      network={contractkitNetwork}
+    >
+      <IntlProvider
+        locale="pt"
+        messages={messages[locale] || messages.en}
+        // defaultRichTextElements={defaultRichTextElements}
       >
-        <IntlProvider
-          locale="pt"
-          messages={messages[locale] || messages.en}
-          // defaultRichTextElements={defaultRichTextElements}
-        >
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-              {process.env.NEXT_PUBLIC_ENV === 'development' && (
-                <ReactQueryDevtools initialIsOpen={false} />
-              )}
-            </Hydrate>
-          </QueryClientProvider>
-        </IntlProvider>
-      </ContractKitProvider>
-    </>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps?.dehydratedState}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+            {process.env.NEXT_PUBLIC_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
+          </Hydrate>
+        </QueryClientProvider>
+      </IntlProvider>
+    </ContractKitProvider>
   );
 };
 

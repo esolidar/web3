@@ -1,5 +1,7 @@
 import Head from 'next/head';
+import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Header from '../components/Header';
+import Footer from '@src/components/Footer';
 
 /* eslint-disable no-undef */
 interface Props {
@@ -26,11 +28,13 @@ const Layout = ({ children }: Props) => (
       <link rel="apple-touch-icon" href="/apple-icon.png" />
       <meta name="theme-color" content="#317EFB" />
     </Head>
-    <div className="container">
-      <Header />
-      <div className="app">{children}</div>
+    <Header />
+    <div className="app">
+      <Viewport centred size="xl">
+        <div className="container">{children}</div>
+      </Viewport>
     </div>
-    ;
+    <Footer />
   </>
 );
 
