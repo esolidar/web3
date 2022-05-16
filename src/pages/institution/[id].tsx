@@ -1,18 +1,17 @@
 import { dehydrate, QueryClient } from 'react-query';
-import { useContractKit } from '@celo-tools/use-contractkit';
 import { useRouter } from 'next/router';
 import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
 import CardContribute from '../../components/cardContribute/CardContribute';
+import CardSDG from '../../components/cardSDG/CardSDG';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
 } from '../../api/hooks/useGetInstitutionDetail';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 
 const InstitutionDetail = () => {
-  const { address } = useContractKit();
   const router = useRouter();
   const { id } = router.query;
   const donateCeloCUSD = useDonateCeloCUSD();
@@ -23,37 +22,6 @@ const InstitutionDetail = () => {
   const institutionWalletAddress = institutionDetail.celo_wallet.find(
     (item: any) => item.default
   ).wallet_address;
-
-  // const transfer = async () => {
-  //   await performActions(async (kit: ContractKit) => {
-  //     let account: string = '';
-  //     const stableToken = await kit.contracts.getStableToken();
-  //     const amount = kit.web3.utils.toWei('1', 'ether');
-
-  //     if (address) account = address;
-  //     const gasLimit = await kit.connection.estimateGas({
-  //       to: institutionWalletAddress,
-  //       from: account,
-  //       value: amount,
-  //     });
-
-  //     const gasPrice = '500000000';
-  //     const adjustedGasLimit = gasLimit * 2;
-
-  //     // try {
-  //     //   gasPrice = await kit.connection.gasPrice.toString();
-  //     // } catch (_) {}
-
-  //     const tx = await stableToken
-  //       .transfer(institutionWalletAddress, amount)
-  //       .send({ from: account, feeCurrency: stableToken.address, gas: adjustedGasLimit, gasPrice });
-
-  //     // const hash = await tx.getHash();
-  //     const receipt = await tx.waitReceipt();
-  //     if (receipt.status) alert('success');
-  //     else alert('error');
-  //   });
-  // };
 
   return (
     <div className="nonprofit-detail">
@@ -93,7 +61,7 @@ const InstitutionDetail = () => {
               thumb={institutionDetail.thumbs.thumb}
             />
             <div className="nonprofit-detail__balance--amount">
-              <div>Raised from 342 donors</div>
+              <div className="body-small">Raised from 342 donors</div>
               <div>23,764.63 cUSD</div>
             </div>
           </div>
@@ -117,9 +85,11 @@ const InstitutionDetail = () => {
         </div>
         <div>
           <CardContribute
+            name={institutionDetail.name}
             address={institutionWalletAddress}
             onClickDonate={() => donateCeloCUSD(institutionWalletAddress, '1')}
           />
+          <CardSDG sdgList={institutionDetail.ods} />
         </div>
       </div>
     </div>

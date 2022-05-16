@@ -100,46 +100,6 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         </QueryClientProvider>
       </IntlProvider>
     </ContractKitProvider>
-
-    // <ContractKitProvider
-    //   dapp={{
-    //     name: 'use-contractkit demo',
-    //     description: 'A demo DApp to showcase functionality',
-    //     url: 'https://use-contractkit.vercel.app',
-    //     icon: 'https://use-contractkit.vercel.app/favicon.ico',
-    //   }}
-    //   connectModal={{
-    //     providersOptions: {
-    //       hideFromDefaults: [
-    //         SupportedProviders.CeloDance,
-    //         SupportedProviders.CeloExtensionWallet,
-    //         SupportedProviders.CeloTerminal,
-    //         SupportedProviders.CeloWallet,
-    //         SupportedProviders.Injected,
-    //         SupportedProviders.Ledger,
-    //         SupportedProviders.PrivateKey,
-    //       ],
-    //     },
-    //   }}
-    //   network={contractkitNetwork}
-    // >
-    //   <IntlProvider
-    //     locale="pt"
-    //     messages={messages[locale] || messages.en}
-    //     // defaultRichTextElements={defaultRichTextElements}
-    //   >
-    //     <QueryClientProvider client={queryClient}>
-    //       <Hydrate state={pageProps?.dehydratedState}>
-    //         <Layout>
-    //           <Component {...pageProps} />
-    //         </Layout>
-    //         {process.env.NEXT_PUBLIC_ENV === 'development' && (
-    //           <ReactQueryDevtools initialIsOpen={false} />
-    //         )}
-    //       </Hydrate>
-    //     </QueryClientProvider>
-    //   </IntlProvider>
-    // </ContractKitProvider>
   );
 };
 
