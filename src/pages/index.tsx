@@ -31,7 +31,6 @@ const Home = () => {
     const institutionWalletAddress = institution.celo_wallet.find(
       (item: any) => item.default
     ).wallet_address;
-
     donateCeloCUSD(institutionWalletAddress, '1');
   };
 
@@ -59,7 +58,7 @@ const Home = () => {
       <div className="mr-auto" style={{ width: '420px' }}>
         <TextField
           size="md"
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           value={search}
           placeholder="Search for nonprofits or causes..."
           field="term"
@@ -75,6 +74,7 @@ const Home = () => {
           <div className="home__grid">
             {institutionList.data.map((institution: any) => (
               <CardNonProfit
+                key={institution.id}
                 npo={institution}
                 handleClickDonate={() => handleClickDonate(institution)}
                 handleClickThumb={() => handleClickThumb(institution)}
