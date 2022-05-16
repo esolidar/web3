@@ -1,0 +1,21 @@
+.card-contribute {
+  border: 1px solid map-get($neutrals, 200);
+  border-radius: $border-radius-1;
+  width: 100%;
+  max-width: 400px;
+  padding: $distance-3;
+
+  & > h3 {
+    margin-top: 0;
+  }
+
+  &__qr-code {
+    height: 352px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $distance-2;
+  }
+}
