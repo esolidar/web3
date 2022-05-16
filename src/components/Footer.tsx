@@ -39,7 +39,7 @@ const Footer = () => {
                 iconRight={<Icon name="ChevronUp" />}
                 isLoading={false}
                 onClick={() => {}}
-                size="md"
+                size="sm"
                 text="English"
                 theme="light"
                 type="button"

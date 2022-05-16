@@ -7,3 +7,4 @@ declare module '@esolidar/toolkit/build/elements/dropdownLabelGroup';
 declare module '@esolidar/toolkit/build/components/noMatch';
 declare module '@esolidar/toolkit/build/components/viewport';
 declare module '@esolidar/toolkit/build/elements/icon';
+declare module '@esolidar/toolkit/build/elements/dropdown';
