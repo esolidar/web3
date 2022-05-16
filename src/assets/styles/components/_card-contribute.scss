@@ -1,0 +1,36 @@
+.card-contribute {
+  border: 1px solid map-get($neutrals, 200);
+  border-radius: $border-radius-1;
+  padding: $distance-3;
+
+  &__header {
+    margin-top: 0;
+  }
+
+  &__header-description {
+    margin-top: $distance-1;
+    margin-bottom: $distance-3;
+  }
+
+  &__qr-code {
+    height: 352px;
+  }
+
+  &__address {
+    display: flex;
+    align-items: center;
+    gap: $distance-1;
+    margin: 28px 0;
+    @include svg-change-color(map-get($turquoise, 500));
+
+    & > .btn-link {
+      padding: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $distance-2;
+  }
+}
