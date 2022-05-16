@@ -86,6 +86,9 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
           icon: 'https://use-contractkit.vercel.app/favicon.ico',
         }}
         connectModal={{
+          reactModalProps: {
+            overlayClassName: 'web3__connect-modal',
+          },
           providersOptions: {
             hideFromDefaults: [
               SupportedProviders.CeloDance,
@@ -106,7 +109,7 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
           // defaultRichTextElements={defaultRichTextElements}
         >
           <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
+            <Hydrate state={pageProps?.dehydratedState}>
               <Layout>
                 <Component {...pageProps} />
               </Layout>
