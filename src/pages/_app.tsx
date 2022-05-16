@@ -106,6 +106,7 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
 App.getInitialProps = async (appContext: any) => {
   const { locale } = appContext.ctx;
 
+  console.log('idioma', locale);
   return {
     initialProps: {
       locale,
