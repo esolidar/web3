@@ -19,51 +19,69 @@ const Footer = () => {
         identification purposes only. Use of these names, logos, and brands does not imply
         endorsement.
       </div>
+
       <div className="footer-component__menu">
         <div>{`© ${year} esolidar. All rights reserved.`}</div>
-        <div className="footer-component__menu-item">Privacy Policy</div>
-        <div className="footer-component__menu-item">Terms & Conditions</div>
-        <div className="footer-component__menu-item">Cookie Policy</div>
+        <div className="footer-component__menu-item">
+          <a href="/" target="_blank">
+            Privacy Policy
+          </a>
+        </div>
+        <div className="footer-component__menu-item">
+          <a href="/" target="_blank">
+            Terms & Conditions
+          </a>
+        </div>
+        <div className="footer-component__menu-item">
+          <a href="/" target="_blank">
+            Cookie Policy
+          </a>
+        </div>
         <div className="footer-component__menu-item-separator" />
-        <div>
+        <div className="power-by-esolidar">
           Powered by <strong>esolidar</strong>
         </div>
-        <div className="change-lang">
-          <Icon name="Language" />
 
-          <Dropdown
-            customButton={
-              <Button
-                extraClass="primary-full"
-                ghost
-                iconRight={<Icon name="ChevronUp" />}
-                isLoading={false}
-                onClick={() => {}}
-                size="sm"
-                text="English"
-                theme="light"
-                type="button"
-                withLoading={false}
-              />
-            }
-            items={[
-              {
-                id: 0,
-                onClick: () => {},
-                text: 'Action',
-              },
-              {
-                id: 0,
-                onClick: () => {},
-                text: 'Action',
-              },
-              {
-                id: 0,
-                onClick: () => {},
-                text: 'Action',
-              },
-            ]}
-          />
+        <div className="change-language">
+          <div className="power-by-esolidar-mobile">
+            Powered by <strong>esolidar</strong>
+          </div>
+          <div className="change-lang">
+            <Icon name="Language" />
+            <Dropdown
+              customButton={
+                <Button
+                  extraClass="primary-full btn-change-lang"
+                  ghost
+                  iconRight={<Icon name="ChevronUp" />}
+                  isLoading={false}
+                  onClick={() => {}}
+                  size="sm"
+                  text="English"
+                  theme="light"
+                  type="button"
+                  withLoading={false}
+                />
+              }
+              items={[
+                {
+                  id: 0,
+                  onClick: () => {},
+                  text: 'Action',
+                },
+                {
+                  id: 0,
+                  onClick: () => {},
+                  text: 'Action',
+                },
+                {
+                  id: 0,
+                  onClick: () => {},
+                  text: 'Action',
+                },
+              ]}
+            />
+          </div>
         </div>
       </div>
     </div>
