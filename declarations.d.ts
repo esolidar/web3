@@ -11,3 +11,4 @@ declare module '@esolidar/toolkit/build/elements/icon';
 declare module '@esolidar/toolkit/build/elements/dropdown';
 declare module '@esolidar/toolkit/build/elements/popover';
 declare module '@esolidar/toolkit/build/utils/getOdsList';
+declare module '@esolidar/toolkit/build/elements/textField';
