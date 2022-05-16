@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import { SUPPORTED_LOCALES } from '../constants/locales';
 
-const getLocaleTranslations = lang => {
+const getLocaleTranslations = (lang: string) => {
   switch (lang) {
     case SUPPORTED_LOCALES.BR:
       return Object.assign(

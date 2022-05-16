@@ -1,0 +1,50 @@
+.nonprofit-detail {
+  & > p {
+    color: map-get($turquoise, 500);
+  }
+
+  & .component-title {
+    margin-bottom: $distance-5;
+  }
+
+  &__columns {
+    display: flex;
+    gap: $distance-5;
+
+    & > div:last-child {
+      display: flex;
+      flex-direction: column;
+      gap: $distance-3;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    & .nonprofit-detail__balance {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: $distance-5;
+
+      &--amount {
+        display: flex;
+        flex-direction: column;
+
+        > div {
+          &:last-of-type {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 700;
+            color: map-get($base, black);
+          }
+        }
+      }
+    }
+
+    & .nonprofit-detail__mission {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: map-get($base, black);
+    }
+  }
+}
