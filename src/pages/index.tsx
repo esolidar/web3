@@ -66,25 +66,27 @@ const Home = () => {
           ))}
         </div>
       )}
-      {address ? (
-        <>
-          <p>My address</p>
-          {address}
-          <button type="button" onClick={getBalance}>
-            getBalances
-          </button>
-          {/* <button type="button" onClick={transfer}>
-            Transfer
-          </button> */}
-          <button type="button" onClick={destroy}>
-            Disconnect
-          </button>
-        </>
-      ) : (
-        <button type="button" onClick={() => connect().catch(e => console.log(e))}>
-          Connect wallet
-        </button>
-      )}
+      {
+        // address ? (
+        //   <>
+        //     <p>My address</p>
+        //     {address}
+        //     <button type="button" onClick={getBalance.getBalances}>
+        //       getBalances
+        //     </button>
+        //     {/* <button type="button" onClick={transfer}>
+        //       Transfer
+        //     </button> */}
+        //     <button type="button" onClick={destroy}>
+        //       Disconnect
+        //     </button>
+        //   </>
+        // ) : (
+        //   <button type="button" onClick={() => connect().catch(e => console.log(e))}>
+        //     Connect wallet
+        //   </button>
+        // )
+      }
     </div>
   );
 };

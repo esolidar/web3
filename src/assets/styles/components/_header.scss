@@ -1,55 +1,115 @@
 .header {
   position: fixed;
-  height: 80px;
+  // height: 80px;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-areas: 'home-logo nav';
   align-items: center;
   z-index: 99;
+  background-color: map-get($base, white);
 
-  .home-logo {
-    margin-right: auto;
-
-    .logo {
-      margin-left: $distance-4;
+  @media (max-width: map-get($breakpoints, md)) {
+    .mobile-menu-burger {
+      margin-left: auto;
+      padding: 20px $distance-3;
     }
-  }
 
-  &__menu {
-    display: flex;
-    gap: $distance-2;
-
-    &-item {
+    .logo-web {
+      display: none;
+    }
+    .logo-mobile {
       display: flex;
-      align-items: center;
-      position: relative;
+      padding: 20px $distance-3;
+    }
 
-      a {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        text-decoration: none;
-        color: map-get($base, Black);
-        padding: $distance-4 $distance-2;
+    &__menu {
+      display: none;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: map-get($base, white);
+      padding: $distance-2 $distance-3;
+
+      .wallet {
+        padding-bottom: $distance-3;
       }
 
-      &.active,
-      &:hover {
-        &::after {
-          position: absolute;
-          content: '';
-          bottom: 0;
-          left: 0;
-          right: 0;
-          border-bottom: 5px solid map-get($turquoise, 500);
+      .header__menu-item {
+        a {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 28px;
+          color: map-get($base, Black);
+          text-decoration: none;
+          display: block;
+          padding: $distance-2 0;
         }
       }
     }
+  }
 
-    &-connect-button {
+  @media (min-width: map-get($breakpoints, md)) {
+    .mobile-menu-burger {
+      display: none;
+    }
+    .logo-web {
       display: flex;
-      align-items: center;
-      padding-right: $distance-4;
+    }
+    .logo-mobile {
+      display: none;
+    }
+
+    .home-logo {
+      margin-right: auto;
+
+      .logo {
+        margin-left: $distance-4;
+      }
+    }
+
+    &__menu {
+      display: flex;
+      gap: $distance-2;
+      margin-left: auto;
+
+      &-item {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        a {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 24px;
+          text-decoration: none;
+          color: map-get($base, Black);
+          padding: $distance-4 $distance-2;
+        }
+
+        &.active,
+        &:hover {
+          &::after {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-bottom: 5px solid map-get($turquoise, 500);
+          }
+        }
+      }
+
+      &-connect-button {
+        display: flex;
+        align-items: center;
+        padding-right: $distance-4;
+      }
     }
   }
 }
