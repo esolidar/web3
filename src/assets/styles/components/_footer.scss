@@ -1,0 +1,40 @@
+.footer-component {
+  &__copyright {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($neutrals, 700);
+    padding: $distance-5 $distance-7;
+  }
+
+  &__menu {
+    padding: 0 $distance-7 $distance-5 $distance-7;
+    display: flex;
+    gap: $distance-2;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: map-get($neutrals, 700);
+
+    &-item {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+
+      &-separator {
+        margin: 0 $distance-3;
+        border-right: 1px solid map-get($neutrals, 400);
+      }
+    }
+  }
+}
+
+.change-lang {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: $distance-2;
+}
