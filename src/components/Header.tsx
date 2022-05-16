@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import DropdownLabelGroup from '@esolidar/toolkit/build/elements/dropdownLabelGroup';
@@ -19,37 +20,41 @@ interface WalletProps {
   setIsNavVisible(val: boolean): void;
 }
 
-const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => (
-  <div className="wallet">
-    {address && balance ? (
-      <DropdownLabelGroup
-        dropdownItems={[
-          {
-            id: 0,
-            leftIcon: 'DeleteCircle',
-            text: 'Disconect',
-            onClick: () => {
-              setIsNavVisible(false);
-              destroy();
+const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => {
+  const intl = useIntl();
+
+  return (
+    <div className="wallet">
+      {address && balance ? (
+        <DropdownLabelGroup
+          dropdownItems={[
+            {
+              id: 0,
+              leftIcon: 'DeleteCircle',
+              text: intl.formatMessage({ id: 'web3.disconect' }),
+              onClick: () => {
+                setIsNavVisible(false);
+                destroy();
+              },
             },
-          },
-        ]}
-        dropdownText={truncateAddress(address, 5)}
-        labelText={`${balance} cUSD`}
-      />
-    ) : (
-      <Button
-        extraClass="secondary"
-        text="Connect wallet"
-        size="md"
-        onClick={() => {
-          setIsNavVisible(false);
-          connect().catch(e => console.log(e));
-        }}
-      />
-    )}
-  </div>
-);
+          ]}
+          dropdownText={truncateAddress(address, 5)}
+          labelText={`${balance} cUSD`}
+        />
+      ) : (
+        <Button
+          extraClass="secondary"
+          text={intl.formatMessage({ id: 'web3.connect.wallet' })}
+          size="md"
+          onClick={() => {
+            setIsNavVisible(false);
+            connect().catch((e: any) => console.log(e));
+          }}
+        />
+      )}
+    </div>
+  );
+};
 
 const Header = () => {
   const { address, connect, destroy } = useContractKit();
@@ -88,7 +93,9 @@ const Header = () => {
       <nav className="header__menu">
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
           <Link href="/discover">
-            <a>Discover</a>
+            <a>
+              <FormattedMessage id="web3.institution.list.title" />
+            </a>
           </Link>
         </div>
         {/* <div
@@ -136,7 +143,9 @@ const Header = () => {
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}
             >
               <Link href="/discover">
-                <a>Discover</a>
+                <a>
+                  <FormattedMessage id="web3.institution.list.title" />
+                </a>
               </Link>
             </div>
             {/* <div

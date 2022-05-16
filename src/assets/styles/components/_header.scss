@@ -54,9 +54,11 @@
   }
 
   @media (min-width: map-get($breakpoints, md)) {
-    .mobile-menu-burger {
+    .mobile-menu-burger,
+    .mobile-menu {
       display: none;
     }
+
     .logo-web {
       display: flex;
     }
