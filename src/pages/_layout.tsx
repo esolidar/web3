@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Header from '../components/Header';
-import Footer from '@src/components/Footer';
+import Footer from '../components/Footer';
 
 /* eslint-disable no-undef */
 interface Props {
