@@ -66,6 +66,9 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         icon: 'https://use-contractkit.vercel.app/favicon.ico',
       }}
       connectModal={{
+        reactModalProps: {
+          overlayClassName: 'web3__connect-modal',
+        },
         providersOptions: {
           hideFromDefaults: [
             SupportedProviders.CeloDance,

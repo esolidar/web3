@@ -4,18 +4,23 @@ import queryString from 'query-string';
 import ROOT_URL from '../../constants/apiUrl';
 
 interface Args {
+  search?: string;
   onSuccess?(data: any): void;
 }
 
 const queryKey: string = 'getInstitutionList';
-const params: string = queryString.stringify({ has_celo_wallet: Number(true) });
-const url: string = `${ROOT_URL}institutions${params && `?${params}`}`;
+const url = (params: string): string => `${ROOT_URL}institutions${params && `?${params}`}`;
 
-const useGetInstitutionList = ({ onSuccess }: Args) =>
+const useGetInstitutionList = ({ search, onSuccess }: Args) =>
   useQuery(
-    queryKey,
+    // [queryKey, search], // FIXME: search is not working here
+    queryKey, // FIXME: search is not working here
     async () => {
-      const { data: response } = await axios.get(url);
+      const params: string = queryString.stringify({
+        has_celo_wallet: Number(true),
+        name: search || undefined,
+      });
+      const { data: response } = await axios.get(url(params));
       return response.data;
     },
     {
@@ -25,7 +30,8 @@ const useGetInstitutionList = ({ onSuccess }: Args) =>
 
 export const useGetInstitutionListPrefetch = async (queryClient: QueryClient) => {
   await queryClient.prefetchQuery(queryKey, async () => {
-    const { data: response } = await axios.get(url);
+    const params: string = queryString.stringify({ has_celo_wallet: Number(true) });
+    const { data: response } = await axios.get(url(params));
     return response.data;
   });
 };
