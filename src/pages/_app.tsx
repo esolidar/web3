@@ -12,6 +12,7 @@ import {
 import Layout from './_layout';
 import { SUPPORTED_LOCALES } from '../constants/locales';
 import getLocaleTranslations from '../utils/locales';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
 import '@celo-tools/use-contractkit/lib/styles.css';
 
