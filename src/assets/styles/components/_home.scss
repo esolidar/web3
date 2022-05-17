@@ -14,3 +14,96 @@
     color: map-get($turquoise, 500);
   }
 }
+
+.home-banner {
+  height: 790px;
+  width: 100%;
+  position: relative;
+
+  &__background {
+    height: 790px;
+    width: 100%;
+    background: map-get($blue, 800);
+    -ms-transform: skewY(20deg); /* IE 9 */
+    transform: skewY(-5deg);
+    position: absolute;
+    top: -85px;
+  }
+
+  #shape-1,
+  #shape-2 {
+    right: 0;
+    top: 0;
+    position: absolute;
+    z-index: 2;
+  }
+  .content-banner {
+    position: absolute;
+    top: 153px;
+    z-index: 3;
+    padding: 0 $distance-2;
+    @media (max-width: map-get($breakpoints, md)) {
+      top: 100px;
+    }
+
+    h1 {
+      width: 510px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 64px;
+      letter-spacing: -0.02em;
+      color: #ffffff !important;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+
+      b {
+        background: -webkit-linear-gradient(60deg, #48d9c9, #e1d69c);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @media (max-width: map-get($breakpoints, md)) {
+        width: 100%;
+      }
+    }
+
+    p {
+      width: 510px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 32px;
+      color: #ffffff;
+      padding: 0%;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        width: 100%;
+      }
+    }
+  }
+  .header-action-buttons {
+    padding-top: $distance-6;
+    display: flex;
+    gap: $distance-2;
+
+    @media (max-width: map-get($breakpoints, md)) {
+      flex-direction: column;
+    }
+
+    .btn-white {
+      color: map-get($base, white);
+      padding: $distance-2 $distance-3;
+      text-decoration: none;
+      text-align: center;
+
+      &:hover {
+        @include animate();
+        color: map-get($turquoise, 500);
+      }
+    }
+  }
+}
