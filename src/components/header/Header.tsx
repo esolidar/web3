@@ -9,8 +9,8 @@ import DropdownLabelGroup from '@esolidar/toolkit/build/elements/dropdownLabelGr
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
-import useGetBalance from '../hooks/useGetBalance/useGetBalance';
-import truncateAddress from '../utils/truncateAddress';
+import useGetBalance from '../../hooks/useGetBalance/useGetBalance';
+import truncateAddress from '../../utils/truncateAddress';
 
 interface WalletProps {
   address: any;
