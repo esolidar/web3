@@ -3,7 +3,7 @@ import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { useIntl } from 'react-intl';
 
-const HomeBanner = () => {
+const Hero = () => {
   const intl = useIntl();
   const { address, connect } = useContractKit();
 
@@ -90,7 +90,7 @@ const HomeBanner = () => {
                 }}
               />
             )}
-            <a href="/discover" className="btn-white">
+            <a href={`/${intl.locale}/discover`} className="btn-white">
               {intl.formatMessage({ id: 'Discover  causes' })}
             </a>
           </div>
@@ -100,4 +100,4 @@ const HomeBanner = () => {
   );
 };
 
-export default HomeBanner;
+export default Hero;

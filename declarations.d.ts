@@ -15,3 +15,8 @@ declare module '@esolidar/toolkit/build/elements/textField';
 declare module '@esolidar/toolkit/build/elements/multiSelectField';
 declare module '@esolidar/toolkit/build/components/loading';
 declare module '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
+declare module '@esolidar/toolkit/build/elements/toast';
+declare module '@esolidar/toolkit/build/elements/banner';
+declare module '@esolidar/toolkit/build/hooks/useInterval';
+declare module '@esolidar/toolkit/build/utils/lastElemOf';
+declare module '@esolidar/toolkit/build/components/shareModal';

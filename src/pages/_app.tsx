@@ -14,7 +14,9 @@ import { SUPPORTED_LOCALES } from '../constants/locales';
 import getLocaleTranslations from '../utils/locales';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
+import ToastProvider from '../providers/ToastProvider';
 import '@celo-tools/use-contractkit/lib/styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export type ILocale = {
   [key in string]: string;
@@ -58,6 +60,7 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
   const { locale } = initialProps;
 
   const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
+
   return (
     <ContractKitProvider
       dapp={{
@@ -92,7 +95,10 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps?.dehydratedState}>
             <Layout>
-              <Component {...pageProps} />
+              {/* <ToastsContainer toasts={toasts} onToastFinished={onToastFinished} /> */}
+              <ToastProvider>
+                <Component {...pageProps} />
+              </ToastProvider>
             </Layout>
             {process.env.NEXT_PUBLIC_ENV === 'development' && (
               <ReactQueryDevtools initialIsOpen={false} />
@@ -107,7 +113,6 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
 App.getInitialProps = async (appContext: any) => {
   const { locale } = appContext.ctx;
 
-  console.log('idioma', locale);
   return {
     initialProps: {
       locale,
