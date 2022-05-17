@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
-import HomeBanner from '../components/HomeBanner';
+import Hero from '../components/Hero';
 
 const DiscoverPage = () => (
   <>
-    <HomeBanner />
+    <Hero />
     <Viewport centred size="xl">
       <div style={{ height: '1500px' }}>
         <FormattedMessage id="Home page" />

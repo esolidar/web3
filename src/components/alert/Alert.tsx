@@ -15,12 +15,12 @@ const Alert = ({ alert, onRemove }: Props) => {
   const { id, type = 'banner', status = 'success', title, subtitle, onClose, variant } = alert;
 
   useInterval(() => {
-    onRemove(id);
+    onRemove(Number(id));
   }, 5000);
 
   const handleClose = () => {
     if (onClose) onClose();
-    onRemove(id);
+    onRemove(Number(id));
   };
 
   return (
