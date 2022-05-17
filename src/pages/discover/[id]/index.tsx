@@ -4,12 +4,12 @@ import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbo
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
-import CardContribute from '../../components/cardContribute/CardContribute';
-import CardSDG from '../../components/cardSDG/CardSDG';
+import CardContribute from '../../../components/cardContribute/CardContribute';
+import CardSDG from '../../../components/cardSDG/CardSDG';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
-} from '../../api/hooks/useGetInstitutionDetail';
-import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
+} from '../../../api/hooks/useGetInstitutionDetail';
+import useDonateCeloCUSD from '../../../hooks/useDonate/useDonate';
 
 const InstitutionDetail = () => {
   const router = useRouter();
