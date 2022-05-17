@@ -20,6 +20,10 @@ interface WalletProps {
   setIsNavVisible(val: boolean): void;
 }
 
+interface Props {
+  isHomepage: boolean;
+}
+
 const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => {
   const intl = useIntl();
 
@@ -56,7 +60,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
   );
 };
 
-const Header = () => {
+const Header = ({ isHomepage }: Props) => {
   const { address, connect, destroy } = useContractKit();
   const { balance, getBalances } = useGetBalance();
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
@@ -74,7 +78,7 @@ const Header = () => {
     typeof window !== 'undefined' ? window.location.href.includes(path) : '';
 
   return (
-    <header className="header">
+    <header className={classnames('header', { 'home-page-header': isHomepage })}>
       <Link href="/">
         <a className="home-logo">
           <img
