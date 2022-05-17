@@ -8,7 +8,6 @@ import useGetInstitutionList, {
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
-import DonationModal from '../../components/donationModal/DonationModal';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -52,7 +51,6 @@ const Home = () => {
   return (
     <div className="container">
       <main className="main">
-        <DonationModal openModal={true} />
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
         <Link
           href={{
