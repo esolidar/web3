@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
 import ToastProvider from '../providers/ToastProvider';
 import '@celo-tools/use-contractkit/lib/styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export type ILocale = {
   [key in string]: string;
