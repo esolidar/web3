@@ -2,6 +2,7 @@ import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { useIntl } from 'react-intl';
+import getRoute from '../routes';
 
 const Hero = () => {
   const intl = useIntl();
@@ -90,7 +91,7 @@ const Hero = () => {
                 }}
               />
             )}
-            <a href={`/${intl.locale}/discover`} className="btn-white">
+            <a href={getRoute.DISCOVER(intl.locale)} className="btn-white">
               {intl.formatMessage({ id: 'Discover  causes' })}
             </a>
           </div>

@@ -24,7 +24,7 @@ const DonationModal: FC<Props> = ({
   onCloseModal,
   onclickDonate,
   onClickAllowCusd,
-}: Props): JSX.Element => {
+}: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
 
   const intl: IntlShape = useIntl();
@@ -100,7 +100,7 @@ const ModalBody: FC<ModalBodyProps> = ({
   shortcuts = [25, 50, 150, 500],
   onChangeForm,
   onClickShortcut,
-}: ModalBodyProps): JSX.Element => {
+}: ModalBodyProps) => {
   const intl: IntlShape = useIntl();
 
   const { amount, errors } = form;

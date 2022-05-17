@@ -20,3 +20,5 @@ declare module '@esolidar/toolkit/build/elements/banner';
 declare module '@esolidar/toolkit/build/hooks/useInterval';
 declare module '@esolidar/toolkit/build/utils/lastElemOf';
 declare module '@esolidar/toolkit/build/components/shareModal';
+declare module '@esolidar/toolkit/build/elements/customModal';
+declare module '@esolidar/toolkit/build/elements/textFieldNumber';

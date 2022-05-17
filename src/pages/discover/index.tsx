@@ -19,6 +19,7 @@ import {
 } from '../../api/hooks/useGetInstitutionList';
 import useGetSdg from '../../api/hooks/useGetSdg';
 import { Sdg } from '../../interfaces/sdg';
+import getRoute from '../../routes';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -78,7 +79,7 @@ const List = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(`/discover/${institution.id}`);
+    router.push(getRoute.nonProfit.DETAIL(intl.locale, institution.id));
   };
 
   const odsLink = (): string => {
@@ -92,7 +93,7 @@ const List = () => {
       <Breadcrumbs
         breadcrumbs={[
           {
-            handleClick: () => router.push('/'),
+            handleClick: () => router.push(getRoute.HOME(intl.locale)),
             title: 'Home',
           },
           {
