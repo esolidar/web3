@@ -15,6 +15,7 @@ interface Props extends ModalBodyProps {
   openModal: boolean;
   isAllowCusdLoading: boolean;
   doneAllowCusdLoading: boolean;
+  isDonateLoading: boolean;
   NonprofitName: string;
   onCloseModal(): void;
   onclickDonate(form: Form): void;

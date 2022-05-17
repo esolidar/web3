@@ -118,5 +118,9 @@
     width: 100%;
     background-color: map-get($background, secondary);
     @include svg-change-color(map-get($neutrals, 700));
+
+    &.isLoadind {
+      opacity: 1;
+    }
   }
 }
