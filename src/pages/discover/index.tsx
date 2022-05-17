@@ -7,11 +7,12 @@ import Title from '@esolidar/toolkit/build/unreleased/title';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
 import TextField from '@esolidar/toolkit/build/elements/textField';
-import useDonateCeloCUSD from '../hooks/useDonate/useDonate';
+import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 // import useGetBalance from '../hooks/useGetBalance/useGetBalance';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
-} from '../api/hooks/useGetInstitutionList';
+} from '../../api/hooks/useGetInstitutionList';
+import getRoute from '../../routes';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -35,7 +36,7 @@ const Home = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    push(`/${intl.locale}/institution/${institution.id}`);
+    push(getRoute.nonProfit.DETAIL(intl.locale, institution.id));
   };
 
   return (
@@ -43,7 +44,7 @@ const Home = () => {
       <Breadcrumbs
         breadcrumbs={[
           {
-            handleClick: () => push(`/${intl.locale}`),
+            handleClick: () => push(getRoute.HOME(intl.locale)),
             title: 'Home',
           },
           {
