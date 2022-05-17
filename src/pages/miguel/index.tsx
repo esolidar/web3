@@ -49,53 +49,55 @@ const Home = () => {
   };
 
   return (
-    <main className="main">
-      <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
-      <Link
-        href={{
-          pathname: '/institution/[id]',
-          query: { id: 51 },
-        }}
-      >
-        <p>Go to institution 51</p>
-      </Link>
-      <Link
-        href={{
-          pathname: '/institution/[id]',
-          query: { id: 54 },
-        }}
-      >
-        <p>Go to institution 54</p>
-      </Link>
-      {address ? (
-        <>
-          <p>My address</p>
-          {address}
-          <button type="button" onClick={getBalances}>
-            getBalances
-          </button>
-          <button type="button" onClick={() => donateWithCUSD(toMitch, '1')}>
-            Transfer
-          </button>
-          <button type="button" onClick={destroy}>
-            Disconnect
-          </button>
-          <h2>Address truncated:</h2>
-          <p>{truncateAddress(toMitch, 5)}</p>
-          <h2>Account summary:</h2>
-        </>
-      ) : (
-        <>
-          <button type="button" onClick={() => connect().catch(e => console.log(e))}>
-            Connect wallet
-          </button>
-          <h3> Total balance of an account:</h3>
-          <button type="button" onClick={getTotalBalance}>
-            Total balance of: ${toMitch}
-          </button>
-        </>
-      )}
-    </main>
+    <div className="container">
+      <main className="main">
+        <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 51 },
+          }}
+        >
+          <p>Go to institution 51</p>
+        </Link>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 54 },
+          }}
+        >
+          <p>Go to institution 54</p>
+        </Link>
+        {address ? (
+          <>
+            <p>My address</p>
+            {address}
+            <button type="button" onClick={getBalances}>
+              getBalances
+            </button>
+            <button type="button" onClick={() => donateWithCUSD(toMitch, '1')}>
+              Transfer
+            </button>
+            <button type="button" onClick={destroy}>
+              Disconnect
+            </button>
+            <h2>Address truncated:</h2>
+            <p>{truncateAddress(toMitch, 5)}</p>
+            <h2>Account summary:</h2>
+          </>
+        ) : (
+          <>
+            <button type="button" onClick={() => connect().catch(e => console.log(e))}>
+              Connect wallet
+            </button>
+            <h3> Total balance of an account:</h3>
+            <button type="button" onClick={getTotalBalance}>
+              Total balance of: ${toMitch}
+            </button>
+          </>
+        )}
+      </main>
+    </div>
   );
 };
 

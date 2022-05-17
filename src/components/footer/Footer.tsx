@@ -21,7 +21,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="footer-component">
+    <footer className="footer-component">
       <div className="footer-component__copyright">
         <FormattedMessage id="web3.copyright.note" />
       </div>
@@ -105,7 +105,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
