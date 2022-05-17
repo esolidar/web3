@@ -1,11 +1,11 @@
 interface Alert {
-  id: number;
+  id?: number;
   variant: 'description' | 'snack-bar';
   type: 'banner' | 'toast';
-  status: 'success' | 'error';
+  status: 'success' | 'danger';
   title: string;
-  subtitle: string;
-  onClose(): void;
+  subtitle?: string;
+  onClose?(): void;
 }
 
 export default Alert;
