@@ -61,6 +61,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
 };
 
 const Header = ({ isHomepage }: Props) => {
+  const intl = useIntl();
   const { address, connect, destroy } = useContractKit();
   const { balance, getBalances } = useGetBalance();
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
@@ -79,7 +80,7 @@ const Header = ({ isHomepage }: Props) => {
 
   return (
     <header className={classnames('header', { 'home-page-header': isHomepage })}>
-      <Link href="/">
+      <Link href={`/${intl.locale}`}>
         <a className="home-logo">
           <img
             src="https://static.esolidar.com/frontend/logo/esolidar/logo.svg"
@@ -96,7 +97,7 @@ const Header = ({ isHomepage }: Props) => {
 
       <nav className="header__menu">
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
-          <Link href="/discover">
+          <Link href={`/${intl.locale}/discover`}>
             <a>
               <FormattedMessage id="web3.institution.list.title" />
             </a>
@@ -146,7 +147,7 @@ const Header = ({ isHomepage }: Props) => {
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}
             >
-              <Link href="/discover">
+              <Link href={`/${intl.locale}/discover`}>
                 <a>
                   <FormattedMessage id="web3.institution.list.title" />
                 </a>

@@ -18,7 +18,7 @@ import useGetInstitutionList, {
 
 const Home = () => {
   const intl = useIntl();
-  const router = useRouter();
+  const { push } = useRouter();
   const donateCeloCUSD = useDonateCeloCUSD();
   const [search, setSearch] = useState<string | undefined>('');
 
@@ -35,7 +35,7 @@ const Home = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(`/institution/${institution.id}`);
+    push(`/${intl.locale}/institution/${institution.id}`);
   };
 
   return (
@@ -43,7 +43,7 @@ const Home = () => {
       <Breadcrumbs
         breadcrumbs={[
           {
-            handleClick: () => {},
+            handleClick: () => push(`/${intl.locale}`),
             title: 'Home',
           },
           {
