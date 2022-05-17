@@ -19,7 +19,8 @@ const DonationModal: FC<Props> = ({
   isAllowCusdLoading = false,
   doneAllowCusdLoading = false,
   isDonateLoading = false,
-  NonprofitName,
+  nonProfitName,
+  allowCusdError,
   onCloseModal,
   onclickDonate,
   onClickAllowCusd,
@@ -28,7 +29,7 @@ const DonationModal: FC<Props> = ({
 
   const intl: IntlShape = useIntl();
 
-  const handleChangeForm = ({ value }) => {
+  const handleChangeForm = ({ value }: any) => {
     let newValue: any = value + 0;
     if (balance < value) {
       newValue = balance;
@@ -43,7 +44,7 @@ const DonationModal: FC<Props> = ({
       show={openModal}
       onHide={onCloseModal}
       size="md"
-      title={intl.formatMessage({ id: 'web3.donateModal.to' }, { NonprofitName })}
+      title={intl.formatMessage({ id: 'web3.donateModal.to' }, { nonProfitName })}
       dialogClassName="donationModal"
       backdrop="static"
       bodyChildren={
@@ -71,6 +72,7 @@ const DonationModal: FC<Props> = ({
             icon={doneAllowCusdLoading && <Icon name="CheckCircle" />}
             fullWidth
           />
+          <span className="donationModal__error">{allowCusdError}</span>
           <Button
             className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
             extraClass={classnames({
