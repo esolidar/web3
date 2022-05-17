@@ -12,3 +12,6 @@ declare module '@esolidar/toolkit/build/elements/dropdown';
 declare module '@esolidar/toolkit/build/elements/popover';
 declare module '@esolidar/toolkit/build/utils/getOdsList';
 declare module '@esolidar/toolkit/build/elements/textField';
+declare module '@esolidar/toolkit/build/elements/multiSelectField';
+declare module '@esolidar/toolkit/build/components/loading';
+declare module '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';

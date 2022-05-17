@@ -1,17 +1,8 @@
 .app {
   padding-top: 160px;
-}
 
-.home {
-  .home__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: $distance-4;
-    grid-row-gap: $distance-4;
-  }
-
-  & > p {
-    color: map-get($turquoise, 500);
+  @media (max-width: map-get($breakpoints, md)) {
+    padding-top: 80px;
   }
 }
 
