@@ -2,6 +2,11 @@
   border: 1px solid map-get($neutrals, 200);
   border-radius: $border-radius-1;
   padding: $distance-3;
+  width: 100%;
+
+  @media (max-width: map-get($breakpoints, md)) {
+    display: none;
+  }
 
   &__header {
     margin-top: 0;
@@ -13,7 +18,7 @@
   }
 
   &__qr-code {
-    height: 352px;
+    width: 100%;
   }
 
   &__address {

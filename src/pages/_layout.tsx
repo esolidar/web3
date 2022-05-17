@@ -50,8 +50,8 @@ const Layout = ({ children }: Props) => {
         <div>{children}</div>
       ) : (
         <div className="app">
-          <Viewport centred size="xl">
-            <div className="container">{children}</div>
+          <Viewport className="web3__viewport" centred size="xl">
+            <div>{children}</div>
           </Viewport>
         </div>
       )}

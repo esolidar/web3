@@ -7,13 +7,14 @@ import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
 import ShareModal from '@esolidar/toolkit/build/components/shareModal';
-import CardContribute from '../../components/cardContribute/CardContribute';
-import CardSDG from '../../components/cardSDG/CardSDG';
+import CardContribute from '../../../components/cardContribute/CardContribute';
+import CardSDG from '../../../components/cardSDG/CardSDG';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
-} from '../../api/hooks/useGetInstitutionDetail';
-import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
-import useToast from '../../hooks/useToast/useToast';
+} from '../../../api/hooks/useGetInstitutionDetail';
+import useDonateCeloCUSD from '../../../hooks/useDonate/useDonate';
+import useToast from '../../../hooks/useToast/useToast';
+import getRoute from '../../../routes';
 
 const InstitutionDetail = () => {
   const {
@@ -26,10 +27,10 @@ const InstitutionDetail = () => {
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
 
-  const { data: institutionDetail } = useGetInstitutionDetail({ institutionId: String(id) });
-  console.log(institutionDetail);
+  const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
+  console.log(institution);
 
-  const institutionWalletAddress = institutionDetail.celo_wallet.find(
+  const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
   ).wallet_address;
 
@@ -39,75 +40,76 @@ const InstitutionDetail = () => {
         <Breadcrumbs
           breadcrumbs={[
             {
-              handleClick: () => push(`/${intl.locale}`),
+              handleClick: () => push(getRoute.HOME(intl.locale)),
               title: 'Home',
             },
             {
-              handleClick: () => push(`/${intl.locale}/discover`),
+              handleClick: () => push(getRoute.DISCOVER(intl.locale)),
               title: 'Discover',
             },
             {
-              title: institutionDetail.name,
+              title: institution.name,
             },
           ]}
         />
-        <Title subtitle={institutionDetail.location} title={institutionDetail.name} />
+        <Title subtitle={institution.location} title={institution.name} />
         <div className="nonprofit-detail__columns">
-          <div>
+          <div className="nonprofit-detail__columns--left">
             <CarouselLightbox
               listItems={[
                 {
-                  url: `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institutionDetail.s3_cover_key}`,
-                  altTag: institutionDetail.name,
+                  url: `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`,
+                  altTag: institution.name,
                   type: 'photo',
                 },
               ]}
             />
             <div className="nonprofit-detail__balance">
               <ProfileAvatar
-                buttonText={institutionDetail.link || ''}
-                buttonUrl={institutionDetail.link}
+                buttonText={institution.link || ''}
+                buttonUrl={institution.link}
                 isNameBold
-                name={institutionDetail.name}
-                thumb={institutionDetail.thumbs.thumb}
+                name={institution.name}
+                thumb={institution.thumbs.thumb}
               />
               <div className="nonprofit-detail__balance--amount">
                 <div className="body-small">Raised from 342 donors</div>
                 <div>23,764.63 cUSD</div>
               </div>
             </div>
-            <hr />
-            <h3>Mission</h3>
-            <p className="nonprofit-detail__mission">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-              has been the standard dummy text ever since the 1500s, when an unknown printer took a
-              galley of type and scrambled it to make a type specimen. Lorem Ipsum is simply dummy
-              text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy
-              text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-              it to make a type specimen. Lorem Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the standard dummy text ever since the
-              1500s, when an unknown printer took a galley of type and scrambled it to make a type
-              specimen. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown
-              printer took a galley of type and scrambled it to make a type specimen. What the
-              charity does? Why they do it? How they do it? How the money is spent? What they are
-              working on? Real stories as examples of success.
-            </p>
+            <div className="nonprofit-detail__mission">
+              <h3>Mission</h3>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer
+                took a galley of type and scrambled it to make a type specimen. Lorem Ipsum is
+                simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                standard dummy text ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen. Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry. Lorem Ipsum has been the standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+                to make a type specimen. Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the standard dummy text ever since the
+                1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                specimen. What the charity does? Why they do it? How they do it? How the money is
+                spent? What they are working on? Real stories as examples of success.
+              </p>
+            </div>
           </div>
-          <div>
+          <div className="nonprofit-detail__columns--right">
             <CardContribute
-              name={institutionDetail.name}
+              name={institution.name}
               address={institutionWalletAddress}
               onClickDonate={() => donateCeloCUSD(institutionWalletAddress, '1')}
               onClickShare={() => setIsOpenShareModal(true)}
             />
-            <CardSDG sdgList={institutionDetail.ods} />
+            <CardSDG sdgList={institution.ods} />
           </div>
         </div>
       </div>
       <ShareModal
         openModal={isOpenShareModal}
-        title={institutionDetail.name}
+        title={institution.name}
         windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
         onCloseModal={() => setIsOpenShareModal(false)}
         onClickCopyToClipboard={() => toast.success('Successfully copied URL')}

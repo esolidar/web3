@@ -1,11 +1,3 @@
-.container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .web3 {
   &__connect-modal {
     position: fixed;
@@ -19,13 +11,10 @@
       z-index: 1000;
     }
   }
-}
 
-hr {
-  height: 1px;
-  border: 0;
-  border-top: 1px solid map-get($neutrals, 200);
-  margin-top: $distance-5 !important;
+  &__viewport {
+    padding: 0 $distance-3;
+  }
 }
 
 .alert-container {

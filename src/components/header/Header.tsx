@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import classnames from 'classnames';
 import useGetBalance from '../../hooks/useGetBalance/useGetBalance';
 import truncateAddress from '../../utils/truncateAddress';
+import getRoute from '../../routes';
 
 interface WalletProps {
   address: any;
@@ -80,7 +81,7 @@ const Header = ({ isHomepage }: Props) => {
 
   return (
     <header className={classnames('header', { 'home-page-header': isHomepage })}>
-      <Link href={`/${intl.locale}`}>
+      <Link href={getRoute.HOME(intl.locale)}>
         <a className="home-logo">
           <img
             src="https://static.esolidar.com/frontend/logo/esolidar/logo.svg"
@@ -97,7 +98,7 @@ const Header = ({ isHomepage }: Props) => {
 
       <nav className="header__menu">
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
-          <Link href={`/${intl.locale}/discover`}>
+          <Link href={getRoute.DISCOVER(intl.locale)}>
             <a>
               <FormattedMessage id="web3.institution.list.title" />
             </a>
@@ -147,7 +148,7 @@ const Header = ({ isHomepage }: Props) => {
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}
             >
-              <Link href={`/${intl.locale}/discover`}>
+              <Link href={getRoute.DISCOVER(intl.locale)}>
                 <a>
                   <FormattedMessage id="web3.institution.list.title" />
                 </a>
