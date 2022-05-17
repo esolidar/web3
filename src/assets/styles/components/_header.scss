@@ -8,6 +8,10 @@
   z-index: 99;
   background-color: map-get($base, white);
 
+  a {
+    text-decoration: none;
+  }
+
   @media (max-width: map-get($breakpoints, md)) {
     .mobile-menu-burger {
       margin-left: auto;
@@ -54,6 +58,27 @@
   }
 
   @media (min-width: map-get($breakpoints, md)) {
+    &.home-page-header {
+      @include animate();
+      background-color: transparent;
+      .btn-esolidar {
+        color: map-get($base, white);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .header__menu-item {
+        a {
+          color: map-get($base, white);
+        }
+      }
+
+      .esolidar-dropdown__toggle {
+        .DropdownLabelGroup__dropdown-text {
+          color: map-get($base, white);
+        }
+      }
+    }
+
     .mobile-menu-burger,
     .mobile-menu {
       display: none;
