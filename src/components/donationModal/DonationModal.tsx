@@ -18,6 +18,7 @@ const DonationModal: FC<Props> = ({
   balance,
   isAllowCusdLoading = false,
   doneAllowCusdLoading = false,
+  isDonateLoading = false,
   NonprofitName,
   onCloseModal,
   onclickDonate,
@@ -56,11 +57,14 @@ const DonationModal: FC<Props> = ({
       actionsChildren={
         <>
           <Button
-            className="donationModal__button-disabled"
+            className={classnames('donationModal__button-disabled', {
+              isLoadind: isAllowCusdLoading,
+            })}
             extraClass={classnames({ 'primary-full': !doneAllowCusdLoading })}
             size="md"
             text={intl.formatMessage({ id: 'web3.donateModal.allow.cusd' })}
-            onClick={onClickAllowCusd}
+            onClick={() => onClickAllowCusd}
+            withLoading
             isLoading={isAllowCusdLoading}
             disabled={!form.amount || doneAllowCusdLoading}
             type={doneAllowCusdLoading && 'icon'}
@@ -68,11 +72,15 @@ const DonationModal: FC<Props> = ({
             fullWidth
           />
           <Button
-            className="donationModal__button-disabled"
-            extraClass={classnames({ 'primary-full': form.amount && doneAllowCusdLoading })}
+            className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
+            extraClass={classnames({
+              'primary-full': (form.amount && doneAllowCusdLoading) || isDonateLoading,
+            })}
             size="md"
             text={intl.formatMessage({ id: 'web3.donate' })}
             onClick={() => onclickDonate(form)}
+            withLoading
+            isLoading={isDonateLoading}
             disabled={!form.amount || !doneAllowCusdLoading}
             fullWidth
           />
