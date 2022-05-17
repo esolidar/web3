@@ -8,15 +8,17 @@ import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
 import TextField from '@esolidar/toolkit/build/elements/textField';
 import MultiSelectField from '@esolidar/toolkit/build/elements/multiSelectField';
 import Button from '@esolidar/toolkit/build/elements/button';
+import Icon from '@esolidar/toolkit/build/elements/icon';
+import Popover from '@esolidar/toolkit/build/elements/popover';
 import useIntersectionObserverInfiniteScroll from '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
 import Loading from '@esolidar/toolkit/build/components/loading';
-import useDonateCeloCUSD from '../hooks/useDonate/useDonate';
+import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import {
   useGetInstitutionListPrefetch,
   useGetInstitutionListInfinite,
-} from '../api/hooks/useGetInstitutionList';
-import useGetSdg from '../api/hooks/useGetSdg';
-import { Sdg } from '../interfaces/sdg';
+} from '../../api/hooks/useGetInstitutionList';
+import useGetSdg from '../../api/hooks/useGetSdg';
+import { Sdg } from '../../interfaces/sdg';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -35,12 +37,14 @@ const List = () => {
   const donateCeloCUSD = useDonateCeloCUSD();
   const [search, setSearch] = useState<string | undefined>('');
   const [odsId, setOdsId] = useState<SdgOption[]>([]);
+  const [total, setTotal] = useState<number>(0);
 
   const { isLoading, isFetching, data, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
     useGetInstitutionListInfinite({
       search,
       odsId,
       onSuccess: data => {
+        setTotal(data.total);
         institutionList = data.pages;
       },
     });
@@ -54,9 +58,6 @@ const List = () => {
     root: null,
     status,
   });
-
-  console.log('institutionList', institutionList);
-  console.log('data', data);
 
   useGetSdg({
     onSuccess: data => {
@@ -77,7 +78,13 @@ const List = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(`/institution/${institution.id}`);
+    router.push(`/discover/${institution.id}`);
+  };
+
+  const odsLink = (): string => {
+    if (router.locale === 'pt') return 'https://www.ods.pt/';
+    if (router.locale === 'br') return 'https://brasil.un.org/pt-br/';
+    return 'https://sdgs.un.org/goals';
   };
 
   return (
@@ -111,15 +118,43 @@ const List = () => {
             }}
           />
         </div>
-        <div style={{ width: '300px' }}>
+        <div className="filter-field" style={{ width: '300px' }}>
           <MultiSelectField
             name="sdg"
             onChange={(e: any) => setOdsId(e)}
             showSelectAll={false}
             valueText={intl.formatMessage({ id: 'projects.filter.ods' })}
-            size="sm"
+            size="md"
+            menuWidth="450px"
             value=""
             options={sdgOptions}
+            labelHeader={
+              <span className="projects-list__filters-popover">
+                <FormattedMessage id="sdg.description.1" />
+                <Popover
+                  className="projects-list__filters-popover-body"
+                  overlayTrigger={<Icon name="InfoBold" size="sm" />}
+                  size="md"
+                  popoverBodyChildren={
+                    <div>
+                      <h3>
+                        <FormattedMessage id="sdg.description" />
+                      </h3>
+                      <p>
+                        <FormattedMessage id="sdg.description.text" />
+                      </p>
+                      <Button
+                        className="popover-btn"
+                        extraClass="link"
+                        href={odsLink()}
+                        target="_blank"
+                        text={intl.formatMessage({ id: 'learn.more' })}
+                      />
+                    </div>
+                  }
+                />
+              </span>
+            }
           />
         </div>
       </div>
@@ -134,13 +169,13 @@ const List = () => {
           </p>
         </div>
       )}
-      {data?.total > 0 && !isLoading && (
+      {total > 0 && !isLoading && (
         <div>
           <div className="npo-list-count">
             <FormattedMessage
               id="{total} nonprofits or causes"
               defaultMessage="{total} nonprofits or causes"
-              values={{ total: data.total }}
+              values={{ total }}
             />{' '}
           </div>
           <div className="home__grid">
@@ -157,21 +192,24 @@ const List = () => {
               </Fragment>
             ))}
           </div>
-          <div>
-            <Button
-              ref={loadMoreButtonRef}
-              extraClass="secondary"
-              className={`${!showLoadButton && 'invisible'}`}
-              size="lg"
-              onClick={fetchNextPage}
-              disabled={!hasNextPage || isFetchingNextPage}
-              text={intl.formatMessage({ id: 'load.more' })}
-              dataTestId="load-more"
-            />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '420px', display: 'flex', flexBasis: '420px' }}>
+              <Button
+                ref={loadMoreButtonRef}
+                extraClass="secondary"
+                fullWidth
+                className={`${!showLoadButton && 'invisible'}`}
+                size="lg"
+                onClick={fetchNextPage}
+                disabled={!hasNextPage || isFetchingNextPage}
+                text={intl.formatMessage({ id: 'load.more' })}
+                dataTestId="load-more"
+              />
+            </div>
           </div>
         </div>
       )}
-      {!isFetching && data?.total === 0 && !isLoading && (
+      {!isFetching && total === 0 && !isLoading && (
         <div className="no-result-npo-list">
           <div style={{ width: '256px', height: '256px', margin: '0 auto' }} />
           <h3>

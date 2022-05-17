@@ -9,12 +9,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: $distance-4;
-    grid-row-gap: $distance-4;
+    grid-row-gap: 0;
+    z-index: 0;
+    position: relative;
 
     @media (max-width: map-get($breakpoints, xs)) {
       display: flex;
       flex-direction: column;
-      grid-row-gap: 0;
     }
 
     @media (max-width: map-get($breakpoints, md)) {
