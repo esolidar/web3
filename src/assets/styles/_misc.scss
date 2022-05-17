@@ -1,3 +1,10 @@
+.container {
+  min-height: calc(100vh - 160px - 168px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .web3 {
   &__connect-modal {
     position: fixed;
