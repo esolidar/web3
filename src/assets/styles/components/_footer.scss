@@ -65,6 +65,7 @@
 @media (max-width: map-get($breakpoints, md)) {
   .footer-component {
     padding: $distance-3;
+    padding-top: $distance-5;
 
     &__menu {
       display: block;
