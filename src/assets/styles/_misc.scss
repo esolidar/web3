@@ -44,10 +44,3 @@ hr {
     padding: 0;
   }
 }
-.custom-modal,
-.modal {
-  z-index: 9999;
-}
-.modal-backdrop.show {
-  z-index: 999 !important;
-}
