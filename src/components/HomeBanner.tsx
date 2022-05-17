@@ -90,7 +90,7 @@ const HomeBanner = () => {
                 }}
               />
             )}
-            <a href="/discover" className="btn-white">
+            <a href={`/${intl.locale}/discover`} className="btn-white">
               {intl.formatMessage({ id: 'Discover  causes' })}
             </a>
           </div>
