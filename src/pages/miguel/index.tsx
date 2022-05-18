@@ -64,7 +64,6 @@ const Home = () => {
         <DonationModal
           openModal={openModal}
           balance={12}
-          dinheironut
           nonProfitName="Xpto"
           onCloseModal={() => setOpenModal(false)}
           onclickDonate={form =>
