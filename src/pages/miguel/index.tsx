@@ -49,14 +49,8 @@ const Home = () => {
       if (address) account = address;
       const celoBalance = await celotoken.balanceOf(account);
       const cUSDBalance = await cUSDtoken.balanceOf(account);
-
       console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
-
-      return {
-        celo: celoBalance,
-        cusd: cUSDBalance,
-      };
     });
   };
 
@@ -70,6 +64,7 @@ const Home = () => {
         <DonationModal
           openModal={openModal}
           balance={12}
+          dinheironut
           nonProfitName="Xpto"
           onCloseModal={() => setOpenModal(false)}
           onclickDonate={form =>
