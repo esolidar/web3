@@ -16,14 +16,10 @@ const DEFAULT_FORM: Form = {
 const DonationModal: FC<Props> = ({
   openModal,
   balance,
-  isAllowCusdLoading = false,
-  doneAllowCusdLoading = false,
   isDonateLoading = false,
   nonProfitName,
-  allowCusdError,
   onCloseModal,
   onclickDonate,
-  onClickAllowCusd,
 }: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
 
@@ -35,7 +31,7 @@ const DonationModal: FC<Props> = ({
       newValue = balance;
     }
     const newForm: Form = { ...form };
-    newForm.amount = newValue;
+    newForm.amount = `${newValue}`;
     setForm(newForm);
   };
 
@@ -56,37 +52,19 @@ const DonationModal: FC<Props> = ({
         />
       }
       actionsChildren={
-        <>
-          <Button
-            className={classnames('donationModal__button-disabled', {
-              isLoadind: isAllowCusdLoading,
-            })}
-            extraClass={classnames({ 'primary-full': !doneAllowCusdLoading })}
-            size="md"
-            text={intl.formatMessage({ id: 'web3.donateModal.allow.cusd' })}
-            onClick={() => onClickAllowCusd}
-            withLoading
-            isLoading={isAllowCusdLoading}
-            disabled={!form.amount || doneAllowCusdLoading}
-            type={doneAllowCusdLoading && 'icon'}
-            icon={doneAllowCusdLoading && <Icon name="CheckCircle" />}
-            fullWidth
-          />
-          <span className="donationModal__error">{allowCusdError}</span>
-          <Button
-            className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
-            extraClass={classnames({
-              'primary-full': (form.amount && doneAllowCusdLoading) || isDonateLoading,
-            })}
-            size="md"
-            text={intl.formatMessage({ id: 'web3.donate' })}
-            onClick={() => onclickDonate(form)}
-            withLoading
-            isLoading={isDonateLoading}
-            disabled={!form.amount || !doneAllowCusdLoading}
-            fullWidth
-          />
-        </>
+        <Button
+          className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
+          extraClass={classnames({
+            'primary-full': form.amount || isDonateLoading,
+          })}
+          size="md"
+          text={intl.formatMessage({ id: 'web3.donate' })}
+          onClick={() => onclickDonate(form)}
+          withLoading
+          isLoading={isDonateLoading}
+          disabled={!form.amount}
+          fullWidth
+        />
       }
     />
   );
