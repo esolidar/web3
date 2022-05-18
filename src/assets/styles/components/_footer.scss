@@ -62,10 +62,15 @@
     }
   }
 }
+
 @media (max-width: map-get($breakpoints, md)) {
   .footer-component {
     padding: $distance-3;
     padding-top: $distance-5;
+
+    &__detail {
+      padding-bottom: 96px;
+    }
 
     &__menu {
       display: block;
@@ -78,7 +83,7 @@
           margin-top: $distance-6;
           margin-bottom: $distance-6;
           width: 100%;
-          background: map-get($neutrals, 400);
+          background: map-get($neutrals, 200);
           height: 1px;
         }
       }

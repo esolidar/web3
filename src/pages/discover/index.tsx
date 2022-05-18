@@ -108,7 +108,7 @@ const List = () => {
       <div className="filters">
         <div className="filters__search">
           <TextField
-            size="md"
+            // size="md"
             onChange={(e: any) => setSearch(e.target.value)}
             value={search}
             placeholder="Search for nonprofits or causes..."
@@ -119,7 +119,7 @@ const List = () => {
             }}
           />
         </div>
-        <div className="filter-field" style={{ width: '300px' }}>
+        <div className="filters__field">
           <MultiSelectField
             name="sdg"
             onChange={(e: any) => setOdsId(e)}
@@ -145,11 +145,12 @@ const List = () => {
                         <FormattedMessage id="sdg.description.text" />
                       </p>
                       <Button
-                        className="popover-btn"
+                        className="popover-btn m-0 p-0"
                         extraClass="link"
                         href={odsLink()}
                         target="_blank"
                         text={intl.formatMessage({ id: 'learn.more' })}
+                        size="sm"
                       />
                     </div>
                   }

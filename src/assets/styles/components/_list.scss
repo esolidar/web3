@@ -33,23 +33,44 @@
   display: flex;
   gap: $distance-2;
 
+  @media (max-width: map-get($breakpoints, sm)) {
+    flex-direction: column;
+    gap: 0;
+  }
+
   &__search {
     width: 420px;
 
     .form-group {
       margin-bottom: $distance-3;
     }
-  }
 
-  .multi-select-component {
-    margin-bottom: $distance-3;
-  }
-
-  @media (max-width: map-get($breakpoints, md)) {
-    flex-direction: column;
-
-    &__search {
+    @media (max-width: map-get($breakpoints, sm)) {
       width: 100%;
+
+      & .form-group {
+        margin-bottom: $distance-2;
+      }
+    }
+  }
+
+  &__field {
+    width: 300px;
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      width: 100%;
+
+      & .esolidar-select {
+        max-width: unset;
+
+        & .esolidar-select__control {
+          width: 100%;
+        }
+      }
+    }
+
+    .multi-select-component {
+      margin-bottom: $distance-3;
     }
   }
 }

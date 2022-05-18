@@ -40,11 +40,12 @@ const CardSDG = ({ sdgList }: Props) => {
                 })}
               </p>
               <Button
-                className="popover-btn"
+                className="popover-btn m-0 p-0"
                 extraClass="link"
                 href={odsPopoverLink[intl.locale] || odsPopoverLink.en}
                 target="_blank"
                 text={intl.formatMessage({ id: 'toolkit.learn-more' })}
+                size="sm"
               />
             </div>
           }

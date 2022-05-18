@@ -4,24 +4,30 @@ import { useRouter } from 'next/router';
 import Dropdown from '@esolidar/toolkit/build/elements/dropdown';
 import Button from '@esolidar/toolkit/build/elements/button';
 
+interface Locale {
+  id: string;
+  name: string;
+}
+
+const locales: Locale[] = [
+  { id: 'pt', name: 'Português' },
+  { id: 'br', name: 'Português (BR)' },
+  { id: 'en', name: 'English' },
+];
+
 const Footer = () => {
-  const d = new Date();
-  const year: number = d.getFullYear();
   const router = useRouter();
   const intl = useIntl();
-
-  const locales = [
-    { id: 'pt', name: 'Português' },
-    { id: 'br', name: 'Português (BR)' },
-    { id: 'en', name: 'English' },
-  ];
 
   const handleChangeLang = (locale: string) => {
     router.push(router.pathname, router.pathname, { locale });
   };
 
+  const year: number = new Date().getFullYear();
+  const isInstitutionDetailPage: boolean = router.pathname === '/discover/[id]';
+
   return (
-    <footer className="footer-component">
+    <footer className={`footer-component ${isInstitutionDetailPage && 'footer-component__detail'}`}>
       <div className="footer-component__copyright">
         <FormattedMessage id="web3.copyright.note" />
       </div>
