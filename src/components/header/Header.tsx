@@ -45,6 +45,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
           ]}
           dropdownText={truncateAddress(address, 5)}
           labelText={`${balance} cUSD`}
+          // fullWidth
         />
       ) : (
         <Button
