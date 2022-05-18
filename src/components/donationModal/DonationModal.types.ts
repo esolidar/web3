@@ -1,5 +1,5 @@
 export interface Form {
-  amount: number | null;
+  amount: number | string | null;
   errors: any;
 }
 
@@ -11,16 +11,13 @@ export interface ModalBodyProps {
   onClickShortcut(e: any): void;
 }
 
-interface Props extends ModalBodyProps {
+interface Props {
+  balance: number;
   openModal: boolean;
-  isAllowCusdLoading: boolean;
-  doneAllowCusdLoading: boolean;
-  isDonateLoading: boolean;
+  isDonateLoading?: boolean;
   nonProfitName: string;
-  allowCusdError: string;
   onCloseModal(): void;
   onclickDonate(form: Form): void;
-  onClickAllowCusd(): void;
 }
 
 export default Props;
