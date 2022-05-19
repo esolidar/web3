@@ -1,9 +1,8 @@
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { dehydrate, QueryClient } from 'react-query';
-import Button from '@esolidar/toolkit/build/elements/button';
 import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
@@ -11,14 +10,11 @@ import useGetInstitutionList, {
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
-import DonationModal from '../../components/donationModal';
 
 // TODO: gas price
 // TODO: success / error das transactions
 
 const Home = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
   const intl = useIntl();
   const toMitch = '0x7335966f30FC589347793e3C2FE378549b8604B4';
 
@@ -58,20 +54,6 @@ const Home = () => {
     <div className="container">
       <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
-        <Button onClick={() => setOpenModal(true)} extraClass="primary-full" text="Donate" />
-
-        {/* Miguel:: aqui tens de passar o valor do balance correto */}
-        <DonationModal
-          openModal={openModal}
-          balance={12}
-          nonProfitName="Xpto"
-          onCloseModal={() => setOpenModal(false)}
-          onclickDonate={form =>
-            form.amount
-              ? donateWithCUSD(toMitch, `${form.amount}`)
-              : alert('please fill the amount to donate')
-          }
-        />
         <Link
           href={{
             pathname: '/institution/[id]',

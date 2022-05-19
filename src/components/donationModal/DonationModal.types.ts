@@ -4,20 +4,20 @@ export interface Form {
 }
 
 export interface ModalBodyProps {
-  balance: number;
+  balance: number | undefined;
   form: Form;
   shortcuts?: Array<string | number>;
+  isDonateLoading: boolean;
   onChangeForm(e: any): void;
   onClickShortcut(e: any): void;
 }
 
 interface Props {
-  balance: number;
+  balance: number | undefined;
   openModal: boolean;
-  isDonateLoading?: boolean;
   nonProfitName: string;
   onCloseModal(): void;
-  onclickDonate(form: Form): void;
+  onclickDonate(form: Form): Promise<any>;
 }
 
 export default Props;

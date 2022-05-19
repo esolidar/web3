@@ -1,7 +1,8 @@
-import { useState, useRef, Fragment, ChangeEvent } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useState, useRef, Fragment, ChangeEvent, useCallback } from 'react';
+import { FormattedMessage, useIntl, IntlShape } from 'react-intl';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from 'react-query';
+import { useContractKit } from '@celo-tools/use-contractkit';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
@@ -13,7 +14,6 @@ import Popover from '@esolidar/toolkit/build/elements/popover';
 import useDebounce from '@esolidar/toolkit/build/hooks/useDebounce';
 import useIntersectionObserverInfiniteScroll from '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
 import Loading from '@esolidar/toolkit/build/components/loading';
-import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import {
   useGetInstitutionListPrefetch,
   useGetInstitutionListInfinite,
@@ -21,6 +21,7 @@ import {
 import useGetSdg from '../../api/hooks/useGetSdg';
 import { Sdg } from '../../interfaces/sdg';
 import getRoute from '../../routes';
+import Modals from '../../components/donationModal/Modals';
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -34,13 +35,17 @@ let sdgOptions: SdgOption[] = [];
 let institutionList: any = [];
 
 const List = () => {
-  const intl = useIntl();
-  const router = useRouter();
-  const donateCeloCUSD = useDonateCeloCUSD();
+  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string | undefined>('');
   const [odsId, setOdsId] = useState<SdgOption[]>([]);
   const [total, setTotal] = useState<number>(0);
   const debouncedSearch = useDebounce(search, 500);
+
+  const intl: IntlShape = useIntl();
+  const { address, connect } = useContractKit();
+  const institutionWalletAddress = useRef('');
+  const nonProfitName = useRef('');
+  const router = useRouter();
 
   const { isLoading, isFetching, data, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
     useGetInstitutionListInfinite({
@@ -73,12 +78,22 @@ const List = () => {
     },
   });
 
-  const handleClickDonate = (institution: any) => {
-    const institutionWalletAddress = institution.celo_wallet.find(
-      (item: any) => item.default
-    ).wallet_address;
-    donateCeloCUSD(institutionWalletAddress, '1');
-  };
+  const handleClickDonate = useCallback(
+    (institution: any) => {
+      nonProfitName.current = institution.name;
+      institutionWalletAddress.current = institution.celo_wallet.find(
+        (item: any) => item.default
+      ).wallet_address;
+      if (address) {
+        setIsOpenDonationModal(true);
+      } else {
+        connect()
+          .then(() => setIsOpenDonationModal(true))
+          .catch((e: any) => console.log(e));
+      }
+    },
+    [isOpenDonationModal]
+  );
 
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
@@ -233,6 +248,12 @@ const List = () => {
           </p>
         </div>
       )}
+      <Modals
+        openModal={isOpenDonationModal}
+        setOpenModal={setIsOpenDonationModal}
+        walletAddress={institutionWalletAddress.current}
+        nonProfitName={nonProfitName.current}
+      />
     </div>
   );
 };
