@@ -91,16 +91,20 @@ const Hero = () => {
               />
             </p>
             <div className="header-action-buttons">
-              {!address && (
-                <Button
-                  extraClass="primary-full"
-                  text={intl.formatMessage({ id: 'web3.connect.wallet' })}
-                  size="lg"
-                  onClick={() => {
-                    connect().catch((e: any) => console.log(e));
-                  }}
-                />
-              )}
+              <Button
+                disabled={address}
+                extraClass="primary-full"
+                text={
+                  address
+                    ? intl.formatMessage({ id: 'web3.connected.wallet' })
+                    : intl.formatMessage({ id: 'web3.connect.wallet' })
+                }
+                size="lg"
+                onClick={() => {
+                  connect().catch((e: any) => console.log(e));
+                }}
+              />
+
               <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
                 {intl.formatMessage({ id: 'Discover  causes' })}
               </a>
