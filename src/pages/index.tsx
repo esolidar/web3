@@ -24,7 +24,7 @@ const DiscoverPage = ({ dehydratedState }: any) => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(getRoute.nonProfit.DETAIL(intl.locale, institution.id));
+    router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
   };
 
   return (
@@ -40,7 +40,7 @@ const DiscoverPage = ({ dehydratedState }: any) => {
                 extraClass="link"
                 fullWidth={false}
                 ghost={false}
-                href={getRoute.DISCOVER(intl.locale)}
+                href={getRoute.DISCOVER(String(router.locale))}
                 iconRight={<Icon name="ArrowRight" />}
                 isLoading={false}
                 size="md"
