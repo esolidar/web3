@@ -16,6 +16,7 @@ import useGetInstitutionDetail, {
 import useDonateCeloCUSD from '../../../hooks/useDonate/useDonate';
 import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
+import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
@@ -30,6 +31,7 @@ const InstitutionDetail = () => {
   // const intl = useIntl();
   const donateCeloCUSD = useDonateCeloCUSD();
   const toast = useToast();
+  const isSSR = useIsSSR();
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
 
@@ -85,7 +87,9 @@ const InstitutionDetail = () => {
             </div>
             <div className="nonprofit-detail__mission">
               <h3>Mission</h3>
-              <p>{formatTextWithParagraphs(institution.about?.[String(router.locale)])}</p>
+              {!isSSR && institution.about && (
+                <p>{formatTextWithParagraphs(institution.about[String(router.locale)])}</p>
+              )}
             </div>
           </div>
           <div className="nonprofit-detail__columns--right">
