@@ -1,12 +1,14 @@
+import { useIntl, FormattedMessage, IntlShape } from 'react-intl';
+import { useRouter } from 'next/router';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
-import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import getRoute from '../routes';
 import HomeIllustration from './HomeIllustration';
 
 const Hero = () => {
   const intl: IntlShape = useIntl();
+  const router = useRouter();
   const { address, connect } = useContractKit();
 
   return (
@@ -99,7 +101,7 @@ const Hero = () => {
                   }}
                 />
               )}
-              <a href={getRoute.DISCOVER(intl.locale)} className="btn-white">
+              <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
                 {intl.formatMessage({ id: 'Discover  causes' })}
               </a>
             </div>

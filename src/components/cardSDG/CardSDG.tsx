@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import Button from '@esolidar/toolkit/build/elements/button';
@@ -20,15 +21,15 @@ const odsPopoverLink: IOdsPopoverLink = {
 
 const CardSDG = ({ sdgList }: Props) => {
   const intl = useIntl();
+  const router = useRouter();
 
-  const formattedSDGs = getOdsList(sdgList, intl.locale, intl.formatMessage);
+  const formattedSDGs = getOdsList(sdgList, String(router.locale), intl.formatMessage);
 
   return (
     <div className="card-sdg">
       <h3 className="card-sdg__header">
         {intl.formatMessage({ id: 'toolkit.accelerator.appForm.form.sdgs' })}
         <Popover
-          className="projects-list__filters-popover-body"
           overlayTrigger={<Icon name="InfoBold" size="sm" />}
           size="md"
           popoverBodyChildren={
@@ -40,11 +41,12 @@ const CardSDG = ({ sdgList }: Props) => {
                 })}
               </p>
               <Button
-                className="popover-btn"
+                className="popover-btn m-0 p-0"
                 extraClass="link"
-                href={odsPopoverLink[intl.locale] || odsPopoverLink.en}
+                href={odsPopoverLink[String(router.locale)] || odsPopoverLink.en}
                 target="_blank"
                 text={intl.formatMessage({ id: 'toolkit.learn-more' })}
+                size="sm"
               />
             </div>
           }

@@ -32,18 +32,10 @@ interface Props extends AppProps {
 }
 
 const messages: IMessages = {
-  br: getLocaleTranslations(SUPPORTED_LOCALES.BR),
-  en: getLocaleTranslations(SUPPORTED_LOCALES.EN),
-  pt: getLocaleTranslations(SUPPORTED_LOCALES.PT),
+  br: getLocaleTranslations(SUPPORTED_LOCALES.BR.id),
+  en: getLocaleTranslations(SUPPORTED_LOCALES.EN.id),
+  pt: getLocaleTranslations(SUPPORTED_LOCALES.PT.id),
 };
-
-// const defaultRichTextElements = {
-//   br: <br />,
-//   b: (chunks: any) => <b>{chunks}</b>,
-//   p: (chunks: any) => <p>{chunks}</p>,
-//   i: (chunks: any) => <i>{chunks}</i>,
-//   strong: (chunks: any) => <strong>{chunks}</strong>,
-// };
 
 const App = ({ Component, pageProps, initialProps }: Props) => {
   const [queryClient] = useState(
@@ -86,15 +78,10 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
       }}
       network={contractkitNetwork}
     >
-      <IntlProvider
-        locale={locale}
-        messages={messages[locale] || messages.en}
-        // defaultRichTextElements={defaultRichTextElements}
-      >
+      <IntlProvider locale={locale} messages={messages[locale] || messages.en}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps?.dehydratedState}>
             <Layout>
-              {/* <ToastsContainer toasts={toasts} onToastFinished={onToastFinished} /> */}
               <ToastProvider>
                 <Component {...pageProps} />
               </ToastProvider>
