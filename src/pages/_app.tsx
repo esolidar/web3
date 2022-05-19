@@ -87,7 +87,7 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
       network={contractkitNetwork}
     >
       <IntlProvider
-        locale="pt"
+        locale={locale}
         messages={messages[locale] || messages.en}
         // defaultRichTextElements={defaultRichTextElements}
       >

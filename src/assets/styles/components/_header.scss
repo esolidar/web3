@@ -61,9 +61,19 @@
     &.home-page-header {
       @include animate();
       background-color: transparent;
+      // background: map-get($blue, 800);
+    }
+
+    &.home-page-header-buttons {
+      @include animate();
+
       .btn-esolidar {
         color: map-get($base, white);
         border: 1px solid rgba(255, 255, 255, 0.4);
+
+        &:hover {
+          background-color: transparent !important;
+        }
       }
 
       .header__menu-item {

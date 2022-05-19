@@ -12,6 +12,8 @@ import classnames from 'classnames';
 import useGetBalance from '../../hooks/useGetBalance/useGetBalance';
 import truncateAddress from '../../utils/truncateAddress';
 import getRoute from '../../routes';
+import LogoWhite from './LogoWhite';
+import Logo from './Logo';
 
 interface WalletProps {
   address: any;
@@ -22,7 +24,8 @@ interface WalletProps {
 }
 
 interface Props {
-  isHomepage: boolean;
+  isHeaderTransparent: boolean;
+  isBottonsTransparent: boolean;
 }
 
 const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => {
@@ -61,7 +64,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
   );
 };
 
-const Header = ({ isHomepage }: Props) => {
+const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
   const intl = useIntl();
   const { address, connect, destroy } = useContractKit();
   const { balance, getBalances } = useGetBalance();
@@ -80,14 +83,20 @@ const Header = ({ isHomepage }: Props) => {
     typeof window !== 'undefined' ? window.location.href.includes(path) : '';
 
   return (
-    <header className={classnames('header', { 'home-page-header': isHomepage })}>
+    <header
+      className={classnames(
+        'header',
+        { 'home-page-header': isHeaderTransparent },
+        { 'home-page-header-buttons': isBottonsTransparent }
+      )}
+    >
       <Link href={getRoute.HOME(intl.locale)}>
         <a className="home-logo">
-          <img
-            src="https://static.esolidar.com/frontend/logo/esolidar/logo.svg"
-            className="logo logo-web"
-            alt="esolidar"
-          />
+          <div className="logo logo-web">
+            {isHeaderTransparent && <LogoWhite />}
+            {!isHeaderTransparent && <Logo />}
+          </div>
+
           <img
             src="https://static.esolidar.com/frontend/logo/esolidar/logo-xsmall.svg"
             className="logo logo-mobile"
