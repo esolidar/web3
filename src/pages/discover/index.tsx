@@ -117,6 +117,11 @@ const List = () => {
               name: 'Search',
               show: true,
             }}
+            rightIcon={{
+              name: 'DeleteCircle',
+              onClick: () => setSearch(''),
+              show: true,
+            }}
           />
         </div>
         <div className="filter-field" style={{ width: '300px' }}>
