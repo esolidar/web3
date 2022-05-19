@@ -4,12 +4,14 @@ import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import getRoute from '../routes';
+import useIsSSR from '../hooks/useIsSSR/useIsSSR';
 import HomeIllustration from './HomeIllustration';
 
 const Hero = () => {
   const intl: IntlShape = useIntl();
   const router = useRouter();
   const { address, connect } = useContractKit();
+  const isSSR = useIsSSR();
 
   return (
     <div className="home-banner">
@@ -91,20 +93,21 @@ const Hero = () => {
               />
             </p>
             <div className="header-action-buttons">
-              <Button
-                disabled={address}
-                extraClass="primary-full"
-                text={
-                  address
-                    ? intl.formatMessage({ id: 'web3.connected.wallet' })
-                    : intl.formatMessage({ id: 'web3.connect.wallet' })
-                }
-                size="lg"
-                onClick={() => {
-                  connect().catch((e: any) => console.log(e));
-                }}
-              />
-
+              {!isSSR && (
+                <Button
+                  disabled={address}
+                  extraClass="primary-full"
+                  text={
+                    address
+                      ? intl.formatMessage({ id: 'web3.connected.wallet' })
+                      : intl.formatMessage({ id: 'web3.connect.wallet' })
+                  }
+                  size="lg"
+                  onClick={() => {
+                    connect().catch((e: any) => console.log(e));
+                  }}
+                />
+              )}
               <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
                 {intl.formatMessage({ id: 'Discover  causes' })}
               </a>
