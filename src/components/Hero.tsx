@@ -93,10 +93,15 @@ const Hero = () => {
               />
             </p>
             <div className="header-action-buttons">
-              {!isSSR && !address && (
+              {!isSSR && (
                 <Button
+                  disabled={address}
                   extraClass="primary-full"
-                  text={intl.formatMessage({ id: 'web3.connect.wallet' })}
+                  text={
+                    address
+                      ? intl.formatMessage({ id: 'web3.connected.wallet' })
+                      : intl.formatMessage({ id: 'web3.connect.wallet' })
+                  }
                   size="lg"
                   onClick={() => {
                     connect().catch((e: any) => console.log(e));
