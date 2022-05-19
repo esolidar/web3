@@ -3,28 +3,33 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import Dropdown from '@esolidar/toolkit/build/elements/dropdown';
 import Button from '@esolidar/toolkit/build/elements/button';
-
-interface Locale {
-  id: string;
-  name: string;
-}
-
-const locales: Locale[] = [
-  { id: 'pt', name: 'Português' },
-  { id: 'br', name: 'Português (BR)' },
-  { id: 'en', name: 'English' },
-];
+import { SUPPORTED_LOCALES } from '../../constants/locales';
 
 const Footer = () => {
   const router = useRouter();
   const intl = useIntl();
+  const {
+    query: { id },
+    pathname,
+  } = router;
 
   const handleChangeLang = (locale: string) => {
-    router.push(router.pathname, router.pathname, { locale });
+    const newRoute = `/${locale}${pathname}`;
+    router.push(
+      {
+        pathname: newRoute,
+        query: { id },
+      },
+      newRoute,
+      { locale }
+    );
   };
 
   const year: number = new Date().getFullYear();
-  const isInstitutionDetailPage: boolean = router.pathname === '/discover/[id]';
+  const isInstitutionDetailPage: boolean = pathname === '/discover/[id]';
+  const currentLocale = Object.values(SUPPORTED_LOCALES).find(
+    i => i.id === String(router.locale)
+  )?.name;
 
   return (
     <footer className={`footer-component ${isInstitutionDetailPage && 'footer-component__detail'}`}>
@@ -84,7 +89,7 @@ const Footer = () => {
                   isLoading={false}
                   onClick={() => {}}
                   size="sm"
-                  text={locales.find(i => i.id === router.locale)?.name}
+                  text={currentLocale}
                   theme="light"
                   type="button"
                   withLoading={false}
@@ -93,18 +98,18 @@ const Footer = () => {
               items={[
                 {
                   id: 0,
-                  onClick: () => handleChangeLang('pt'),
-                  text: 'Português',
+                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.PT.id),
+                  text: SUPPORTED_LOCALES.PT.name,
                 },
                 {
                   id: 0,
-                  onClick: () => handleChangeLang('br'),
-                  text: 'Português (BR)',
+                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.BR.id),
+                  text: SUPPORTED_LOCALES.BR.name,
                 },
                 {
                   id: 0,
-                  onClick: () => handleChangeLang('en'),
-                  text: 'English',
+                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.EN.id),
+                  text: SUPPORTED_LOCALES.EN.name,
                 },
               ]}
             />
