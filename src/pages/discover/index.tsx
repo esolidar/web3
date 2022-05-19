@@ -1,4 +1,4 @@
-import { useState, useRef, Fragment } from 'react';
+import { useState, useRef, Fragment, ChangeEvent } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient } from 'react-query';
@@ -10,6 +10,7 @@ import MultiSelectField from '@esolidar/toolkit/build/elements/multiSelectField'
 import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import Popover from '@esolidar/toolkit/build/elements/popover';
+import useDebounce from '@esolidar/toolkit/build/hooks/useDebounce';
 import useIntersectionObserverInfiniteScroll from '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
 import Loading from '@esolidar/toolkit/build/components/loading';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
@@ -39,10 +40,11 @@ const List = () => {
   const [search, setSearch] = useState<string | undefined>('');
   const [odsId, setOdsId] = useState<SdgOption[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const debouncedSearch = useDebounce(search, 500);
 
   const { isLoading, isFetching, data, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
     useGetInstitutionListInfinite({
-      search,
+      search: debouncedSearch,
       odsId,
       onSuccess: data => {
         setTotal(data.total);
@@ -82,6 +84,10 @@ const List = () => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
   };
 
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   const odsLink = (): string => {
     if (String(router.locale) === 'pt') return 'https://www.ods.pt/';
     if (String(router.locale) === 'br') return 'https://brasil.un.org/pt-br/';
@@ -109,7 +115,7 @@ const List = () => {
         <div className="filters__search">
           <TextField
             // size="md"
-            onChange={(e: any) => setSearch(e.target.value)}
+            onChange={handleSearch}
             value={search}
             placeholder="Search for nonprofits or causes..."
             field="term"
