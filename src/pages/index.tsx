@@ -1,27 +1,43 @@
+import { useRef, useState, useCallback } from 'react';
 import { FormattedMessage, useIntl, IntlShape } from 'react-intl';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useContractKit } from '@celo-tools/use-contractkit';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
 import Button from '@esolidar/toolkit/build/elements/button';
 import Hero from '../components/Hero';
 import { useGetInstitutionListPrefetch } from '../api/hooks/useGetInstitutionList';
-import useDonateCeloCUSD from '../hooks/useDonate/useDonate';
 import getRoute from '../routes';
+import Modals from '../components/donationModal/Modals';
 
 const DiscoverPage = ({ dehydratedState }: any) => {
+  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
   const { data } = dehydratedState?.queries?.[0].state.data.institutions || '';
   const router = useRouter();
-  const donateCeloCUSD = useDonateCeloCUSD();
   const intl: IntlShape = useIntl();
+  const { address, connect } = useContractKit();
 
-  const handleClickDonate = (institution: any) => {
-    const institutionWalletAddress = institution.celo_wallet.find(
-      (item: any) => item.default
-    ).wallet_address;
-    donateCeloCUSD(institutionWalletAddress, '1');
-  };
+  const institutionWalletAddress = useRef('');
+  const nonProfitName = useRef('');
+
+  const handleClickDonate = useCallback(
+    (institution: any) => {
+      nonProfitName.current = institution.name;
+      institutionWalletAddress.current = institution.celo_wallet.find(
+        (item: any) => item.default
+      ).wallet_address;
+      if (address) {
+        setIsOpenDonationModal(true);
+      } else {
+        connect()
+          .then(() => setIsOpenDonationModal(true))
+          .catch((e: any) => console.log(e));
+      }
+    },
+    [isOpenDonationModal]
+  );
 
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
@@ -121,6 +137,12 @@ const DiscoverPage = ({ dehydratedState }: any) => {
           </div>
         </div>
       </Viewport>
+      <Modals
+        openModal={isOpenDonationModal}
+        setOpenModal={setIsOpenDonationModal}
+        walletAddress={institutionWalletAddress.current}
+        nonProfitName={nonProfitName.current}
+      />
     </>
   );
 };
