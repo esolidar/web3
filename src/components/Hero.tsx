@@ -1,14 +1,17 @@
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage, IntlShape } from 'react-intl';
 import { useRouter } from 'next/router';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import getRoute from '../routes';
+import useIsSSR from '../hooks/useIsSSR/useIsSSR';
+import HomeIllustration from './HomeIllustration';
 
 const Hero = () => {
-  const intl = useIntl();
+  const intl: IntlShape = useIntl();
   const router = useRouter();
   const { address, connect } = useContractKit();
+  const isSSR = useIsSSR();
 
   return (
     <div className="home-banner">
@@ -73,29 +76,45 @@ const Hero = () => {
           </filter>
         </defs>
       </svg>
+
       <Viewport centred size="xl">
         <div className="content-banner">
-          <h1>
-            Maximize your impact <b>with crypto</b>
-          </h1>
-          <p>
-            We make the connection between donors and fundraisers more transparent, efficient and
-            rewarding
-          </p>
-          <div className="header-action-buttons">
-            {!address && (
-              <Button
-                extraClass="primary-full"
-                text={intl.formatMessage({ id: 'web3.connect.wallet' })}
-                size="lg"
-                onClick={() => {
-                  connect().catch((e: any) => console.log(e));
-                }}
+          <div>
+            <h1>
+              <FormattedMessage id="Maximize your impact " />
+              <b>
+                <FormattedMessage id="with crypto" />
+              </b>
+            </h1>
+            <p>
+              <FormattedMessage
+                id="We make the connection between donors and fundraisers more transparent, efficient and
+              rewarding"
               />
-            )}
-            <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
-              {intl.formatMessage({ id: 'Discover  causes' })}
-            </a>
+            </p>
+            <div className="header-action-buttons">
+              {!isSSR && (
+                <Button
+                  disabled={address}
+                  extraClass="primary-full"
+                  text={
+                    address
+                      ? intl.formatMessage({ id: 'web3.connected.wallet' })
+                      : intl.formatMessage({ id: 'web3.connect.wallet' })
+                  }
+                  size="lg"
+                  onClick={() => {
+                    connect().catch((e: any) => console.log(e));
+                  }}
+                />
+              )}
+              <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
+                {intl.formatMessage({ id: 'Discover  causes' })}
+              </a>
+            </div>
+          </div>
+          <div className="illustration">
+            <HomeIllustration />
           </div>
         </div>
       </Viewport>

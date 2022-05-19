@@ -13,12 +13,25 @@ interface Props {
 const Layout = ({ children }: Props) => {
   const router = useRouter();
   const [isHeaderTransparent, setIsHeaderTransparent] = useState<boolean>(router.pathname === '/');
+  const [isBottonsTransparent, setIsBottonsTransparent] = useState<boolean>(
+    router.pathname === '/'
+  );
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
       const scroll = window.scrollY;
-      if (scroll > 700) setIsHeaderTransparent(false);
-      else setIsHeaderTransparent(true);
+
+      if (scroll > 600) {
+        setIsBottonsTransparent(false);
+      } else {
+        setIsBottonsTransparent(true);
+      }
+
+      if (scroll > 700) {
+        setIsHeaderTransparent(false);
+      } else {
+        setIsHeaderTransparent(true);
+      }
     });
     return () => {
       document.removeEventListener('scroll', () => {});
@@ -45,7 +58,10 @@ const Layout = ({ children }: Props) => {
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Header isHomepage={router.pathname === '/' && isHeaderTransparent} />
+      <Header
+        isHeaderTransparent={router.pathname === '/' && isHeaderTransparent}
+        isBottonsTransparent={router.pathname === '/' && isBottonsTransparent}
+      />
       {router.pathname === '/' ? (
         <div>{children}</div>
       ) : (

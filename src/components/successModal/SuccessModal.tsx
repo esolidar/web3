@@ -6,6 +6,7 @@ import { IntlShape, useIntl } from 'react-intl';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
+import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
 
 const SuccessModal: FC<Props> = ({ transitionID, openModal, onCloseModal, shareProps }: Props) => {
@@ -16,7 +17,7 @@ const SuccessModal: FC<Props> = ({ transitionID, openModal, onCloseModal, shareP
       show={openModal}
       onHide={onCloseModal}
       size="md"
-      title={intl.formatMessage({ id: 'web3.thankYou' })}
+      title={intl.formatMessage({ id: 'web3.thankYou', defaultMessage: 'Thank you! 🎉' })}
       dialogClassName="successModal"
       backdrop="static"
       showFooter={false}
@@ -54,21 +55,34 @@ const ModalBody: FC<ModalBodyProps> = ({
   return (
     <div className="successModal__body">
       <div className="successModal__subtitle">
-        {intl.formatMessage({ id: 'web3.successModal.subtitle' })}
+        {intl.formatMessage({
+          id: 'web3.successModal.subtitle',
+          defaultMessage:
+            'You just gave more for less cost, making a real impact with your crypto. Thank you for supporting {NonprofitName} mission!',
+        })}
       </div>
       <div className="successModal__transition">
         <div className="successModal__transition-title">
-          {intl.formatMessage({ id: 'web3.successModal.transition' })}
+          {intl.formatMessage({
+            id: 'web3.successModal.transition',
+            defaultMessage: 'Blockchain transaction ID',
+          })}
         </div>
-        <div className="successModal__transition-id"> {transitionID}</div>
+        <div className="successModal__transition-id"> {truncateAddress(transitionID, 5)}</div>
       </div>
       <div className="successModal__separator" />
       <div className="successModal__share">
         <div className="successModal__share-title">
-          {intl.formatMessage({ id: 'web3.successModal.share.title' })}
+          {intl.formatMessage({
+            id: 'web3.successModal.share.title',
+            defaultMessage: 'Spread the word!',
+          })}
         </div>
         <span className="successModal__share-subtitle">
-          {intl.formatMessage({ id: 'web3.successModal.share.subtitle' })}
+          {intl.formatMessage({
+            id: 'web3.successModal.share.subtitle',
+            defaultMessage: 'Help this good cause by inviting your friends',
+          })}
         </span>
         <div className="successModal__share-icons">
           <ul>
@@ -124,7 +138,12 @@ const ModalBody: FC<ModalBodyProps> = ({
                     type="icon"
                     theme="light"
                   />
-                  <span>Copy link</span>
+                  <span>
+                    {intl.formatMessage({
+                      id: 'web3.successModal.copy.link',
+                      defaultMessage: 'Copy link',
+                    })}
+                  </span>
                 </a>
               </li>
             )}

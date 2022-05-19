@@ -14,10 +14,10 @@ const useDonateCeloCUSD = () => {
           gasPrice: kit.gasPrice,
         });
       });
-
       console.log('sendTransaction succeeded');
     } catch (e) {
       console.log((e as Error).message);
+      return e;
     } finally {
       console.log('finally');
     }

@@ -37,7 +37,6 @@
     &-icons {
       display: flex;
       margin-top: $distance-3;
-      margin-bottom: $distance-3;
 
       ul {
         padding: 0;
@@ -46,11 +45,7 @@
 
         li {
           list-style: none;
-          margin-bottom: $distance-2;
-
-          &:last-child {
-            margin-bottom: 0;
-          }
+          margin-bottom: $distance-4;
 
           a {
             cursor: pointer;

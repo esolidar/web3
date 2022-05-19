@@ -78,7 +78,7 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
       }}
       network={contractkitNetwork}
     >
-      <IntlProvider locale="pt" messages={messages[locale] || messages.en}>
+      <IntlProvider locale={locale} messages={messages[locale] || messages.en}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps?.dehydratedState}>
             <Layout>
