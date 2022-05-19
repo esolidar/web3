@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
@@ -16,23 +16,45 @@ const DEFAULT_FORM: Form = {
 const DonationModal: FC<Props> = ({
   openModal,
   balance,
-  isDonateLoading = false,
   nonProfitName,
   onCloseModal,
   onclickDonate,
 }: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
+  const [isDonateLoading, setIsDonateLoading] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
 
+  useEffect(() => {
+    if (balance === 0) {
+      const newForm: Form = { ...form };
+      newForm.errors = { amount: 'not enought balance or gas' };
+      setForm(newForm);
+    }
+  }, [balance]);
+
   const handleChangeForm = ({ value }: any) => {
-    let newValue: any = value + 0;
-    if (balance < value) {
+    let newValue: any = Number(value);
+    if (value === '') newValue = null;
+    if (balance && newValue >= balance) {
       newValue = balance;
     }
     const newForm: Form = { ...form };
-    newForm.amount = `${newValue}`;
+    newForm.amount = newValue;
     setForm(newForm);
+  };
+
+  const handleClickDonate = () => {
+    setIsDonateLoading(true);
+    onclickDonate(form)
+      .then(success => {
+        if (success) {
+          handleChangeForm({ value: null });
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   return (
@@ -59,10 +81,10 @@ const DonationModal: FC<Props> = ({
           })}
           size="md"
           text={intl.formatMessage({ id: 'web3.donate' })}
-          onClick={() => onclickDonate(form)}
+          onClick={handleClickDonate}
           withLoading
           isLoading={isDonateLoading}
-          disabled={!form.amount}
+          disabled={!form.amount || form.amount === 0}
           fullWidth
         />
       }
@@ -105,7 +127,7 @@ const ModalBody: FC<ModalBodyProps> = ({
           decimalScale={2}
           placeholder="0.00 cUSD"
           value={amount}
-          onChange={() => onChangeForm}
+          onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount || errors?.balance}
           dataTestId="amount"
         />
