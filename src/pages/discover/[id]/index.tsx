@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 // import { useIntl } from 'react-intl';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useContractKit } from '@celo-tools/use-contractkit';
 import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
@@ -13,9 +14,10 @@ import DonateFooter from '../../../components/donateFooter/DonateFooter';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
 } from '../../../api/hooks/useGetInstitutionDetail';
-import useDonateCeloCUSD from '../../../hooks/useDonate/useDonate';
 import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
+import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
+import Modals from '../../../components/donationModal/Modals';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
@@ -27,18 +29,30 @@ const InstitutionDetail = () => {
     query: { id },
     push,
   } = router;
-  // const intl = useIntl();
-  const donateCeloCUSD = useDonateCeloCUSD();
   const toast = useToast();
+  const isSSR = useIsSSR();
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
+  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
 
+  const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
-  console.log(institution);
+  const nonProfitName = useRef('');
+  nonProfitName.current = institution.name;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
   ).wallet_address;
+
+  const handleClickDonate = useCallback(() => {
+    if (address) {
+      setIsOpenDonationModal(true);
+    } else {
+      connect()
+        .then(() => setIsOpenDonationModal(true))
+        .catch((e: any) => console.log(e));
+    }
+  }, [isOpenDonationModal]);
 
   return (
     <>
@@ -85,14 +99,16 @@ const InstitutionDetail = () => {
             </div>
             <div className="nonprofit-detail__mission">
               <h3>Mission</h3>
-              <p>{formatTextWithParagraphs(institution.about?.[String(router.locale)])}</p>
+              {!isSSR && institution.about && (
+                <p>{formatTextWithParagraphs(institution.about[String(router.locale)])}</p>
+              )}
             </div>
           </div>
           <div className="nonprofit-detail__columns--right">
             <CardContribute
               name={institution.name}
               address={institutionWalletAddress}
-              onClickDonate={() => donateCeloCUSD(institutionWalletAddress, '1')}
+              onClickDonate={handleClickDonate}
               onClickShare={() => setIsOpenShareModal(true)}
             />
             <CardSDG sdgList={institution.ods} />
@@ -107,8 +123,14 @@ const InstitutionDetail = () => {
         onClickCopyToClipboard={() => toast.success('Successfully copied URL')}
       />
       <DonateFooter
-        onClickDonate={() => donateCeloCUSD(institutionWalletAddress, '1')}
+        onClickDonate={handleClickDonate}
         onClickShare={() => setIsOpenShareModal(true)}
+      />
+      <Modals
+        openModal={isOpenDonationModal}
+        setOpenModal={setIsOpenDonationModal}
+        walletAddress={institutionWalletAddress}
+        nonProfitName={nonProfitName.current}
       />
     </>
   );

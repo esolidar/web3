@@ -26,6 +26,11 @@ const DonationModal: FC<Props> = ({
   const intl: IntlShape = useIntl();
 
   useEffect(() => {
+    setIsDonateLoading(false);
+    handleChangeForm({ value: null });
+  }, [openModal]);
+
+  useEffect(() => {
     if (balance === 0) {
       const newForm: Form = { ...form };
       newForm.errors = { amount: 'not enought balance or gas' };
@@ -46,16 +51,12 @@ const DonationModal: FC<Props> = ({
 
   const handleClickDonate = () => {
     setIsDonateLoading(true);
-    onclickDonate(form)
-      .then(success => {
-        if (success) {
-          setIsDonateLoading(false);
-          handleChangeForm({ value: null });
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    onclickDonate(form).then((value: any) => {
+      if (value) {
+        setIsDonateLoading(false);
+        handleChangeForm({ value: null });
+      }
+    });
   };
 
   return (
@@ -72,6 +73,7 @@ const DonationModal: FC<Props> = ({
           form={form}
           onChangeForm={handleChangeForm}
           onClickShortcut={handleChangeForm}
+          isDonateLoading={isDonateLoading}
         />
       }
       actionsChildren={
@@ -101,6 +103,7 @@ const ModalBody: FC<ModalBodyProps> = ({
   shortcuts = [25, 50, 150, 500],
   onChangeForm,
   onClickShortcut,
+  isDonateLoading,
 }: ModalBodyProps) => {
   const intl: IntlShape = useIntl();
 
@@ -131,9 +134,8 @@ const ModalBody: FC<ModalBodyProps> = ({
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount || errors?.balance}
           dataTestId="amount"
-          TextfieldNumberProps={{
-            min: 0,
-          }}
+          allowNegative={false}
+          disabled={isDonateLoading}
         />
       </div>
       <div className="donationModal__shortcuts">
@@ -151,6 +153,7 @@ const ModalBody: FC<ModalBodyProps> = ({
               ghost
               theme="light"
               key={val}
+              disabled={isDonateLoading}
             />
           ))}
         </div>

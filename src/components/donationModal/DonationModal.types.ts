@@ -7,6 +7,7 @@ export interface ModalBodyProps {
   balance: number | undefined;
   form: Form;
   shortcuts?: Array<string | number>;
+  isDonateLoading: boolean;
   onChangeForm(e: any): void;
   onClickShortcut(e: any): void;
 }
