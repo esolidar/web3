@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
@@ -9,6 +9,7 @@ import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
 import ShareModal from '@esolidar/toolkit/build/components/shareModal';
 import CardContribute from '../../../components/cardContribute/CardContribute';
 import CardSDG from '../../../components/cardSDG/CardSDG';
+import DonateFooter from '../../../components/donateFooter/DonateFooter';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
 } from '../../../api/hooks/useGetInstitutionDetail';
@@ -16,12 +17,17 @@ import useDonateCeloCUSD from '../../../hooks/useDonate/useDonate';
 import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
 
+const formatTextWithParagraphs = (value: string) =>
+  // eslint-disable-next-line react/no-array-index-key
+  value?.split('\n').map((item, index) => <p key={index}>{item}</p>);
+
 const InstitutionDetail = () => {
+  const router = useRouter();
   const {
     query: { id },
     push,
-  } = useRouter();
-  const intl = useIntl();
+  } = router;
+  // const intl = useIntl();
   const donateCeloCUSD = useDonateCeloCUSD();
   const toast = useToast();
 
@@ -40,11 +46,11 @@ const InstitutionDetail = () => {
         <Breadcrumbs
           breadcrumbs={[
             {
-              handleClick: () => push(getRoute.HOME(intl.locale)),
+              handleClick: () => push(getRoute.HOME(String(router.locale))),
               title: 'Home',
             },
             {
-              handleClick: () => push(getRoute.DISCOVER(intl.locale)),
+              handleClick: () => push(getRoute.DISCOVER(String(router.locale))),
               title: 'Discover',
             },
             {
@@ -79,21 +85,7 @@ const InstitutionDetail = () => {
             </div>
             <div className="nonprofit-detail__mission">
               <h3>Mission</h3>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer
-                took a galley of type and scrambled it to make a type specimen. Lorem Ipsum is
-                simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen. Lorem Ipsum is simply dummy text of
-                the printing and typesetting industry. Lorem Ipsum has been the standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                to make a type specimen. Lorem Ipsum is simply dummy text of the printing and
-                typesetting industry. Lorem Ipsum has been the standard dummy text ever since the
-                1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                specimen. What the charity does? Why they do it? How they do it? How the money is
-                spent? What they are working on? Real stories as examples of success.
-              </p>
+              <p>{formatTextWithParagraphs(institution.about?.[String(router.locale)])}</p>
             </div>
           </div>
           <div className="nonprofit-detail__columns--right">
@@ -113,6 +105,10 @@ const InstitutionDetail = () => {
         windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
         onCloseModal={() => setIsOpenShareModal(false)}
         onClickCopyToClipboard={() => toast.success('Successfully copied URL')}
+      />
+      <DonateFooter
+        onClickDonate={() => donateCeloCUSD(institutionWalletAddress, '1')}
+        onClickShare={() => setIsOpenShareModal(true)}
       />
     </>
   );

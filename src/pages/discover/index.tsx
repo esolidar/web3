@@ -79,12 +79,12 @@ const List = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(getRoute.nonProfit.DETAIL(intl.locale, institution.id));
+    router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
   };
 
   const odsLink = (): string => {
-    if (router.locale === 'pt') return 'https://www.ods.pt/';
-    if (router.locale === 'br') return 'https://brasil.un.org/pt-br/';
+    if (String(router.locale) === 'pt') return 'https://www.ods.pt/';
+    if (String(router.locale) === 'br') return 'https://brasil.un.org/pt-br/';
     return 'https://sdgs.un.org/goals';
   };
 
@@ -93,7 +93,7 @@ const List = () => {
       <Breadcrumbs
         breadcrumbs={[
           {
-            handleClick: () => router.push(getRoute.HOME(intl.locale)),
+            handleClick: () => router.push(getRoute.HOME(String(router.locale))),
             title: 'Home',
           },
           {
@@ -108,7 +108,7 @@ const List = () => {
       <div className="filters">
         <div className="filters__search">
           <TextField
-            size="md"
+            // size="md"
             onChange={(e: any) => setSearch(e.target.value)}
             value={search}
             placeholder="Search for nonprofits or causes..."
@@ -124,7 +124,7 @@ const List = () => {
             }}
           />
         </div>
-        <div className="filter-field" style={{ width: '300px' }}>
+        <div className="filters__field">
           <MultiSelectField
             name="sdg"
             onChange={(e: any) => setOdsId(e)}
@@ -150,11 +150,12 @@ const List = () => {
                         <FormattedMessage id="sdg.description.text" />
                       </p>
                       <Button
-                        className="popover-btn"
+                        className="popover-btn m-0 p-0"
                         extraClass="link"
                         href={odsLink()}
                         target="_blank"
                         text={intl.formatMessage({ id: 'learn.more' })}
+                        size="sm"
                       />
                     </div>
                   }

@@ -6,6 +6,11 @@
 
   &__header {
     margin-top: 0;
+
+    & .popover-component-trigger {
+      vertical-align: text-top;
+      margin-left: $distance-1;
+    }
   }
 
   &__header-description {
