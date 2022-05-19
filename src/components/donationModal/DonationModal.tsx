@@ -34,9 +34,9 @@ const DonationModal: FC<Props> = ({
   }, [balance]);
 
   const handleChangeForm = ({ value }: any) => {
-    let newValue: any = Number(value);
+    let newValue: any = +value;
     if (value === '') newValue = null;
-    if (balance && newValue >= balance) {
+    if (balance && newValue >= +balance) {
       newValue = balance;
     }
     const newForm: Form = { ...form };
@@ -49,6 +49,7 @@ const DonationModal: FC<Props> = ({
     onclickDonate(form)
       .then(success => {
         if (success) {
+          setIsDonateLoading(false);
           handleChangeForm({ value: null });
         }
       })
@@ -130,6 +131,9 @@ const ModalBody: FC<ModalBodyProps> = ({
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount || errors?.balance}
           dataTestId="amount"
+          TextfieldNumberProps={{
+            min: 0,
+          }}
         />
       </div>
       <div className="donationModal__shortcuts">

@@ -45,6 +45,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
           ]}
           dropdownText={truncateAddress(address, 5)}
           labelText={`${balance} cUSD`}
+          // fullWidth
         />
       ) : (
         <Button
@@ -62,7 +63,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
 };
 
 const Header = ({ isHomepage }: Props) => {
-  const intl = useIntl();
+  const router = useRouter();
   const { address, connect, destroy } = useContractKit();
   const { balance, getBalances } = useGetBalance();
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
@@ -81,7 +82,7 @@ const Header = ({ isHomepage }: Props) => {
 
   return (
     <header className={classnames('header', { 'home-page-header': isHomepage })}>
-      <Link href={getRoute.HOME(intl.locale)}>
+      <Link href={getRoute.HOME(String(router.locale))}>
         <a className="home-logo">
           <img
             src="https://static.esolidar.com/frontend/logo/esolidar/logo.svg"
@@ -98,7 +99,7 @@ const Header = ({ isHomepage }: Props) => {
 
       <nav className="header__menu">
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
-          <Link href={getRoute.DISCOVER(intl.locale)}>
+          <Link href={getRoute.DISCOVER(String(router.locale))}>
             <a>
               <FormattedMessage id="web3.institution.list.title" />
             </a>
@@ -148,7 +149,7 @@ const Header = ({ isHomepage }: Props) => {
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}
             >
-              <Link href={getRoute.DISCOVER(intl.locale)}>
+              <Link href={getRoute.DISCOVER(String(router.locale))}>
                 <a>
                   <FormattedMessage id="web3.institution.list.title" />
                 </a>

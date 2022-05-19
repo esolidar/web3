@@ -1240,10 +1240,10 @@
   dependencies:
     readline-sync "^1.4.10"
 
-"@esolidar/toolkit@^4.134.3":
-  version "4.134.3"
-  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.134.3/d4e220b8fc6e611b6b647215bcc451822d7c3086d479590aa5acb242816c69fb#f8224fa5bb1721aac53358f94249ae06f053b74e"
-  integrity sha512-c3PnoG6R1dMnkiRz3UNVE5e31tiAhbu6ku4WhDKtGKWPK7/C1eUJw7M75YRZ9gHqGy8K/SIvpdqzNnLEgyqGww==
+"@esolidar/toolkit@^4.134.5":
+  version "4.134.5"
+  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.134.5/77a1beaf6ebb4583c2d414b4b1d47c5ebd8408b7bce7bf366a88075658341361#a98463fc4314379caebaecb2cf0f8c1315b81684"
+  integrity sha512-Q9m8A6emoJ5/mUKO4DK5/9pjqJjwX/pGiqoSAvO8HWPjz5ZJepZPJEdL/0c4ynTLnIwqvafFYOHczzmaaCPvSg==
   dependencies:
     "@rollup/plugin-typescript" "^8.3.0"
     react-loading-skeleton "^3.0.3"
