@@ -29,9 +29,12 @@ const useGetInstitutionList = ({ search, odsId = [], onSuccess }: Args) =>
     }
   );
 
-export const useGetInstitutionListPrefetch = async (queryClient: QueryClient) => {
+export const useGetInstitutionListPrefetch = async (queryClient: QueryClient, perPage = 6) => {
   await queryClient.prefetchQuery(queryKey, async () => {
-    const params: string = queryString.stringify({ has_celo_wallet: Number(true) });
+    const params: string = queryString.stringify({
+      has_celo_wallet: Number(true),
+      per_page: perPage,
+    });
     const { data: response } = await axios.get(url(params));
     return response.data;
   });
