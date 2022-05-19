@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+// import { useIntl } from 'react-intl';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
@@ -22,11 +22,12 @@ const formatTextWithParagraphs = (value: string) =>
   value?.split('\n').map((item, index) => <p key={index}>{item}</p>);
 
 const InstitutionDetail = () => {
+  const router = useRouter();
   const {
     query: { id },
     push,
-  } = useRouter();
-  const intl = useIntl();
+  } = router;
+  // const intl = useIntl();
   const donateCeloCUSD = useDonateCeloCUSD();
   const toast = useToast();
 
@@ -45,11 +46,11 @@ const InstitutionDetail = () => {
         <Breadcrumbs
           breadcrumbs={[
             {
-              handleClick: () => push(getRoute.HOME(intl.locale)),
+              handleClick: () => push(getRoute.HOME(String(router.locale))),
               title: 'Home',
             },
             {
-              handleClick: () => push(getRoute.DISCOVER(intl.locale)),
+              handleClick: () => push(getRoute.DISCOVER(String(router.locale))),
               title: 'Discover',
             },
             {
@@ -84,7 +85,7 @@ const InstitutionDetail = () => {
             </div>
             <div className="nonprofit-detail__mission">
               <h3>Mission</h3>
-              <p>{formatTextWithParagraphs(institution.about?.[intl.locale])}</p>
+              <p>{formatTextWithParagraphs(institution.about?.[String(router.locale)])}</p>
             </div>
           </div>
           <div className="nonprofit-detail__columns--right">

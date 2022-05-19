@@ -79,12 +79,12 @@ const List = () => {
   };
 
   const handleClickThumb = (institution: any) => {
-    router.push(getRoute.nonProfit.DETAIL(intl.locale, institution.id));
+    router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
   };
 
   const odsLink = (): string => {
-    if (router.locale === 'pt') return 'https://www.ods.pt/';
-    if (router.locale === 'br') return 'https://brasil.un.org/pt-br/';
+    if (String(router.locale) === 'pt') return 'https://www.ods.pt/';
+    if (String(router.locale) === 'br') return 'https://brasil.un.org/pt-br/';
     return 'https://sdgs.un.org/goals';
   };
 
@@ -93,7 +93,7 @@ const List = () => {
       <Breadcrumbs
         breadcrumbs={[
           {
-            handleClick: () => router.push(getRoute.HOME(intl.locale)),
+            handleClick: () => router.push(getRoute.HOME(String(router.locale))),
             title: 'Home',
           },
           {
