@@ -86,7 +86,7 @@ const InstitutionDetail = () => {
             />
             <div className="nonprofit-detail__balance">
               <ProfileAvatar
-                buttonText={institution.link || ''}
+                buttonText={institution.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
                 buttonUrl={institution.link}
                 isNameBold
                 name={institution.name}
