@@ -1233,10 +1233,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@esolidar/i18n@^0.326.0":
-  version "0.326.0"
-  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.326.0/3ef5058e9ca92bbde38f441de640405824b82966d81cab6f92fc633c626bb96e#0f9caa82b8bba17d5769eb0806d87edffd82e48e"
-  integrity sha512-QSBC+Qu4RhkW0EHU/8Tzb45CcHsOJr6Q91wve1Mmm+y7/iK3JjWJzlfFumj77f0RrU9uchXUJ2fCGxm2PgXVBw==
+"@esolidar/i18n@^0.327.0":
+  version "0.327.0"
+  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.327.0/97fca349bf7b97095e2e9e16c72d4059a3866ae1c17023e8e24cda5193053c92#d335300519b80b64155f5b05888b96aa76b97b79"
+  integrity sha512-Z0pGZ1SIkPV426tuZvXloHRk2KH4bmxsUJaKdQ+gd2DbqL3xHlM9WlS5QuCIJaPvZW6hoPsdbFCfNqdaRWlhQQ==
   dependencies:
     readline-sync "^1.4.10"
 

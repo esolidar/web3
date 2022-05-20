@@ -135,7 +135,7 @@ const ModalBody: FC<ModalBodyProps> = ({
           suffix=" cUSD"
           thousandSeparator
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
-          decimalScale={2}
+          decimalScale={4}
           placeholder="0.00 cUSD"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
