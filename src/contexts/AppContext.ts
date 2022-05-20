@@ -13,7 +13,7 @@ const defaultValue: AppContext = {
   list: [],
   add: () => null,
   remove: () => null,
-  balance: null,
+  balance: undefined,
   changeBalance: () => null,
 };
 
