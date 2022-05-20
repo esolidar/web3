@@ -42,7 +42,7 @@ A dedicated Dapp on top of Celo where any nonprofit, susteinable project or caus
 
 This project is licensed under the terms of the **MIT** license.
 
-## Security Vulnerabilities
+### Security Vulnerabilities
 
 If you discover a security vulnerability within esolidar web3 repository, please create an issue on this repo. All security vulnerabilities will be promptly addressed.
 
