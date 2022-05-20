@@ -7,9 +7,9 @@ jobs:
     name: install app
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v2
         with:
           always-auth: true
           node-version: 12
@@ -21,7 +21,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v2
         id: cache-build
         with:
           path: ./*
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v3
+      - uses: actions/cache@v2
         id: restore-build
         with:
           node-version: 12
