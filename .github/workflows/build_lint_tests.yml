@@ -7,12 +7,12 @@ jobs:
     name: install app
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           always-auth: true
-          node-version: 12
+          node-version: '12.x'
           registry-url: https://npm.pkg.github.com
           scope: '@esolidar'
 
@@ -21,7 +21,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-build
         with:
           path: ./*
@@ -32,10 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: restore-build
         with:
-          node-version: 12
+          node-version: '12.x'
           path: ./*
           key: ${{ github.sha }}
       - run: yarn test:lint
