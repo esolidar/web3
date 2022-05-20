@@ -51,6 +51,7 @@ const Modals = ({ openModal = false, setOpenModal, walletAddress, nonProfitName 
       />
       <ThankYouModal
         transitionID={walletAddress}
+        nonProfitName={nonProfitName}
         openModal={isOpenSuccess}
         onCloseModal={() => setIsOpenSuccess(false)}
         shareProps={{ title: 'teste', windowLocationHref: 'loree' }}
