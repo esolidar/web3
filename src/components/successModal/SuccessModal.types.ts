@@ -11,10 +11,12 @@ interface shareProps {
 
 export interface ModalBodyProps extends shareProps {
   transitionID: string;
+  nonProfitName: string;
 }
 
 interface Props {
   transitionID: string;
+  nonProfitName: string;
   shareProps: shareProps;
   openModal: boolean;
   onCloseModal(): void;

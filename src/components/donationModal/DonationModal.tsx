@@ -31,9 +31,9 @@ const DonationModal: FC<Props> = ({
   }, [openModal]);
 
   useEffect(() => {
-    if (balance === 0) {
+    if (balance && +balance === 0.0) {
       const newForm: Form = { ...form };
-      newForm.errors = { amount: 'not enought balance or gas' };
+      newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
       setForm(newForm);
     }
   }, [balance]);
@@ -135,8 +135,8 @@ const ModalBody: FC<ModalBodyProps> = ({
           suffix=" cUSD"
           thousandSeparator
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
-          decimalScale={2}
-          placeholder="0.00 cUSD"
+          decimalScale={4}
+          placeholder="0.0000 cUSD"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount || errors?.balance}

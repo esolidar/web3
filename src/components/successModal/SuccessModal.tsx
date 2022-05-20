@@ -10,7 +10,13 @@ import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
 import openCeloAddress from '../../utils/openCeloAddress';
 
-const SuccessModal: FC<Props> = ({ transitionID, openModal, onCloseModal, shareProps }: Props) => {
+const SuccessModal: FC<Props> = ({
+  transitionID,
+  nonProfitName,
+  openModal,
+  onCloseModal,
+  shareProps,
+}: Props) => {
   const intl: IntlShape = useIntl();
 
   return (
@@ -22,7 +28,9 @@ const SuccessModal: FC<Props> = ({ transitionID, openModal, onCloseModal, shareP
       dialogClassName="successModal"
       backdrop="static"
       showFooter={false}
-      bodyChildren={<ModalBody {...shareProps} transitionID={transitionID} />}
+      bodyChildren={
+        <ModalBody {...shareProps} transitionID={transitionID} nonProfitName={nonProfitName} />
+      }
     />
   );
 };
@@ -31,6 +39,7 @@ export default SuccessModal;
 
 const ModalBody: FC<ModalBodyProps> = ({
   transitionID,
+  nonProfitName,
   title = '',
   showFacebook = true,
   showTwitter = true,
@@ -58,17 +67,17 @@ const ModalBody: FC<ModalBodyProps> = ({
   return (
     <div className="successModal__body">
       <div className="successModal__subtitle">
-        {intl.formatMessage({
-          id: 'web3.successModal.subtitle',
-          defaultMessage:
-            'You just gave more for less cost, making a real impact with your crypto. Thank you for supporting {NonprofitName} mission!',
-        })}
+        {intl.formatMessage(
+          {
+            id: 'web3.successModal.subtitle',
+          },
+          { nonProfitName }
+        )}
       </div>
       <div className="successModal__transition">
         <div className="successModal__transition-title">
           {intl.formatMessage({
             id: 'web3.successModal.transition',
-            defaultMessage: 'Blockchain transaction ID',
           })}
         </div>
         <div className="successModal__transition-id">
@@ -93,13 +102,11 @@ const ModalBody: FC<ModalBodyProps> = ({
         <div className="successModal__share-title">
           {intl.formatMessage({
             id: 'web3.successModal.share.title',
-            defaultMessage: 'Spread the word!',
           })}
         </div>
         <span className="successModal__share-subtitle">
           {intl.formatMessage({
             id: 'web3.successModal.share.subtitle',
-            defaultMessage: 'Help this good cause by inviting your friends',
           })}
         </span>
         <div className="successModal__share-icons">
@@ -159,7 +166,6 @@ const ModalBody: FC<ModalBodyProps> = ({
                   <span>
                     {intl.formatMessage({
                       id: 'web3.successModal.copy.link',
-                      defaultMessage: 'Copy link',
                     })}
                   </span>
                 </a>
@@ -233,7 +239,6 @@ const ModalBody: FC<ModalBodyProps> = ({
         size="md"
         title={intl.formatMessage({
           id: 'web3.successModal.blockchain.title',
-          defaultMessage: 'Blockchain transaction ID',
         })}
         dialogClassName="sdg-description"
         backdrop="static"
@@ -243,8 +248,6 @@ const ModalBody: FC<ModalBodyProps> = ({
             <p>
               {intl.formatMessage({
                 id: 'web3.successModal.blockchain.text',
-                defaultMessage:
-                  'A txid or Transaction ID is a string of letters and numbersthat identifies a specific transaction on the blockchain. As the name suggests, it literally “confirms” that the funds have been sent to the correct address and not to anyone else.',
               })}
             </p>
             <Button
@@ -252,8 +255,6 @@ const ModalBody: FC<ModalBodyProps> = ({
               extraClass="link"
               href={intl.formatMessage({
                 id: 'web3.successModal.blockchain.learn.more.url',
-                defaultMessage:
-                  'https://www.cryptonary.com/cryptoschool/how-to-check-transactions-on-the-blockchain/',
               })}
               target="_blank"
               text={intl.formatMessage({ id: 'learn.more' })}
