@@ -1,16 +1,20 @@
 import { createContext } from 'react';
 import Alert from '../interfaces/alert';
 
-interface ToastContext {
+interface AppContext {
   list: Alert[];
   add(alert: Alert): void;
   remove(id: number): void;
+  balance: number | null | undefined;
+  changeBalance(value: number): void;
 }
 
-const defaultValue: ToastContext = {
+const defaultValue: AppContext = {
   list: [],
   add: () => null,
   remove: () => null,
+  balance: null,
+  changeBalance: () => null,
 };
 
 export default createContext(defaultValue);

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@esolidar/toolkit/build/elements/button';
@@ -14,6 +14,7 @@ import truncateAddress from '../../utils/truncateAddress';
 import getRoute from '../../routes';
 import LogoWhite from './LogoWhite';
 import Logo from './Logo';
+import AppContext from '../../contexts/AppContext';
 
 interface WalletProps {
   address: any;
@@ -68,9 +69,12 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
 const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
   const router = useRouter();
   const { address, connect, destroy } = useContractKit();
-  const { balance, getBalances } = useGetBalance();
+  const { getBalances } = useGetBalance();
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
   const dynamicRoute = useRouter().asPath;
+
+  const context = useContext(AppContext);
+  const { balance } = context;
 
   useEffect(() => {
     setIsNavVisible(false);
@@ -105,7 +109,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
           />
         </a>
       </Link>
-
       <nav className="header__menu">
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
           <Link href={getRoute.DISCOVER(String(router.locale))}>

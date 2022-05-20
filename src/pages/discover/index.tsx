@@ -138,11 +138,15 @@ const List = () => {
               name: 'Search',
               show: true,
             }}
-            rightIcon={{
-              name: 'DeleteCircle',
-              onClick: () => setSearch(''),
-              show: true,
-            }}
+            rightIcon={
+              search
+                ? {
+                    name: 'DeleteCircle',
+                    onClick: () => setSearch(''),
+                    show: true,
+                  }
+                : null
+            }
           />
         </div>
         <div className="filters__field">
@@ -157,7 +161,7 @@ const List = () => {
             options={sdgOptions}
             labelHeader={
               <span className="projects-list__filters-popover">
-                <FormattedMessage id="sdg.description.1" />
+                <FormattedMessage id="sdg.description.1" />{' '}
                 <Popover
                   className="projects-list__filters-popover-body"
                   overlayTrigger={<Icon name="InfoBold" size="sm" />}
