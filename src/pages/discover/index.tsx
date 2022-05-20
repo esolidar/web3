@@ -10,9 +10,9 @@ import TextField from '@esolidar/toolkit/build/elements/textField';
 import MultiSelectField from '@esolidar/toolkit/build/elements/multiSelectField';
 import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
-import Popover from '@esolidar/toolkit/build/elements/popover';
 import useDebounce from '@esolidar/toolkit/build/hooks/useDebounce';
 import useIntersectionObserverInfiniteScroll from '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
+import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Loading from '@esolidar/toolkit/build/components/loading';
 import {
   useGetInstitutionListPrefetch,
@@ -39,6 +39,7 @@ const List = () => {
   const [search, setSearch] = useState<string | undefined>('');
   const [odsId, setOdsId] = useState<SdgOption[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const debouncedSearch = useDebounce(search, 500);
 
   const intl: IntlShape = useIntl();
@@ -160,30 +161,14 @@ const List = () => {
             value=""
             options={sdgOptions}
             labelHeader={
-              <span className="projects-list__filters-popover">
-                <FormattedMessage id="sdg.description.1" />{' '}
-                <Popover
-                  className="projects-list__filters-popover-body"
-                  overlayTrigger={<Icon name="InfoBold" size="sm" />}
-                  size="md"
-                  popoverBodyChildren={
-                    <div>
-                      <h3>
-                        <FormattedMessage id="sdg.description" />
-                      </h3>
-                      <p>
-                        <FormattedMessage id="sdg.description.text" />
-                      </p>
-                      <Button
-                        className="popover-btn m-0 p-0"
-                        extraClass="link"
-                        href={odsLink()}
-                        target="_blank"
-                        text={intl.formatMessage({ id: 'learn.more' })}
-                        size="sm"
-                      />
-                    </div>
-                  }
+              <span className="sdg-description-title">
+                <FormattedMessage id="sdg.description.1" />
+                <Icon
+                  name="InfoBold"
+                  size="sm"
+                  onClick={() => {
+                    setOpenModal(true);
+                  }}
                 />
               </span>
             }
@@ -257,6 +242,30 @@ const List = () => {
         setOpenModal={setIsOpenDonationModal}
         walletAddress={institutionWalletAddress.current}
         nonProfitName={nonProfitName.current}
+      />
+      <CustomModal
+        show={openModal}
+        onHide={() => setOpenModal(false)}
+        size="md"
+        title={intl.formatMessage({ id: 'sdg.description' })}
+        dialogClassName="sdg-description"
+        backdrop="static"
+        showFooter={false}
+        bodyChildren={
+          <>
+            <p>
+              <FormattedMessage id="sdg.description.text" />
+            </p>
+            <Button
+              className="popover-btn m-0 p-0"
+              extraClass="link"
+              href={odsLink()}
+              target="_blank"
+              text={intl.formatMessage({ id: 'learn.more' })}
+              size="sm"
+            />
+          </>
+        }
       />
     </div>
   );

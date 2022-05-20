@@ -55,13 +55,15 @@ const DonationModal: FC<Props> = ({
   };
 
   const handleClickDonate = () => {
-    setIsDonateLoading(true);
-    onclickDonate(form).then((value: any) => {
-      if (value) {
-        setIsDonateLoading(false);
-        handleChangeForm({ value: null });
-      }
-    });
+    if (form.amount && form.amount > 0 && balance && balance > 0) {
+      setIsDonateLoading(true);
+      onclickDonate(form).then((value: any) => {
+        if (value) {
+          setIsDonateLoading(false);
+          handleChangeForm({ value: null });
+        }
+      });
+    }
   };
 
   return (

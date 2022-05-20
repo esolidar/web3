@@ -3,6 +3,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
+import Icon from '@esolidar/toolkit/build/elements/icon';
 import CarouselLightbox from '@esolidar/toolkit/build/components/carouselLightbox';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
@@ -108,6 +109,7 @@ const InstitutionDetail = () => {
               <ProfileAvatar
                 buttonText={institution.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
                 buttonUrl={institution.link}
+                buttonIconRight={<Icon name="ExternalLink" size="xs" />}
                 isNameBold
                 name={institution.name}
                 thumb={institution.s3_image_key === '0' ? urlNoImage : institution.thumbs.thumb}
