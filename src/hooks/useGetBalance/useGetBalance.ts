@@ -19,8 +19,9 @@ const useGetBalance = () => {
       const cUSDBalance = await cUSDtoken.balanceOf(account);
       // console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       // console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
+      const value = toNumber(cUSDBalance.toString());
 
-      context.changeBalance(toNumber(cUSDBalance.toString()));
+      context.changeBalance(+value.toFixed(4));
     });
   };
 

@@ -27,8 +27,9 @@ const useGetNpoBalance = () => {
       const cUSDBalance = await cUSDtoken.balanceOf(account);
       // console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       // console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
+      const value = toNumber(cUSDBalance.toString());
 
-      setBalance(toNumber(cUSDBalance.toString()));
+      setBalance(+value.toFixed(4));
     });
   };
 
