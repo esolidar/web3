@@ -34,7 +34,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
 
   return (
     <div className="wallet">
-      {address && balance ? (
+      {address && balance >= 0 ? (
         <DropdownLabelGroup
           dropdownItems={[
             {
@@ -48,7 +48,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
             },
           ]}
           dropdownText={truncateAddress(address, 5)}
-          labelText={`${balance} cUSD`}
+          labelText={balance >= 0 ? `${balance} cUSD` : ''}
           // fullWidth
         />
       ) : (
@@ -69,6 +69,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
 const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
   const router = useRouter();
   const { address, connect, destroy } = useContractKit();
+
   const { getBalances } = useGetBalance();
   const [isNavVisible, setIsNavVisible] = useState<boolean>(false);
   const dynamicRoute = useRouter().asPath;

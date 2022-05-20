@@ -19,15 +19,13 @@ import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
 import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
 import Modals from '../../../components/donationModal/Modals';
-import useGetNpoBalance from '../../../hooks/useGetBalance/useGetNpoBalance';
+import useCeloWalletBalance from '../../../api/hooks/useCeloWalletBalance';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
   value?.split('\n').map((item, index) => <p key={index}>{item}</p>);
 
 const InstitutionDetail = () => {
-  const { getNpoBalance, balance, error } = useGetNpoBalance();
-
   const router = useRouter();
   const {
     query: { id },
@@ -42,24 +40,22 @@ const InstitutionDetail = () => {
 
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
+
   const nonProfitName = useRef('');
   nonProfitName.current = institution.name;
-
-  useEffect(() => {
-    if (error) toast.error('Invalid wallet address');
-  }, [error]);
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
   ).wallet_address;
 
-  useEffect(() => {
-    if (institutionWalletAddress) getNpoBalance(institutionWalletAddress);
-  }, []);
+  const { data: nonprofitBalance } = useCeloWalletBalance({
+    wallet: institutionWalletAddress,
+    balanceOf: 'cusd',
+  });
 
   useEffect(() => {
-    if (balance) setNpoBalance(balance);
-  }, [balance]);
+    if (nonprofitBalance) setNpoBalance(nonprofitBalance);
+  }, [nonprofitBalance]);
 
   const handleClickDonate = useCallback(() => {
     if (address) {
