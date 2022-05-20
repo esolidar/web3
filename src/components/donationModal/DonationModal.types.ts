@@ -4,7 +4,7 @@ export interface Form {
 }
 
 export interface ModalBodyProps {
-  balance: number | undefined;
+  balance: number | null | undefined;
   form: Form;
   shortcuts?: Array<string | number>;
   isDonateLoading: boolean;
@@ -13,7 +13,7 @@ export interface ModalBodyProps {
 }
 
 interface Props {
-  balance: number | undefined;
+  balance: number | null | undefined;
   openModal: boolean;
   nonProfitName: string;
   onCloseModal(): void;

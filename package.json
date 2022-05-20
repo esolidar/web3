@@ -6,7 +6,7 @@
     "dev": "npm run clean &&next dev",
     "build": "npm run clean &&next build",
     "start": "next start",
-    "test:lint": "npm run clean && eslint ./src --ext .jsx --ext .js --ext .ts --ext .tsx",
+    "test:lint": "eslint ./src --ext .jsx --ext .js --ext .ts --ext .tsx",
     "clean": "npx rimraf .next"
   },
   "engines": {
@@ -15,6 +15,7 @@
   "dependencies": {
     "@celo-tools/use-contractkit": "^3.1.0",
     "@celo/contractkit": "^2.0.0",
+    "@celo/utils": "^2.0.0",
     "@esolidar/i18n": "^0.325.0",
     "@esolidar/toolkit": "^4.134.6",
     "axios": "^0.27.2",
