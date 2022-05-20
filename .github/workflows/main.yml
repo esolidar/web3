@@ -1,4 +1,4 @@
-name: codacy-coverage-reporter
+name: build
 
 on:
   push:
@@ -9,13 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     name: codacy-coverage-reporter
     steps:
-      - uses: actions/checkout@master
-
+      - uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           always-auth: true
-          node-version: '12.x'
+          node-version: 12
           registry-url: https://npm.pkg.github.com
           scope: '@esolidar'
 
@@ -26,9 +25,3 @@ jobs:
 
       - name: Run lint tests
         run: yarn test:lint
-
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/clover.xml

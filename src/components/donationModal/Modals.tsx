@@ -24,11 +24,7 @@ const Modals = ({ openModal = false, setOpenModal, walletAddress, nonProfitName 
   const { address } = useContractKit();
 
   useEffect(() => {
-    getBalances();
-  }, []);
-
-  useEffect(() => {
-    getBalances();
+    if (address) getBalances();
   }, [openModal]);
 
   const handledonateWithCUSD = useCallback(

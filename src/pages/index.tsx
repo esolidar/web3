@@ -28,6 +28,7 @@ const DiscoverPage = ({ dehydratedState }: any) => {
       institutionWalletAddress.current = institution.celo_wallet.find(
         (item: any) => item.default
       ).wallet_address;
+
       if (address) {
         setIsOpenDonationModal(true);
       } else {
