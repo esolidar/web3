@@ -6,7 +6,7 @@
     "dev": "npm run clean &&next dev",
     "build": "npm run clean &&next build",
     "start": "next start",
-    "test:lint": "npm run clean && eslint ./src --ext .jsx --ext .js --ext .ts --ext .tsx",
+    "test:lint": "eslint ./src --ext .jsx --ext .js --ext .ts --ext .tsx",
     "clean": "npx rimraf .next"
   },
   "engines": {
