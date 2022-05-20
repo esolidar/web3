@@ -6,17 +6,18 @@ jobs:
   install:
     name: install app
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
           always-auth: true
-          node-version: '12.x'
+          node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com
           scope: '@esolidar'
-
-      - name: Node version
-        run: node -v
 
       - name: Install dependencies
         run: yarn --pure-lockfile --production=false
@@ -35,11 +36,14 @@ jobs:
     needs: install
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - uses: actions/cache@v3
-        id: restore-build
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: '12.x'
+          node-version: ${{ matrix.node-version }}
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          id: restore-build
           path: ./*
           key: ${{ github.sha }}
       - run: yarn test:lint
