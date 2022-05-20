@@ -1,10 +1,9 @@
 # esolidar web3
 
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
-![Build PRs](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
-![Build](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/31c7e814239047ccb71c98b61a97be12)](https://www.codacy.com/gh/esolidar/web3/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=esolidar/web3&amp;utm_campaign=Badge_Grade)
+![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
-[![Open issues][issues-badge]][https://github.com/esolidar/web3/issues]
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/esolidar/web3/blob/main/LICENSE)
 
 Empowering philanthropy and ESG practice through blockchain.
@@ -43,12 +42,10 @@ A dedicated Dapp on top of Celo where any nonprofit, susteinable project or caus
 
 This project is licensed under the terms of the **MIT** license.
 
-## Security Vulnerabilities
+### Security Vulnerabilities
 
 If you discover a security vulnerability within esolidar web3 repository, please create an issue on this repo. All security vulnerabilities will be promptly addressed.
 
 ### Support
 
 Struggling with anything esolidar web3 related? Jump into the [Issue tracker](https://github.com/esolidar/web3/issues) and ask for help any time.
-
-[issues-badge]: https://img.shields.io/github/issues/mkosir/react-parallax-tilt
