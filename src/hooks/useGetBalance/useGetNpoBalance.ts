@@ -7,7 +7,7 @@ import isValidAddress from '../../utils/isValidAddress';
 const useGetNpoBalance = () => {
   const { performActions } = useContractKit();
   const [balance, setBalance] = useState<number>();
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<any>(null);
 
   const getNpoBalance = async (address: string) => {
     if (!isValidAddress(address)) {
