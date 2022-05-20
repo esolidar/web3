@@ -39,14 +39,19 @@ const DonationModal: FC<Props> = ({
   }, [balance]);
 
   const handleChangeForm = ({ value }: any) => {
-    let newValue: any = +value;
-    if (value === '') newValue = null;
-    if (balance && newValue >= +balance) {
-      newValue = balance;
+    if (value) {
+      let newValue: any = +value;
+      if (balance && newValue >= +balance) {
+        newValue = balance;
+      }
+      const newForm: Form = { ...form };
+      newForm.amount = newValue;
+      setForm(newForm);
+    } else {
+      const newForm: Form = { ...form };
+      newForm.amount = null;
+      setForm(newForm);
     }
-    const newForm: Form = { ...form };
-    newForm.amount = newValue;
-    setForm(newForm);
   };
 
   const handleClickDonate = () => {

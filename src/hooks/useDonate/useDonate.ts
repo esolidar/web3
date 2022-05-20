@@ -8,7 +8,6 @@ const useDonateCeloCUSD = () => {
       await performActions(async kit => {
         const cUSD = await kit.contracts.getStableToken();
         const value = kit.web3.utils.toWei(amount, 'ether');
-
         await cUSD.transfer(to, value).sendAndWaitForReceipt({
           from: kit.defaultAccount,
           gasPrice: kit.gasPrice,
@@ -17,7 +16,6 @@ const useDonateCeloCUSD = () => {
       console.log('sendTransaction succeeded');
     } catch (e) {
       console.log((e as Error).message);
-      return e;
     } finally {
       console.log('finally');
     }
