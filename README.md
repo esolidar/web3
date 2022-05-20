@@ -1,10 +1,8 @@
 # esolidar web3
 
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
-![Build PRs](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
-![Build](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
+![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
-![Open issues](https://github.com/esolidar/web3/issues)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/esolidar/web3/blob/main/LICENSE)
 
 Empowering philanthropy and ESG practice through blockchain.
@@ -51,4 +49,3 @@ If you discover a security vulnerability within esolidar web3 repository, please
 
 Struggling with anything esolidar web3 related? Jump into the [Issue tracker](https://github.com/esolidar/web3/issues) and ask for help any time.
 
-[issues-badge]: https://img.shields.io/github/issues/mkosir/react-parallax-tilt
