@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 // import { useIntl } from 'react-intl';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
@@ -18,12 +18,15 @@ import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
 import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
 import Modals from '../../../components/donationModal/Modals';
+import useGetNpoBalance from '../../../hooks/useGetBalance/useGetNpoBalance';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
   value?.split('\n').map((item, index) => <p key={index}>{item}</p>);
 
 const InstitutionDetail = () => {
+  const { getNpoBalance, balance, error } = useGetNpoBalance();
+
   const router = useRouter();
   const {
     query: { id },
@@ -34,15 +37,28 @@ const InstitutionDetail = () => {
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+  const [npoBalance, setNpoBalance] = useState<number | null>(null);
 
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
   const nonProfitName = useRef('');
   nonProfitName.current = institution.name;
 
+  useEffect(() => {
+    if (error) toast.error('Invalid wallet address');
+  }, [error]);
+
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
   ).wallet_address;
+
+  useEffect(() => {
+    if (institutionWalletAddress) getNpoBalance(institutionWalletAddress);
+  }, []);
+
+  useEffect(() => {
+    if (balance) setNpoBalance(balance);
+  }, [balance]);
 
   const handleClickDonate = useCallback(() => {
     if (address) {
@@ -53,6 +69,8 @@ const InstitutionDetail = () => {
         .catch((e: any) => console.log(e));
     }
   }, [isOpenDonationModal]);
+
+  const urlNoImage: string = `${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/assets/placeholders/image.svg`;
 
   return (
     <>
@@ -78,7 +96,9 @@ const InstitutionDetail = () => {
             <CarouselLightbox
               listItems={[
                 {
-                  url: `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`,
+                  url: institution.s3_cover_key
+                    ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+                    : urlNoImage,
                   altTag: institution.name,
                   type: 'photo',
                 },
@@ -90,11 +110,12 @@ const InstitutionDetail = () => {
                 buttonUrl={institution.link}
                 isNameBold
                 name={institution.name}
-                thumb={institution.thumbs.thumb}
+                thumb={institution.s3_image_key === '0' ? urlNoImage : institution.thumbs.thumb}
               />
+
               <div className="nonprofit-detail__balance--amount">
-                <div className="body-small">Raised from 342 donors</div>
-                <div>23,764.63 cUSD</div>
+                <div className="body-small">Raised</div>
+                {npoBalance && <div style={{ whiteSpace: 'nowrap' }}>{`${npoBalance} cUSD`}</div>}
               </div>
             </div>
             <div className="nonprofit-detail__mission">

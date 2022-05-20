@@ -79,9 +79,8 @@ const DiscoverPage = ({ dehydratedState }: any) => {
           </div>
           <div className="home-content__section top">
             <FormattedMessage
-              id="We help you support the causes {br} you care about with crypto"
-              defaultMessage="We help you support the causes {br} you care about with crypto"
-              values={{ br: <br /> }}
+              id="We help you support the causes you care about with crypto"
+              defaultMessage="We help you support the causes you care about with crypto"
             />
             <div className="home-content__section-hr" />
             <div className="home-content__section-right">
