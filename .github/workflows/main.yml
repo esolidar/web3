@@ -17,6 +17,9 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@esolidar'
 
+      - name: Node version
+        run: node -v
+
       - name: Install dependencies
         run: yarn
         env:
