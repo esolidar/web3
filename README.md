@@ -1,5 +1,6 @@
 # esolidar web3
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/97ef1c647bd34b379f60e5839fc57b4b)](https://app.codacy.com/gh/esolidar/web3?utm_source=github.com&utm_medium=referral&utm_content=esolidar/web3&utm_campaign=Badge_Grade_Settings)
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
 ![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
