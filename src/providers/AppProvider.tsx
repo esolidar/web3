@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import lastElemOf from '@esolidar/toolkit/build/utils/lastElemOf';
-import ToastContext from '../contexts/ToastContext';
+import AppContext from '../contexts/AppContext';
 import Alert from '../components/alert/Alert';
 import IAlert from '../interfaces/alert';
 
@@ -9,8 +9,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-const ToastProvider = ({ children }: Props) => {
+const AppProvider = ({ children }: Props) => {
   const [list, setList] = useState<IAlert[]>([]);
+  const [balance, setBalance] = useState<number | null>(null);
 
   const handleAdd = (alert: IAlert) => {
     const id: number = Number(lastElemOf(list)?.id) + 1 || 1;
@@ -21,24 +22,28 @@ const ToastProvider = ({ children }: Props) => {
 
   const handleRemove = (id: number) => setList(list.filter(alert => alert.id !== id));
 
-  const toastProviderValue = useMemo(
+  const handleChangeBalance = (value: number) => setBalance(value);
+
+  const contextProviderValue = useMemo(
     () => ({
+      balance,
+      changeBalance: handleChangeBalance,
       list,
       add: handleAdd,
       remove: handleRemove,
     }),
-    [list, handleAdd, handleRemove]
+    [list, handleAdd, handleRemove, balance, handleChangeBalance]
   );
 
   return (
-    <ToastContext.Provider value={toastProviderValue}>
+    <AppContext.Provider value={contextProviderValue}>
       <div className="alert-container">
         {list.length > 0 &&
           list.map(alert => <Alert key={alert.id} alert={alert} onRemove={handleRemove} />)}
       </div>
       {children}
-    </ToastContext.Provider>
+    </AppContext.Provider>
   );
 };
 
-export default ToastProvider;
+export default AppProvider;
