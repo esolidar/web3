@@ -8,6 +8,7 @@ import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
+import openCeloAddress from '../../utils/openCeloAddress';
 
 const SuccessModal: FC<Props> = ({ transitionID, openModal, onCloseModal, shareProps }: Props) => {
   const intl: IntlShape = useIntl();
@@ -68,7 +69,14 @@ const ModalBody: FC<ModalBodyProps> = ({
             defaultMessage: 'Blockchain transaction ID',
           })}
         </div>
-        <div className="successModal__transition-id"> {truncateAddress(transitionID, 5)}</div>
+        <div
+          className="successModal__transition-id"
+          onClick={() => openCeloAddress(transitionID)}
+          onKeyDown={() => openCeloAddress(transitionID)}
+          role="presentation"
+        >
+          {truncateAddress(transitionID, 5)}
+        </div>
       </div>
       <div className="successModal__separator" />
       <div className="successModal__share">

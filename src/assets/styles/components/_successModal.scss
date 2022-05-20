@@ -17,8 +17,11 @@
       line-height: 20px;
     }
     &-id {
+      color: #120636;
       @extend .successModal__subtitle;
-      font-weight: 400;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
     }
   }
   &__separator {
