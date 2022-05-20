@@ -12,7 +12,8 @@ import {
 import Layout from './_layout';
 import { SUPPORTED_LOCALES } from '../constants/locales';
 import getLocaleTranslations from '../utils/locales';
-import ToastProvider from '../providers/ToastProvider';
+import AppProvider from '../providers/AppProvider';
+
 import '@celo-tools/use-contractkit/lib/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
@@ -81,11 +82,11 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
       <IntlProvider locale={locale} messages={messages[locale] || messages.en}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps?.dehydratedState}>
-            <Layout>
-              <ToastProvider>
+            <AppProvider>
+              <Layout>
                 <Component {...pageProps} />
-              </ToastProvider>
-            </Layout>
+              </Layout>
+            </AppProvider>
             {process.env.NEXT_PUBLIC_ENV === 'development' && (
               <ReactQueryDevtools initialIsOpen={false} />
             )}
