@@ -1,14 +1,20 @@
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { ContractKit } from '@celo/contractkit';
-import { useContext } from 'react';
+import { useState } from 'react';
 import toNumber from '../../utils/convertAmount';
-import AppContext from '../../contexts/AppContext';
+import isValidAddress from '../../utils/isValidAddress';
 
-const useGetBalance = () => {
-  const { address, performActions } = useContractKit();
-  const context = useContext(AppContext);
+const useGetNpoBalance = () => {
+  const { performActions } = useContractKit();
+  const [balance, setBalance] = useState<number>();
+  const [error, setError] = useState<any>();
 
-  const getBalances = async () => {
+  const getNpoBalance = async (address: string) => {
+    if (!isValidAddress(address)) {
+      setError('error');
+      return { error: 'invalid address' };
+    }
+
     await performActions(async (kit: ContractKit) => {
       let account: string = '';
       // const celotoken = await kit.contracts.getGoldToken();
@@ -20,11 +26,11 @@ const useGetBalance = () => {
       // console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       // console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
 
-      context.changeBalance(toNumber(cUSDBalance.toString()));
+      setBalance(toNumber(cUSDBalance.toString()));
     });
   };
 
-  return { getBalances };
+  return { balance, getNpoBalance, error };
 };
 
-export default useGetBalance;
+export default useGetNpoBalance;
