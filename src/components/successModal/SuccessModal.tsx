@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Button from '@esolidar/toolkit/build/elements/button';
@@ -40,6 +40,8 @@ const ModalBody: FC<ModalBodyProps> = ({
   showCopyToClipboard = true,
   windowLocationHref,
 }: ModalBodyProps) => {
+  const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+
   const intl: IntlShape = useIntl();
 
   const fbShare = () => {
@@ -69,13 +71,21 @@ const ModalBody: FC<ModalBodyProps> = ({
             defaultMessage: 'Blockchain transaction ID',
           })}
         </div>
-        <div
-          className="successModal__transition-id"
-          onClick={() => openCeloAddress(transitionID)}
-          onKeyDown={() => openCeloAddress(transitionID)}
-          role="presentation"
-        >
-          {truncateAddress(transitionID, 5)}
+        <div className="successModal__transition-id">
+          <span
+            onClick={() => openCeloAddress(transitionID)}
+            onKeyDown={() => openCeloAddress(transitionID)}
+            role="presentation"
+          >
+            {truncateAddress(transitionID, 5)}
+          </span>
+          <Icon
+            name="InfoBold"
+            size="sm"
+            onClick={() => {
+              setOpenModalInfo(true);
+            }}
+          />
         </div>
       </div>
       <div className="successModal__separator" />
@@ -217,6 +227,41 @@ const ModalBody: FC<ModalBodyProps> = ({
           </ul>
         </div>
       </div>
+      <CustomModal
+        show={openModalInfo}
+        onHide={() => setOpenModalInfo(false)}
+        size="md"
+        title={intl.formatMessage({
+          id: 'web3.successModal.blockchain.title',
+          defaultMessage: 'Blockchain transaction ID',
+        })}
+        dialogClassName="sdg-description"
+        backdrop="static"
+        showFooter={false}
+        bodyChildren={
+          <>
+            <p>
+              {intl.formatMessage({
+                id: 'web3.successModal.blockchain.text',
+                defaultMessage:
+                  'A txid or Transaction ID is a string of letters and numbersthat identifies a specific transaction on the blockchain. As the name suggests, it literally “confirms” that the funds have been sent to the correct address and not to anyone else.',
+              })}
+            </p>
+            <Button
+              className="popover-btn m-0 p-0"
+              extraClass="link"
+              href={intl.formatMessage({
+                id: 'web3.successModal.blockchain.learn.more.url',
+                defaultMessage:
+                  'https://www.cryptonary.com/cryptoschool/how-to-check-transactions-on-the-blockchain/',
+              })}
+              target="_blank"
+              text={intl.formatMessage({ id: 'learn.more' })}
+              size="sm"
+            />
+          </>
+        }
+      />
     </div>
   );
 };
