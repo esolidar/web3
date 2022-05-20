@@ -1,9 +1,10 @@
-# web3
+# esolidar web3
 
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
-[buildstatus-url]: <https://github.com/esolidar/web3/actions?query=workflow>
+![Build PRs](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
+![Build](https://github.com/esolidar/web3/actions/workflows/build_lint_tests.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
-[types-url]: <https://img.shields.io/npm/types/react-dropdown-tree-select.svg?style=flat-square>
+[![Open issues][issues-badge]][issues-url]
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/esolidar/web3/blob/main/LICENSE)
 
 Empowering philanthropy and ESG practice through blockchain.
@@ -27,12 +28,6 @@ A dedicated Dapp on top of Celo where any nonprofit, susteinable project or caus
 - Valora
 - WalletConnect
 
-### License
-
->You can check out the full license [here](https://github.com/esolidar/web3/blob/main/LICENSE)
-
-This project is licensed under the terms of the **MIT** license.
-
 ### Links
 
 - [esolidar.com](https://www.esolidar.com)
@@ -42,10 +37,18 @@ This project is licensed under the terms of the **MIT** license.
 - [Issue tracker](https://github.com/esolidar/web3/issues)
 - [Source code](https://github.com/esolidar/web3)
 
+### License
+
+>You can check out the full license [here](https://github.com/esolidar/web3/blob/main/LICENSE)
+
+This project is licensed under the terms of the **MIT** license.
+
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within esolidar web3 repository, please create an issue on this repo. All security vulnerabilities will be promptly addressed.
 
 ### Support
 
-Struggling with anything esolidar web3 related? Jump into the [Issue tracker](https://github.com/esolidar/web3/issues) or [email us](info@esolidar.com) and ask for help any time.
+Struggling with anything esolidar web3 related? Jump into the [Issue tracker](https://github.com/esolidar/web3/issues) and ask for help any time.
+
+[issues-badge]: https://img.shields.io/github/issues/mkosir/react-parallax-tilt
