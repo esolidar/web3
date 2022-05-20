@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { ContractKit } from '@celo/contractkit';
 import { useState } from 'react';
