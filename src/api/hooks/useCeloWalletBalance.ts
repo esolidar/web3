@@ -17,13 +17,14 @@ interface CeloContractAddress {
 }
 
 const celoContractAddresses: CeloContractAddress[] = [
-    { address: String(process.env.NEXT_PUBLIC_CONTRACT_CELO_ADDRES), name: 'celo' },
-    { address: String(process.env.NEXT_PUBLIC_CONTRACT_CUSD_ADDRES), name: 'cusd' },
-    { address: String(process.env.NEXT_PUBLIC_CONTRACT_CEUR_ADDRES), name: 'ceur' }
+  { address: String(process.env.NEXT_PUBLIC_CONTRACT_CELO_ADDRES), name: 'celo' },
+  { address: String(process.env.NEXT_PUBLIC_CONTRACT_CUSD_ADDRES), name: 'cusd' },
+  { address: String(process.env.NEXT_PUBLIC_CONTRACT_CEUR_ADDRES), name: 'ceur' },
 ];
 
 const queryKey: string = 'celoWalletBalance';
-const url = (wallet: string, contractAddress?: string): string => `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
+const url = (wallet: string, contractAddress?: string): string =>
+  `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
 
 const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: Args) =>
   useQuery(
@@ -31,11 +32,12 @@ const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: 
     async () => {
       const contractAddress = celoContractAddresses.find(({ name }) => name === balanceOf)?.address;
 
-      if(contractAddress === undefined)
-      throw new Error('Currency not find!');
-      
+      if (contractAddress === undefined) throw new Error('Currency not find!');
+
       const { data: response } = await axios.get(url(wallet, contractAddress));
-      return toNumber(response.result);
+      const value = toNumber(response.result);
+
+      return +value.toFixed(4);
     },
     {
       onSuccess: data => onSuccess && onSuccess(data),

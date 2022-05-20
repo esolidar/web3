@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { useContractKit } from '@celo-tools/use-contractkit';
 
 const useDonateCeloCUSD = () => {
@@ -16,6 +17,7 @@ const useDonateCeloCUSD = () => {
       console.log('sendTransaction succeeded');
     } catch (e) {
       console.log((e as Error).message);
+      return e;
     } finally {
       console.log('finally');
     }
