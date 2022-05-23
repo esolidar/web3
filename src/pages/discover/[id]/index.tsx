@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-// import { useIntl } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
+import Head from 'next/head';
 import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
@@ -41,8 +42,11 @@ const InstitutionDetail = () => {
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
 
+  const intl: IntlShape = useIntl();
   const nonProfitName = useRef('');
+  const nonProfitId = useRef(null);
   nonProfitName.current = institution.name;
+  nonProfitId.current = institution.id;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
@@ -71,6 +75,61 @@ const InstitutionDetail = () => {
 
   return (
     <>
+      <Head>
+        <title key="title">{institution.name}</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@esolidar" />
+        <meta name="twitter:title" content={institution.name} />
+        <meta
+          name="twitter:description"
+          content={institution.about[String(router.locale)].substring(0, 120)}
+        />
+        <meta name="twitter:creator" content="@esolidar" />
+        <meta
+          name="twitter:image:src"
+          content={
+            institution.s3_cover_key
+              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+              : urlNoImage
+          }
+        />
+        <meta key="og:title" property="og:title" content={institution.name} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={institution.about[String(router.locale)].substring(0, 120)}
+        />
+
+        <meta
+          key="description"
+          name="description"
+          content={institution.about[String(router.locale)].substring(0, 120)}
+        />
+        <meta
+          key="og:image"
+          property="og:image"
+          content={
+            institution.s3_cover_key
+              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+              : urlNoImage
+          }
+        />
+        <meta key="keywords" name="keywords" content={institution.name} />
+        <meta
+          key="og:url"
+          property="og:url"
+          content={`${process.env.NEXT_PUBLIC_DOMAIN}/${String(router.locale)}/discover/${
+            institution.id
+          }`}
+        />
+        <link
+          key="canonical"
+          href={`${process.env.NEXT_PUBLIC_DOMAIN}${String(router.locale)}/discover/${
+            institution.id
+          }`}
+          rel="canonical"
+        />
+      </Head>
       <div className="nonprofit-detail">
         <Breadcrumbs
           breadcrumbs={[
@@ -112,12 +171,12 @@ const InstitutionDetail = () => {
               />
 
               <div className="nonprofit-detail__balance--amount">
-                <div className="body-small">Raised</div>
+                <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
                 {npoBalance && <div style={{ whiteSpace: 'nowrap' }}>{`${npoBalance} cUSD`}</div>}
               </div>
             </div>
             <div className="nonprofit-detail__mission">
-              <h3>Mission</h3>
+              <h3>{intl.formatMessage({ id: 'web3.mission' })}</h3>
               {!isSSR && institution.about && (
                 <p>{formatTextWithParagraphs(institution.about[String(router.locale)])}</p>
               )}
@@ -150,6 +209,7 @@ const InstitutionDetail = () => {
         setOpenModal={setIsOpenDonationModal}
         walletAddress={institutionWalletAddress}
         nonProfitName={nonProfitName.current}
+        nonProfitId={nonProfitId.current}
       />
     </>
   );

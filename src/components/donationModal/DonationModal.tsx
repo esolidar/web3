@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-use-before-define */
 import React, { FC, useEffect, useState } from 'react';
 import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
@@ -109,19 +110,19 @@ const DonationModal: FC<Props> = ({
           {form.errors?.transaction && (
             <span className="donationModal__error">
               <FormattedMessage
-                id="web3.error.alert"
-                // TODO: link to faqs (waiting for product team)
-                // values={{
-                //   a: chunks => (
-                //     <a
-                //       target="_blank"
-                //       rel="noreferrer"
-                //       href={`https://faqs${locale !== 'en' ? '/pt' : ''}/xpto`}
-                //     >
-                //       {chunks}
-                //     </a>
-                //   ),
-                // }}
+                id="web3.donateModal.error"
+                values={{
+                  // @ts-ignore
+                  a: chunks => (
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href="https://help.esolidar.com/kb/guide/en/troubleshooting-dEsGbnLOMU/Steps/1496184"
+                    >
+                      {chunks}
+                    </a>
+                  ),
+                }}
               />
             </span>
           )}
