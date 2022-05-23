@@ -46,6 +46,7 @@ const List = () => {
   const { address, connect } = useContractKit();
   const institutionWalletAddress = useRef('');
   const nonProfitName = useRef('');
+  const nonProfitId = useRef(null);
   const router = useRouter();
 
   const { isLoading, isFetching, data, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
@@ -82,6 +83,7 @@ const List = () => {
   const handleClickDonate = useCallback(
     (institution: any) => {
       nonProfitName.current = institution.name;
+      nonProfitId.current = institution.id;
       institutionWalletAddress.current = institution.celo_wallet.find(
         (item: any) => item.default
       ).wallet_address;
@@ -242,6 +244,7 @@ const List = () => {
         setOpenModal={setIsOpenDonationModal}
         walletAddress={institutionWalletAddress.current}
         nonProfitName={nonProfitName.current}
+        nonProfitId={nonProfitId.current}
       />
       <CustomModal
         show={openModal}

@@ -39,6 +39,7 @@
         position: relative;
         margin-right: $distance-1;
         background-color: map-get($positive, 300);
+        cursor: auto;
       }
     }
 
@@ -132,5 +133,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
+    text-align: left;
+
+    a {
+      color: map-get($negative, 500);
+      text-decoration: underline;
+    }
   }
 }

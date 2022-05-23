@@ -21,10 +21,12 @@ const DiscoverPage = ({ dehydratedState }: any) => {
 
   const institutionWalletAddress = useRef('');
   const nonProfitName = useRef('');
+  const nonProfitId = useRef(null);
 
   const handleClickDonate = useCallback(
     (institution: any) => {
       nonProfitName.current = institution.name;
+      nonProfitId.current = institution.id;
       institutionWalletAddress.current = institution.celo_wallet.find(
         (item: any) => item.default
       ).wallet_address;
@@ -61,7 +63,7 @@ const DiscoverPage = ({ dehydratedState }: any) => {
                 iconRight={<Icon name="ArrowRight" />}
                 isLoading={false}
                 size="md"
-                text={intl.formatMessage({ id: 'View more' })}
+                text={intl.formatMessage({ id: 'web3.view.more' })}
                 theme="light"
                 type="button"
               />
@@ -78,55 +80,54 @@ const DiscoverPage = ({ dehydratedState }: any) => {
             ))}
           </div>
           <div className="home-content__section top">
-            <FormattedMessage
-              id="We help you support the causes you care about with crypto"
-              defaultMessage="We help you support the causes you care about with crypto"
-            />
+            <div className="home-content__section-left">
+              <FormattedMessage id="web3.homepage.support.title" />
+            </div>
             <div className="home-content__section-hr" />
             <div className="home-content__section-right">
-              <FormattedMessage id="We are bringing transparency, efficiency, and governance into the philanthropic sector and ESG market, by creating a bridge between organizations, donors, and the crypto community, providing new and engaging ways to support worldwide causes and projects." />
+              <FormattedMessage id="web3.homepage.support.subtitle" />
             </div>
           </div>
           <div className="home-content__section-columns">
             <div className="home-content__section-columns-item green">
               <h4>
-                <FormattedMessage id="Maximize your impact" />
+                <FormattedMessage id="web3.homepage.box1.title" />
               </h4>
               <p>
-                <FormattedMessage id="Have a real-world impact with your crypto profits, furthering the mission of the causes you donate to" />
+                <FormattedMessage id="web3.homepage.box1.subtitle" />
               </p>
               <div className="home-content__section-columns-item-footer" />
             </div>
             <div className="home-content__section-columns-item yellow">
               <h4>
-                <FormattedMessage id="Donate anonymously" />
+                <FormattedMessage id="web3.homepage.box2.title" />
               </h4>
               <p>
-                <FormattedMessage id="You can donate crypto anonymously. Support the causes you care about and maintain your privacy." />
+                <FormattedMessage id="web3.homepage.box2.subtitle" />
               </p>
               <div className="home-content__section-columns-item-footer" />
             </div>
             <div className="home-content__section-columns-item yellow">
               <h4>
-                <FormattedMessage id="No platform fees" />
+                <FormattedMessage id="web3.homepage.box3.title" />
               </h4>
               <p>
-                <FormattedMessage id="Give crypto directly to a nonprofit, and 100% of your donation can go to the causes you care about" />
+                <FormattedMessage id="web3.homepage.box3.subtitle" />
               </p>
               <div className="home-content__section-columns-item-footer" />
             </div>
             <div className="home-content__section-columns-item green">
               <h4>
-                <FormattedMessage id="Encourage transparency" />
+                <FormattedMessage id="web3.homepage.box4.title" />
               </h4>
               <p>
-                <FormattedMessage id="Help promote transparent giving and encourage wider adoption of crypto" />
+                <FormattedMessage id="web3.homepage.box4.subtitle" />
               </p>
               <div className="home-content__section-columns-item-footer" />
             </div>
           </div>
           <div className="home-content__section">
-            <FormattedMessage id="Supporters & partners" />
+            <FormattedMessage id="web3.homepage.partners" />
             <div className="home-content__section-hr" />
           </div>
           <div style={{ marginTop: '78px', display: 'flex', gap: '24px' }}>
@@ -142,6 +143,7 @@ const DiscoverPage = ({ dehydratedState }: any) => {
         setOpenModal={setIsOpenDonationModal}
         walletAddress={institutionWalletAddress.current}
         nonProfitName={nonProfitName.current}
+        nonProfitId={nonProfitId.current}
       />
     </>
   );
