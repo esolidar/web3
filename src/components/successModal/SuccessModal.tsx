@@ -24,7 +24,7 @@ const SuccessModal: FC<Props> = ({
       show={openModal}
       onHide={onCloseModal}
       size="md"
-      title={intl.formatMessage({ id: 'web3.thankYou', defaultMessage: 'Thank you! 🎉' })}
+      title={intl.formatMessage({ id: 'web3.thankYou' })}
       dialogClassName="successModal"
       backdrop="static"
       showFooter={false}
@@ -77,7 +77,7 @@ const ModalBody: FC<ModalBodyProps> = ({
       <div className="successModal__transition">
         <div className="successModal__transition-title">
           {intl.formatMessage({
-            id: 'web3.successModal.transition',
+            id: 'web3.successModal.transition.id',
           })}
         </div>
         <div className="successModal__transition-id">
@@ -238,7 +238,7 @@ const ModalBody: FC<ModalBodyProps> = ({
         onHide={() => setOpenModalInfo(false)}
         size="md"
         title={intl.formatMessage({
-          id: 'web3.successModal.blockchain.title',
+          id: 'web3.successModal.transition.id',
         })}
         dialogClassName="sdg-description"
         backdrop="static"

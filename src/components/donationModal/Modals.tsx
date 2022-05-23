@@ -49,6 +49,7 @@ const Modals = ({ openModal = false, setOpenModal, walletAddress, nonProfitName 
         onCloseModal={() => setOpenModal(false)}
         onclickDonate={form => handledonateWithCUSD(form)}
       />
+      {/* TODO: add text and link to share (waiting for product team) */}
       <ThankYouModal
         transitionID={walletAddress}
         nonProfitName={nonProfitName}

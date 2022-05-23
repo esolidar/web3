@@ -72,6 +72,10 @@
     & .nonprofit-detail__mission {
       margin-top: $distance-8;
 
+      h3 {
+        margin-bottom: $distance-2;
+      }
+
       @media (max-width: map-get($breakpoints, md)) {
         margin-top: $distance-4;
       }
@@ -85,7 +89,7 @@
     }
   }
   .profile-avatar__info--name {
-    max-width: 300px;
+    max-width: 250px;
   }
   .profile-avatar__info--link {
     font-weight: 400;
