@@ -21,6 +21,7 @@ const useGetBalance = () => {
       // console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
       const value = toNumber(cUSDBalance.toString());
 
+      // TODO: product team needs to decide the final "format" number
       context.changeBalance(+value.toFixed(4));
     });
   };
