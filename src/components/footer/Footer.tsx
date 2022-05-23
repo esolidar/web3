@@ -34,10 +34,7 @@ const Footer = () => {
   return (
     <footer className={`footer-component ${isInstitutionDetailPage && 'footer-component__detail'}`}>
       <div className="footer-component__copyright">
-        <FormattedMessage
-          id="web3.copyright.note"
-          defaultMessage="Information provided is general and educational in nature. It is not intended to be, and should not be construed as, legal or tax advice. Rules and regulations regarding tax deductions for charitable giving vary at the country and state level, and laws of a specific country, state or laws relevant to a particular situation may affect the applicability, accuracy, or completeness of the information provided. Please consult a tax advisor about the legal or tax consequences of donating in cryptocurrency. All organization names, logos, and brands are property of their respective owners, and are used on this website for identification purposes only. Use of these names, logos, and brands does not imply endorsement."
-        />
+        <FormattedMessage id="web3.copyright.note" />
       </div>
 
       <div className="footer-component__menu">
@@ -117,6 +114,10 @@ const Footer = () => {
               ]}
             />
           </div>
+        </div>
+        <div className="footer-component__social-icons">
+          <Icon name="Twitter" size="md" />
+          <Icon name="Linkedin" size="md" />
         </div>
       </div>
     </footer>

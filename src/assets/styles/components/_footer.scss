@@ -40,6 +40,11 @@
     }
   }
 
+  &__social-icons {
+    display: flex;
+    gap: 16px;
+  }
+
   .change-language {
     display: flex;
     white-space: nowrap;
