@@ -117,7 +117,7 @@ const DonationModal: FC<Props> = ({
                     <a
                       target="_blank"
                       rel="noreferrer"
-                      href="https://help.esolidar.com/kb/guide/en/troubleshooting-dEsGbnLOMU/Steps/1496184"
+                      href={`${process.env.NEXT_PUBLIC_ESOLIDAR_HELP_URL}kb/guide/troubleshooting-dEsGbnLOMU/Steps/1496184`}
                     >
                       {chunks}
                     </a>
