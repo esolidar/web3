@@ -171,7 +171,7 @@ const ModalBody: FC<ModalBodyProps> = ({
           error={errors?.amount}
           dataTestId="amount"
           allowNegative={false}
-          disabled={isDonateLoading || errors?.amount}
+          disabled={isDonateLoading || !!errors?.amount}
         />
       </div>
       <div className="donationModal__shortcuts">
