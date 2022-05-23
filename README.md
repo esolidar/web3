@@ -40,7 +40,7 @@ A dedicated Dapp on top of Celo where any nonprofit, susteinable project or caus
 
 >You can check out the full license [here](https://github.com/esolidar/web3/blob/main/LICENSE)
 
-This project is licensed under the terms of the **MIT** license.
+This project is licensed under the terms of the **Apache License 2.0** license.
 
 ### Security Vulnerabilities
 
