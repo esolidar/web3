@@ -1,11 +1,12 @@
 /* eslint-disable no-use-before-define */
 import React, { FC, useEffect, useState } from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import TextFieldNumber from '@esolidar/toolkit/build/elements/textFieldNumber';
+import useToast from '../../hooks/useToast/useToast';
 import Props, { ModalBodyProps, Form } from './DonationModal.types';
 
 const DEFAULT_FORM: Form = {
@@ -24,34 +25,40 @@ const DonationModal: FC<Props> = ({
   const [isDonateLoading, setIsDonateLoading] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
+  const toast = useToast();
 
-  useEffect(() => {
+  const modalTitle = intl.formatMessage({ id: 'web3.donateModal.to' }, { nonProfitName });
+
+  const resetModal = () => {
     setIsDonateLoading(false);
-    handleChangeForm({ value: null });
-  }, [openModal]);
-
-  useEffect(() => {
-    if (balance && +balance === 0.0) {
+    const funds = balance || 0;
+    if (+funds === 0) {
       const newForm: Form = { ...form };
+      newForm.amount = null;
       newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
       setForm(newForm);
+    } else {
+      setForm(DEFAULT_FORM);
     }
-  }, [balance]);
+  };
+
+  useEffect(() => {
+    resetModal();
+  }, [openModal]);
 
   const handleChangeForm = ({ value }: any) => {
-    if (value) {
-      let newValue: any = +value;
+    const funds = balance || 0;
+    const newForm: Form = { ...form };
+    let newValue: any = null;
+    if (value && funds > 0) {
       if (balance && newValue >= +balance) {
         newValue = balance;
       }
-      const newForm: Form = { ...form };
-      newForm.amount = newValue;
-      setForm(newForm);
-    } else {
-      const newForm: Form = { ...form };
-      newForm.amount = null;
-      setForm(newForm);
+      newValue = +value;
+      newForm.errors = null;
     }
+    newForm.amount = newValue;
+    setForm(newForm);
   };
 
   const handleClickDonate = () => {
@@ -60,7 +67,8 @@ const DonationModal: FC<Props> = ({
       onclickDonate(form).then((value: any) => {
         if (value) {
           setIsDonateLoading(false);
-          handleChangeForm({ value: null });
+          toast.error(intl.formatMessage({ id: 'web3.error.alert' }));
+          setForm({ amount: null, errors: { transaction: true } });
         }
       });
     }
@@ -71,7 +79,7 @@ const DonationModal: FC<Props> = ({
       show={openModal}
       onHide={onCloseModal}
       size="md"
-      title={intl.formatMessage({ id: 'web3.donateModal.to' }, { nonProfitName })}
+      title={modalTitle.length >= 70 ? `${modalTitle.slice(0, 70)}...` : modalTitle}
       dialogClassName="donationModal"
       backdrop="static"
       bodyChildren={
@@ -84,19 +92,40 @@ const DonationModal: FC<Props> = ({
         />
       }
       actionsChildren={
-        <Button
-          className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
-          extraClass={classnames({
-            'primary-full': form.amount || isDonateLoading,
-          })}
-          size="md"
-          text={intl.formatMessage({ id: 'web3.donate' })}
-          onClick={handleClickDonate}
-          withLoading
-          isLoading={isDonateLoading}
-          disabled={!form.amount || form.amount === 0}
-          fullWidth
-        />
+        <>
+          <Button
+            className={classnames('donationModal__button-disabled', { isLoadind: isDonateLoading })}
+            extraClass={classnames({
+              'primary-full': form.amount || isDonateLoading,
+            })}
+            size="md"
+            text={intl.formatMessage({ id: 'web3.donate' })}
+            onClick={handleClickDonate}
+            withLoading
+            isLoading={isDonateLoading}
+            disabled={!form.amount || form.amount === 0}
+            fullWidth
+          />
+          {form.errors?.transaction && (
+            <span className="donationModal__error">
+              <FormattedMessage
+                id="web3.error.alert"
+                // TODO: link to faqs (waiting for product team)
+                // values={{
+                //   a: chunks => (
+                //     <a
+                //       target="_blank"
+                //       rel="noreferrer"
+                //       href={`https://faqs${locale !== 'en' ? '/pt' : ''}/xpto`}
+                //     >
+                //       {chunks}
+                //     </a>
+                //   ),
+                // }}
+              />
+            </span>
+          )}
+        </>
       }
     />
   );
@@ -135,14 +164,14 @@ const ModalBody: FC<ModalBodyProps> = ({
           suffix=" cUSD"
           thousandSeparator
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
-          decimalScale={4}
-          placeholder="0.0000 cUSD"
+          decimalScale={18}
+          placeholder="0.00 cUSD"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
-          error={errors?.amount || errors?.balance}
+          error={errors?.amount}
           dataTestId="amount"
           allowNegative={false}
-          disabled={isDonateLoading}
+          disabled={isDonateLoading || !!errors?.amount}
         />
       </div>
       <div className="donationModal__shortcuts">

@@ -66,6 +66,8 @@
       appearance: none;
       z-index: 1;
       color: map-get($neutrals, 900);
+      padding: $distance-2 $distance-3 $distance-2 $distance-3;
+      height: calc(28px + $distance-3);
     }
   }
   &__shortcuts {
@@ -115,8 +117,10 @@
   }
   &__button-disabled.disabled {
     width: 100%;
+    color: map-get($neutrals, 400);
     background-color: map-get($background, secondary);
-    @include svg-change-color(map-get($neutrals, 700));
+    border: 1px solid map-get($neutrals, 200);
+    opacity: 1;
 
     &.isLoadind {
       opacity: 1;
