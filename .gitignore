@@ -104,5 +104,3 @@ dist
 .tern-port
 
 .env.local
-.env.testing
-.env.production
