@@ -24,6 +24,7 @@ const DonationModal: FC<Props> = ({
 }: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
   const [isDonateLoading, setIsDonateLoading] = useState<boolean>(false);
+  const [isDonateError, setIsDonateError] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
   const toast = useToast();
@@ -32,6 +33,7 @@ const DonationModal: FC<Props> = ({
 
   const resetModal = () => {
     setIsDonateLoading(false);
+    setIsDonateError(false);
     const funds = balance || 0;
     if (+funds === 0) {
       const newForm: Form = { ...form };
@@ -55,11 +57,12 @@ const DonationModal: FC<Props> = ({
       if (balance && newValue >= +balance) {
         newValue = balance;
       }
-      newValue = +value;
+      newValue = value;
       newForm.errors = null;
     }
     newForm.amount = newValue;
     setForm(newForm);
+    setIsDonateError(false);
   };
 
   const handleClickDonate = () => {
@@ -69,7 +72,7 @@ const DonationModal: FC<Props> = ({
         if (value) {
           setIsDonateLoading(false);
           toast.error(intl.formatMessage({ id: 'web3.error.alert' }));
-          setForm({ amount: null, errors: { transaction: true } });
+          setIsDonateError(true);
         }
       });
     }
@@ -99,7 +102,7 @@ const DonationModal: FC<Props> = ({
             extraClass={classnames({
               'primary-full': form.amount || isDonateLoading,
             })}
-            size="md"
+            size="lg"
             text={intl.formatMessage({ id: 'web3.donate' })}
             onClick={handleClickDonate}
             withLoading
@@ -107,7 +110,7 @@ const DonationModal: FC<Props> = ({
             disabled={!form.amount || form.amount === 0}
             fullWidth
           />
-          {form.errors?.transaction && (
+          {isDonateError && (
             <span className="donationModal__error">
               <FormattedMessage
                 id="web3.donateModal.error"
@@ -154,7 +157,7 @@ const ModalBody: FC<ModalBodyProps> = ({
       <div className="donationModal__balance">
         <div className="donationModal__balance-coin">
           <Button className="cusd-icon" icon={<Icon name="AtSign" />} type="icon" theme="light" />
-          <span>cUSD balance</span>
+          <span>{intl.formatMessage({ id: 'web3.balance' })}</span>
         </div>
         <div className="donationModal__balance-value">{balance} cUSD</div>
       </div>
@@ -163,7 +166,7 @@ const ModalBody: FC<ModalBodyProps> = ({
           field="amount"
           id="amount"
           suffix=" cUSD"
-          thousandSeparator
+          thousandSeparator={false}
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
           decimalScale={18}
           placeholder="0.00 cUSD"

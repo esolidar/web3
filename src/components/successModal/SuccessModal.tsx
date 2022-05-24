@@ -9,6 +9,7 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
 import openCeloAddress from '../../utils/openCeloAddress';
+import useToast from '../../hooks/useToast/useToast';
 
 const SuccessModal: FC<Props> = ({
   transitionID,
@@ -52,6 +53,7 @@ const ModalBody: FC<ModalBodyProps> = ({
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
+  const toast = useToast();
 
   const fbShare = () => {
     const url = `https://www.facebook.com/sharer/sharer.php?display=popup&u=${windowLocationHref}&quote=${title}`;
@@ -62,6 +64,7 @@ const ModalBody: FC<ModalBodyProps> = ({
 
   const handleClickCopyToClipboard = () => {
     navigator.clipboard.writeText(windowLocationHref);
+    toast.success(intl.formatMessage({ id: 'web3.copied' }));
   };
 
   return (

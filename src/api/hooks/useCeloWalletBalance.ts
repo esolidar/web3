@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import toNumber from '../../utils/convertAmount';
+import truncateNumber from '../../utils/truncateNumber';
 
 declare type currencies = 'celo' | 'cusd' | 'ceur';
 
@@ -35,9 +36,11 @@ const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: 
       if (contractAddress === undefined) throw new Error('Currency not find!');
 
       const { data: response } = await axios.get(url(wallet, contractAddress));
-      const value = toNumber(response.result);
 
-      return +value.toFixed(4);
+      const value = toNumber(response.result);
+      const truncatedValue = truncateNumber(value, 8);
+
+      return truncatedValue;
     },
     {
       onSuccess: data => onSuccess && onSuccess(data),
