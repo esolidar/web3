@@ -9,6 +9,7 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import TextFieldNumber from '@esolidar/toolkit/build/elements/textFieldNumber';
 import useToast from '../../hooks/useToast/useToast';
 import Props, { ModalBodyProps, Form } from './DonationModal.types';
+import LINKS from '../../constants/links';
 
 const DEFAULT_FORM: Form = {
   amount: null,
@@ -117,11 +118,7 @@ const DonationModal: FC<Props> = ({
                 values={{
                   // @ts-ignore
                   a: chunks => (
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`${process.env.NEXT_PUBLIC_ESOLIDAR_HELP_URL}kb/guide/troubleshooting-dEsGbnLOMU/Steps/1496184`}
-                    >
+                    <a target="_blank" rel="noreferrer" href={LINKS.troubleshooting}>
                       {chunks}
                     </a>
                   ),
