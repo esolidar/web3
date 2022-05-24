@@ -59,25 +59,8 @@ const Home = () => {
     <div className="container">
       <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
-        <RampCheckout 
-          userAddress={address}
-          selectedCountryCode={'US'}  
-          />
         <Button onClick={() => setOpenModal(true)} extraClass="primary-full" text="Donate" />
 
-        {/* Miguel:: aqui tens de passar o valor do balance correto */}
-        <DonationModal
-          openModal={openModal}
-          balance={12}
-          dinheironut
-          nonProfitName="Xpto"
-          onCloseModal={() => setOpenModal(false)}
-          onclickDonate={form =>
-            form.amount
-              ? donateWithCUSD(toMitch, `${form.amount}`)
-              : alert('please fill the amount to donate')
-          }
-        />
         <Link
           href={{
             pathname: '/institution/[id]',
@@ -96,6 +79,10 @@ const Home = () => {
         </Link>
         {address ? (
           <>
+          <RampCheckout 
+            userAddress={address}
+            selectedCountryCode="PT"
+            />
             <p>My address</p>
             {address}
             <button type="button" onClick={getBalances}>
