@@ -65,15 +65,7 @@ const Modals = ({
         openModal={isOpenSuccess}
         onCloseModal={() => setIsOpenSuccess(false)}
         shareProps={{
-          title: intl.formatMessage(
-            { id: 'web3.share.text' },
-            {
-              nonProfitName,
-              url: `${process.env.NEXT_PUBLIC_DOMAIN}/${String(
-                intl.locale
-              )}/discover/${nonProfitId}`,
-            }
-          ),
+          title: intl.formatMessage({ id: 'web3.share.text' }, { nonProfitName }),
           windowLocationHref: `${process.env.NEXT_PUBLIC_DOMAIN}/${String(
             intl.locale
           )}/discover/${nonProfitId}`,
