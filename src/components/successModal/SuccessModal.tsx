@@ -10,6 +10,7 @@ import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
 import openCeloAddress from '../../utils/openCeloAddress';
 import useToast from '../../hooks/useToast/useToast';
+import LINKS from '../../constants/links';
 
 const SuccessModal: FC<Props> = ({
   transitionID,
@@ -256,9 +257,7 @@ const ModalBody: FC<ModalBodyProps> = ({
             <Button
               className="popover-btn m-0 p-0"
               extraClass="link"
-              href={intl.formatMessage({
-                id: 'web3.successModal.blockchain.learn.more.url',
-              })}
+              href={LINKS.blockchainTransactions}
               target="_blank"
               text={intl.formatMessage({ id: 'learn.more' })}
               size="sm"
