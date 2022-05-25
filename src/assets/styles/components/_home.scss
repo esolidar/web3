@@ -8,95 +8,125 @@
 }
 
 .home {
-  &-content {
-    margin-bottom: 115px;
-    position: relative;
+  margin-bottom: 115px;
+  position: relative;
+  z-index: 9;
+  padding: 0 $distance-2;
+
+  &-npo-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: $distance-4;
+    grid-row-gap: 0;
     z-index: 9;
-    padding: 0 $distance-2;
+    position: relative;
 
-    &__npo-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-column-gap: $distance-4;
-      grid-row-gap: 0;
-      z-index: 9;
-      position: relative;
+    @media (max-width: map-get($breakpoints, xs)) {
+      display: flex;
+      flex-direction: column;
+    }
 
-      @media (max-width: map-get($breakpoints, xs)) {
-        display: flex;
-        flex-direction: column;
-      }
+    @media (max-width: map-get($breakpoints, md)) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 
-      @media (max-width: map-get($breakpoints, md)) {
-        grid-template-columns: 1fr 1fr;
+  &-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 160px;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+    color: map-get($base, Black);
+    margin-bottom: $distance-5;
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      align-items: flex-start;
+
+      & .btn-esolidar {
+        margin-top: $distance-1 / 2;
       }
     }
 
-    &__section {
-      margin-top: 160px;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 36px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      color: map-get($base, Black);
+    &__title {
       display: flex;
       align-items: center;
       gap: $distance-4;
-      margin-bottom: $distance-5;
 
-      @media (max-width: map-get($breakpoints, xs)) {
+      @media (max-width: map-get($breakpoints, sm)) {
         flex-direction: column;
-        align-items: flex-start;
+        gap: $distance-5;
       }
 
-      &-hr {
+      &--hr {
         width: 79px;
         height: 1px;
         background-color: map-get($turquoise, 300);
         margin-right: auto;
       }
+    }
 
-      &-columns {
-        margin-top: 160px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: $distance-4;
-        grid-row-gap: $distance-4;
+    &.second-section {
+      align-items: baseline;
 
-        @media (max-width: map-get($breakpoints, xs)) {
-          display: flex;
-          flex-direction: column;
-        }
+      @media (max-width: map-get($breakpoints, sm)) {
+        flex-direction: column;
+        gap: $distance-5;
       }
 
-      &-left {
-        max-width: 493px;
-      }
+      & .home-section__title {
+        align-items: start;
 
-      &-right {
-        width: 382px;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 21px;
-        line-height: 28px;
+        & .home-section__title--hr {
+          margin-top: 25px;
 
-        @media (max-width: map-get($breakpoints, xs)) {
-          width: auto;
-        }
-      }
-
-      &.top {
-        align-items: flex-start;
-
-        .home-content__section-hr {
-          margin-top: $distance-3;
+          @media (max-width: map-get($breakpoints, sm)) {
+            margin-top: unset;
+          }
         }
 
-        .home-content__section-right {
-          margin-top: 12px;
+        &:first-of-type {
+          & > span {
+            max-width: 493px;
+          }
+        }
+
+        &:last-of-type {
+          width: 382px;
+          margin-left: $distance-4;
+
+          @media (max-width: map-get($breakpoints, sm)) {
+            width: auto;
+            margin-left: unset;
+          }
+
+          & > span {
+            font-size: 21px;
+            line-height: 28px;
+            font-weight: 400;
+
+            @media (max-width: map-get($breakpoints, sm)) {
+              font-size: 18px;
+            }
+          }
         }
       }
+    }
+  }
+
+  &-callout-grid {
+    margin-top: 160px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: $distance-4;
+    grid-row-gap: $distance-4;
+
+    @media (max-width: map-get($breakpoints, xs)) {
+      display: flex;
+      flex-direction: column;
     }
   }
 
