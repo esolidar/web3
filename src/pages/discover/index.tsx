@@ -31,7 +31,6 @@ interface SdgOption {
   label: string;
 }
 
-let sdgOptions: SdgOption[] = [];
 let institutionList: any = [];
 
 const List = () => {
@@ -69,16 +68,7 @@ const List = () => {
     status,
   });
 
-  useGetSdg({
-    onSuccess: data => {
-      if (sdgOptions.length === 0) {
-        sdgOptions = data.map((item: Sdg) => ({
-          value: item.id,
-          label: `${item.ods_id} - ${intl.formatMessage({ id: item.tag_name })}`,
-        }));
-      }
-    },
-  });
+  const { data: sdgList } = useGetSdg();
 
   const handleClickDonate = useCallback(
     (institution: any) => {
@@ -161,7 +151,10 @@ const List = () => {
             size="md"
             menuWidth="450px"
             value=""
-            options={sdgOptions}
+            options={sdgList?.map((sdg: Sdg) => ({
+              value: sdg.id,
+              label: `${sdg.ods_id}. ${intl.formatMessage({ id: sdg.tag_name })}`,
+            }))}
             labelHeader={
               <span className="sdg-description-title">
                 <FormattedMessage id="sdg.description.1" />
@@ -277,7 +270,7 @@ const List = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch(queryClient);
+  await useGetInstitutionListPrefetch({ queryClient });
 
   return {
     props: {
