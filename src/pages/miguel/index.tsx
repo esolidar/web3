@@ -93,7 +93,7 @@ const Home = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch(queryClient);
+  await useGetInstitutionListPrefetch({ queryClient });
 
   return {
     props: {
