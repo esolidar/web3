@@ -1,7 +1,7 @@
 // import { useIntl } from 'react-intl';
 import { IntlShape, useIntl } from 'react-intl';
 import Icon from '@esolidar/toolkit/build/elements/icon';
-import Popover from '@esolidar/toolkit/build/elements/popover';
+import Tooltip from '@esolidar/toolkit/build/elements/tooltip';
 import Button from '@esolidar/toolkit/build/elements/button';
 import truncateAddress from '../../utils/truncateAddress';
 import useToast from '../../hooks/useToast/useToast';
@@ -26,17 +26,21 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(address);
-    toast.success('Successfully copied address');
+    toast.success(intl.formatMessage({ id: 'web3.copied' }));
   };
 
   return (
     <div className="card-contribute">
       <h3 className="card-contribute__header">
         {intl.formatMessage({ id: 'web3.CardContribute.title' })}
-        <Popover
-          overlayTrigger={<Icon name="InfoBold" size="sm" />}
-          size="md"
-          popoverBodyChildren={<p>{intl.formatMessage({ id: 'web3.CardContribute.popover' })}</p>}
+        <Tooltip
+          overlay={
+            <span className="text-left">
+              {intl.formatMessage({ id: 'web3.CardContribute.popover' })}
+            </span>
+          }
+          trigger={['hover', 'click']}
+          tooltipBodyChild={<Icon name="InfoBold" size="sm" />}
         />
       </h3>
       <p className="card-contribute__header-description body-small">

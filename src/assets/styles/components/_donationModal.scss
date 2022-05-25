@@ -61,14 +61,41 @@
     .form-group input.form-control {
       font-style: normal;
       font-weight: 700;
-      font-size: 18px;
-      line-height: 28px;
+      font-size: 24px;
+      line-height: 32px;
       -webkit-appearance: none;
       appearance: none;
       z-index: 1;
       color: map-get($neutrals, 900);
       padding: $distance-2 $distance-3 $distance-2 $distance-3;
       height: calc(28px + $distance-3);
+
+      &::placeholder {
+        color: map-get($neutrals, 400);
+      }
+    }
+
+    .textfield-number {
+      position: relative;
+
+      &::after {
+        content: 'cUSD';
+        position: absolute;
+        top: 13px;
+        right: $distance-3;
+        bottom: 18px;
+        color: map-get($neutrals, 400);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28px;
+      }
+
+      &:focus-within {
+        &::after {
+          color: map-get($neutrals, 900);
+        }
+      }
     }
   }
   &__shortcuts {
