@@ -18,6 +18,7 @@
     "@celo/utils": "^2.0.0",
     "@esolidar/i18n": "^0.335.0",
     "@esolidar/toolkit": "^4.134.8",
+    "@ramp-network/ramp-instant-sdk": "^3.1.1",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "bootstrap": "4.4.1",
