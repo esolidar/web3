@@ -1,7 +1,18 @@
-.footer-component {
+.footer {
   padding: $distance-16 $distance-7 0 $distance-7;
 
-  &__copyright {
+  @media (max-width: map-get($breakpoints, md)) {
+    padding: $distance-3;
+    padding-top: $distance-5;
+  }
+
+  &-detail {
+    @media (max-width: map-get($breakpoints, md)) {
+      padding-bottom: 96px;
+    }
+  }
+
+  &-copyright {
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -9,97 +20,102 @@
     color: map-get($neutrals, 700);
   }
 
-  &__menu {
-    padding: $distance-5 0;
+  &-menu {
     display: flex;
     align-items: center;
     gap: $distance-2;
-    font-style: normal;
-    font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     color: map-get($neutrals, 700);
+    padding: $distance-5 0;
 
-    &-item {
-      font-style: normal;
+    @media (max-width: map-get($breakpoints, md)) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $distance-3;
+    }
+
+    &__item {
       font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
 
       a {
         text-decoration: none;
         color: map-get($neutrals, 700);
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
-      &-separator {
+      &--separator {
         margin: 0 $distance-3;
+        background: map-get($neutrals, 200);
         width: 1px;
-        background: map-get($neutrals, 400);
         height: 20px;
-      }
-    }
-  }
 
-  &__social-icons {
-    display: flex;
-    gap: 16px;
-  }
-
-  .change-language {
-    display: flex;
-    white-space: nowrap;
-    align-items: center;
-    margin-left: auto;
-
-    .power-by-esolidar-mobile {
-      display: none;
-    }
-
-    .change-lang {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: $distance-2;
-
-      .btn-change-lang {
-        padding: 0;
-      }
-    }
-  }
-}
-
-@media (max-width: map-get($breakpoints, md)) {
-  .footer-component {
-    padding: $distance-3;
-    padding-top: $distance-5;
-
-    &__detail {
-      padding-bottom: 96px;
-    }
-
-    &__menu {
-      display: block;
-
-      &-item {
-        padding-top: $distance-3;
-
-        &-separator {
-          margin: 0;
-          margin-top: $distance-6;
-          margin-bottom: $distance-6;
+        @media (max-width: map-get($breakpoints, md)) {
+          margin: $distance-3 0;
           width: 100%;
-          background: map-get($neutrals, 200);
           height: 1px;
         }
       }
     }
 
-    .power-by-esolidar-mobile {
-      display: initial !important;
+    & .powered-by-esolidar {
+      @media (max-width: map-get($breakpoints, md)) {
+        display: none;
+      }
+
+      a {
+        font-weight: 600;
+        text-decoration: none;
+        color: map-get($neutrals, 700);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.mobile {
+        display: none;
+
+        @media (max-width: map-get($breakpoints, md)) {
+          display: initial !important;
+        }
+      }
     }
 
-    .power-by-esolidar {
-      display: none;
+    &__lang {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        justify-content: space-between;
+        margin-left: unset;
+        width: 100%;
+      }
+
+      &--dropdown {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: $distance-2;
+
+        @media (max-width: map-get($breakpoints, md)) {
+          gap: $distance-1;
+        }
+      }
+    }
+
+    &__social {
+      display: flex;
+      gap: 16px;
+      margin-left: $distance-8;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        margin-left: unset;
+      }
     }
   }
 }

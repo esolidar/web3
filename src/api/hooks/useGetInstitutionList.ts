@@ -6,13 +6,20 @@ import ROOT_URL from '../../constants/apiUrl';
 interface Args {
   search?: string;
   odsId?: any[];
+  perPage?: number;
   onSuccess?(data: any): void;
+}
+
+interface ArgsPrefetch {
+  queryClient: QueryClient;
+  search?: string | null;
+  perPage?: number;
 }
 
 const queryKey: string = 'getInstitutionList';
 const url = (params: string): string => `${ROOT_URL}institutions${params && `?${params}`}`;
 
-const useGetInstitutionList = ({ search, odsId = [], onSuccess }: Args) =>
+const useGetInstitutionList = ({ search, odsId = [], perPage = 3, onSuccess }: Args) =>
   useQuery(
     [queryKey, search, odsId],
     async () => {
@@ -20,27 +27,30 @@ const useGetInstitutionList = ({ search, odsId = [], onSuccess }: Args) =>
         has_celo_wallet: Number(true),
         name: search ? `%${search}%` : undefined,
         ods_id: odsId.length > 0 ? odsId.flatMap(i => i.value).join() : undefined,
+        per_page: perPage,
       });
       const { data: response } = await axios.get(url(params));
-      return response.data;
+      return response.data.institutions;
     },
     {
       onSuccess: data => onSuccess && onSuccess(data),
     }
   );
 
-export const useGetInstitutionListPrefetch = async (queryClient: QueryClient, perPage = 6) => {
-  await queryClient.prefetchQuery(queryKey, async () => {
+export const useGetInstitutionListPrefetch = async ({
+  queryClient,
+  perPage = 6,
+  search = '',
+}: ArgsPrefetch) => {
+  await queryClient.prefetchQuery([queryKey, search, []], async () => {
     const params: string = queryString.stringify({
       has_celo_wallet: Number(true),
       per_page: perPage,
     });
     const { data: response } = await axios.get(url(params));
-    return response.data;
+    return response.data.institutions;
   });
 };
-
-export default useGetInstitutionList;
 
 export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }: Args) =>
   useInfiniteQuery(
@@ -76,3 +86,5 @@ export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }:
       }),
     }
   );
+
+export default useGetInstitutionList;
