@@ -8,12 +8,12 @@ import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
-import openCeloAddress from '../../utils/openCeloAddress';
+import openCeloTransaction from '../../utils/openCeloTransaction';
 import useToast from '../../hooks/useToast/useToast';
 import LINKS from '../../constants/links';
 
 const SuccessModal: FC<Props> = ({
-  transitionID,
+  transactionID,
   nonProfitName,
   openModal,
   onCloseModal,
@@ -31,7 +31,7 @@ const SuccessModal: FC<Props> = ({
       backdrop="static"
       showFooter={false}
       bodyChildren={
-        <ModalBody {...shareProps} transitionID={transitionID} nonProfitName={nonProfitName} />
+        <ModalBody {...shareProps} transactionID={transactionID} nonProfitName={nonProfitName} />
       }
     />
   );
@@ -40,7 +40,7 @@ const SuccessModal: FC<Props> = ({
 export default SuccessModal;
 
 const ModalBody: FC<ModalBodyProps> = ({
-  transitionID,
+  transactionID,
   nonProfitName,
   title = '',
   showFacebook = true,
@@ -86,11 +86,11 @@ const ModalBody: FC<ModalBodyProps> = ({
         </div>
         <div className="successModal__transition-id">
           <span
-            onClick={() => openCeloAddress(transitionID)}
-            onKeyDown={() => openCeloAddress(transitionID)}
+            onClick={() => openCeloTransaction(transactionID)}
+            onKeyDown={() => openCeloTransaction(transactionID)}
             role="presentation"
           >
-            {truncateAddress(transitionID, 5)}
+            {truncateAddress(transactionID, 6)}
           </span>
           <span className="successModal__transition-icon">
             <Icon

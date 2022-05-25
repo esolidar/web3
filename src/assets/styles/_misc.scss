@@ -51,5 +51,6 @@
 }
 
 .tooltip .rc-tooltip-inner {
+  font-family: map-get($fonts, main);
   text-align: left !important;
 }
