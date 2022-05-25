@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { useContractKit } from '@celo-tools/use-contractkit';
-import getRoute from '../routes';
-import useIsSSR from '../hooks/useIsSSR/useIsSSR';
-import HomeIllustration from './HomeIllustration';
+import getRoute from '../../routes';
+import useIsSSR from '../../hooks/useIsSSR/useIsSSR';
+import HomeIllustration from '../homeIllustration/HomeIllustration';
 
 const Hero = () => {
   const intl: IntlShape = useIntl();
@@ -13,9 +13,13 @@ const Hero = () => {
   const { address, connect } = useContractKit();
   const isSSR = useIsSSR();
 
+  const handleClickDiscover = () => {
+    router.push(getRoute.DISCOVER(String(router.locale)));
+  };
+
   return (
-    <div className="home-banner">
-      <div className="home-banner__background" />
+    <div className="hero">
+      <div className="hero__background" />
       <svg
         id="shape-1"
         width="932"
@@ -78,13 +82,13 @@ const Hero = () => {
       </svg>
 
       <Viewport centred size="xl">
-        <div className="content-banner">
+        <div className="hero__content">
           <div>
             <h1>
               <FormattedMessage id="Maximize your impact " />
-              <b>
+              <span>
                 <FormattedMessage id="with crypto" />
-              </b>
+              </span>
             </h1>
             <p>
               <FormattedMessage
@@ -92,7 +96,7 @@ const Hero = () => {
               rewarding"
               />
             </p>
-            <div className="header-action-buttons">
+            <div className="hero__content--actions">
               {!isSSR && (
                 <Button
                   disabled={address}
@@ -108,12 +112,16 @@ const Hero = () => {
                   }}
                 />
               )}
-              <a href={getRoute.DISCOVER(String(router.locale))} className="btn-white">
-                {intl.formatMessage({ id: 'Discover  causes' })}
-              </a>
+              <Button
+                extraClass="secondary"
+                text={intl.formatMessage({ id: 'Discover  causes' })}
+                size="lg"
+                onClick={handleClickDiscover}
+                ghost
+              />
             </div>
           </div>
-          <div className="illustration">
+          <div className="hero__content--illustration">
             <HomeIllustration />
           </div>
         </div>
