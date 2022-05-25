@@ -1233,17 +1233,17 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@esolidar/i18n@^0.332.0":
-  version "0.332.0"
-  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.332.0/faac805affb98dfe969d303055b8c3a6dc0ef321ee55035388d3fad0c6924a74#7c81730c1310366a0070bc2e02ee6ff8cad35236"
-  integrity sha512-1ZAuWRGDH1S1tn2zUsA+TPHqsIWPaw4A7pvd7ezZdfomHbajDRZoVKRzM4oQcid+soRpOlFxZBHPRyXVopCrgw==
+"@esolidar/i18n@^0.335.0":
+  version "0.335.0"
+  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.335.0/97ea28f7b7d7308ce7c971dfb7bc44103e40c2899cf293cee97a3e20dc289132#e5ab5809687fdccce15e78abe7a5177a4377bdbc"
+  integrity sha512-zZgRgipAkyZRtejfRoR2U+6d7JzenuoZtnGa2BINFwAMPgdKAcny4zcs5rQWBOUBeuBa0AWapItzG+emGS6w/g==
   dependencies:
     readline-sync "^1.4.10"
 
-"@esolidar/toolkit@^4.134.7":
-  version "4.134.7"
-  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.134.7/d2779b46ab4814001e52db70c36f2bb6b27877bba9569e5f0f8d9bebcc2f981a#71db8658e15f14f8ec500ff375bacd9dc6ad2d46"
-  integrity sha512-D/2hmhMWWVtcrX1DZ4C1EQ4ZVQrDZERS5uonColsCuEVTFxkphUNGHVatD0dlV/UFwoJQM+MN8OcJi4MYNZdcA==
+"@esolidar/toolkit@^4.134.8":
+  version "4.134.8"
+  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.134.8/d534abe825f39d0ce902c4bbf5e832e18aa1b3d24b9b628eca084e0848fdff7e#e2be324523816855775c324ed550324ec6a2f714"
+  integrity sha512-1E9/P5pnhvtQc2ZU9vFPLqsgjoqM1NALf/3oYPBMRVmaKSQlK0p6hgSJwUsaoTs1qCBGos9sSMpPyLoLyiL3vg==
   dependencies:
     "@rollup/plugin-typescript" "^8.3.0"
     react-loading-skeleton "^3.0.3"
@@ -1753,6 +1753,13 @@
   version "2.11.5"
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
   integrity sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
+
+"@ramp-network/ramp-instant-sdk@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/@ramp-network/ramp-instant-sdk/-/ramp-instant-sdk-3.1.1.tgz#468bf7b9e28bb7074ab6b720df8aa7ce4aec971e"
+  integrity sha512-styElknV9f9nvxH+uzmlJIRuzuBSzinzWZN6nlrh1SJ7CfDAd460PWkUuWZHEvRhRUTwpZCmltMxtLRCzykJAQ==
+  dependencies:
+    body-scroll-lock "^3.1.5"
 
 "@react-aria/ssr@^3.0.1":
   version "3.1.2"
@@ -2751,6 +2758,11 @@ body-parser@1.20.0, body-parser@^1.16.0:
     raw-body "2.5.1"
     type-is "~1.6.18"
     unpipe "1.0.0"
+
+body-scroll-lock@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.npmjs.org/body-scroll-lock/-/body-scroll-lock-3.1.5.tgz#c1392d9217ed2c3e237fee1e910f6cdd80b7aaec"
+  integrity sha512-Yi1Xaml0EvNA0OYWxXiYNqY24AfWkbA6w5vxE7GWxtKfzIbZM+Qw+aSmkgsbWzbHiy/RCSkUZBplVxTA+E4jJg==
 
 boolbase@^1.0.0:
   version "1.0.0"

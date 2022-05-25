@@ -22,6 +22,7 @@ interface WalletProps {
   destroy(): void;
   connect: any;
   setIsNavVisible(val: boolean): void;
+  isBottonsTransparent: boolean;
 }
 
 interface Props {
@@ -29,7 +30,14 @@ interface Props {
   isBottonsTransparent: boolean;
 }
 
-const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => {
+const Wallet = ({
+  address,
+  balance,
+  destroy,
+  connect,
+  setIsNavVisible,
+  isBottonsTransparent,
+}: WalletProps) => {
   const intl = useIntl();
 
   return (
@@ -49,6 +57,7 @@ const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletP
           ]}
           dropdownText={truncateAddress(address, 5)}
           labelText={balance >= 0 ? `${balance} cUSD` : ''}
+          transparent={isBottonsTransparent}
           // fullWidth
         />
       ) : (
@@ -132,6 +141,7 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             destroy={destroy}
             connect={connect}
             setIsNavVisible={setIsNavVisible}
+            isBottonsTransparent={isBottonsTransparent}
           />
         </div>
       </nav>
@@ -158,6 +168,7 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
               destroy={destroy}
               connect={connect}
               setIsNavVisible={setIsNavVisible}
+              isBottonsTransparent={isBottonsTransparent}
             />
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}
