@@ -24,3 +24,4 @@ declare module '@esolidar/toolkit/build/elements/customModal';
 declare module '@esolidar/toolkit/build/elements/textFieldNumber';
 declare module '@esolidar/toolkit/build/hooks/useDebounce';
 declare module '@esolidar/toolkit/build/hooks/useIsFirstRender';
+declare module '@esolidar/toolkit/build/elements/tooltip';

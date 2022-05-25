@@ -2,6 +2,7 @@ import { useContractKit } from '@celo-tools/use-contractkit';
 import { ContractKit } from '@celo/contractkit';
 import { useContext } from 'react';
 import toNumber from '../../utils/convertAmount';
+import truncateNumber from '../../utils/truncateNumber';
 import AppContext from '../../contexts/AppContext';
 
 const useGetBalance = () => {
@@ -19,10 +20,11 @@ const useGetBalance = () => {
       const cUSDBalance = await cUSDtoken.balanceOf(account);
       // console.log(`Your account CELO balance: ${celoBalance.toString()}`);
       // console.log(`Your account cUSD balance: ${cUSDBalance.toString()}`);
-      const value = toNumber(cUSDBalance.toString());
 
-      // TODO: product team needs to decide the final "format" number
-      context.changeBalance(+value.toFixed(4));
+      const value = toNumber(cUSDBalance.toString());
+      const truncatedValue = truncateNumber(value, 8);
+
+      context.changeBalance(truncatedValue);
     });
   };
 

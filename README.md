@@ -1,5 +1,7 @@
 # esolidar web3
 
+![esolidar](https://static.esolidar.com/frontend/assets/web3-social-share.png)
+
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/31c7e814239047ccb71c98b61a97be12)](https://www.codacy.com/gh/esolidar/web3/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=esolidar/web3&amp;utm_campaign=Badge_Grade)
 ![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
@@ -12,12 +14,14 @@ A dedicated Dapp on top of Celo where any nonprofit, susteinable project or caus
 
 ## Table of Contents
 
-- [Installation](#install)
-- [Supported Wallets](#supported-wallets)
-- [License](#license)
-- [Links](#links)
-- [Security Vulnerabilities](#security-vulnerabilities)
-- [Support](#support)
+- [esolidar web3](#esolidar-web3)
+  - [Table of Contents](#table-of-contents)
+    - [Install](#install)
+    - [Supported Wallets](#supported-wallets)
+    - [Links](#links)
+    - [License](#license)
+    - [Security Vulnerabilities](#security-vulnerabilities)
+    - [Support](#support)
 
 ### Install
 

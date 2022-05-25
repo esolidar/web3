@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Dropdown from '@esolidar/toolkit/build/elements/dropdown';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { SUPPORTED_LOCALES } from '../../constants/locales';
+import SOCIAL_MEDIA from '../../constants/socialMedia';
 
 const footerItems = [
   {
@@ -90,7 +91,7 @@ const Footer = () => {
                 <Button
                   extraClass="primary-full"
                   text={currentLocale}
-                  iconRight={<Icon name="ChevronUp" />}
+                  iconRight={<Icon name="ChevronDown" />}
                   size="sm"
                   ghost
                 />
@@ -117,24 +118,20 @@ const Footer = () => {
         </div>
         <div className="footer-menu__social">
           <Button
-            extraClass="primary-full"
-            type="icon"
-            onClick={() => {
-              // window.open(url, '_blank');
-            }}
-            icon={<Icon name="Twitter" size="md" />}
+            href={SOCIAL_MEDIA.twitter}
+            target="_blank"
+            rel="noreferrer"
             size="sm"
-            ghost
+            type="link"
+            icon={<Icon name="Twitter" size="md" />}
           />
           <Button
-            extraClass="primary-full"
-            type="icon"
-            onClick={() => {
-              // window.open(url, '_blank');
-            }}
-            icon={<Icon name="Linkedin" size="md" />}
+            href={SOCIAL_MEDIA.linkedin}
+            target="_blank"
+            rel="noreferrer"
             size="sm"
-            ghost
+            type="link"
+            icon={<Icon name="Linkedin" size="md" />}
           />
         </div>
       </div>
