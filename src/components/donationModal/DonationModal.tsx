@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-use-before-define */
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
@@ -16,7 +16,7 @@ const DEFAULT_FORM: Form = {
   errors: null,
 };
 
-const DonationModal: FC<Props> = ({
+const DonationModal = ({
   openModal,
   balance,
   nonProfitName,
@@ -55,10 +55,8 @@ const DonationModal: FC<Props> = ({
     const newForm: Form = { ...form };
     let newValue: any = null;
     if (value && funds > 0) {
-      if (balance && newValue >= +balance) {
-        newValue = balance;
-      }
       newValue = value;
+      if (parseFloat(value) > funds) newValue = funds;
       newForm.errors = null;
     }
     newForm.amount = newValue;
@@ -134,7 +132,7 @@ const DonationModal: FC<Props> = ({
 
 export default DonationModal;
 
-const ModalBody: FC<ModalBodyProps> = ({
+const ModalBody = ({
   balance,
   form = DEFAULT_FORM,
   shortcuts = [25, 50, 150, 500],
@@ -162,17 +160,17 @@ const ModalBody: FC<ModalBodyProps> = ({
         <TextFieldNumber
           field="amount"
           id="amount"
-          suffix=" cUSD"
           thousandSeparator={false}
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
           decimalScale={18}
-          placeholder="0.00 cUSD"
+          placeholder="0.00"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount}
           dataTestId="amount"
           allowNegative={false}
           disabled={isDonateLoading || !!errors?.amount}
+          renderText={() => <div>CUSD</div>}
         />
       </div>
       <div className="donationModal__shortcuts">

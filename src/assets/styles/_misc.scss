@@ -4,9 +4,6 @@
   flex-direction: column;
   align-items: center;
 }
-.text-left {
-  text-align: left;
-}
 .web3 {
   &__connect-modal {
     position: fixed;
@@ -16,6 +13,10 @@
     height: 100%;
     z-index: 9999;
 
+    p {
+      padding-top: $distance-4;
+    }
+
     & > div:first-of-type {
       z-index: 1000;
     }
@@ -23,6 +24,10 @@
 
   &__viewport {
     padding: 0 $distance-3;
+  }
+
+  &__getBalance-modal {
+    display: none;
   }
 }
 
@@ -43,4 +48,8 @@
     background-color: transparent;
     border: unset;
   }
+}
+
+.tooltip .rc-tooltip-inner {
+  text-align: left !important;
 }

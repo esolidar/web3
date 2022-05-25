@@ -26,6 +26,15 @@
         margin-left: 10px;
       }
     }
+    &-icon {
+      cursor: pointer;
+
+      &:hover,
+      &:focus,
+      &:active {
+        @include svg-change-color(map-get($theme-colors, primary));
+      }
+    }
   }
   &__separator {
     border-top: 2px solid map-get($neutrals, 200);

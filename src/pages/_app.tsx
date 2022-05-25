@@ -61,6 +61,11 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         url: 'https://use-contractkit.vercel.app',
         icon: 'https://use-contractkit.vercel.app/favicon.ico',
       }}
+      actionModal={{
+        reactModalProps: {
+          overlayClassName: 'web3__getBalance-modal',
+        },
+      }}
       connectModal={{
         reactModalProps: {
           overlayClassName: 'web3__connect-modal',

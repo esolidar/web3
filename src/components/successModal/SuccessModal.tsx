@@ -92,13 +92,15 @@ const ModalBody: FC<ModalBodyProps> = ({
           >
             {truncateAddress(transitionID, 5)}
           </span>
-          <Icon
-            name="InfoBold"
-            size="sm"
-            onClick={() => {
-              setOpenModalInfo(true);
-            }}
-          />
+          <span className="successModal__transition-icon">
+            <Icon
+              name="InfoBold"
+              size="sm"
+              onClick={() => {
+                setOpenModalInfo(true);
+              }}
+            />
+          </span>
         </div>
       </div>
       <div className="successModal__separator" />

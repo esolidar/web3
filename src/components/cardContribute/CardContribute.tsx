@@ -39,7 +39,6 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
               {intl.formatMessage({ id: 'web3.CardContribute.popover' })}
             </span>
           }
-          placement="right"
           trigger={['hover', 'click']}
           tooltipBodyChild={<Icon name="InfoBold" size="sm" />}
         />
