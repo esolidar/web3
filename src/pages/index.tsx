@@ -56,10 +56,12 @@ const Home = () => {
     <>
       <Hero />
       <Viewport centred size="xl">
-        <div className="home-content">
-          <div className="home-content__section">
-            <FormattedMessage id="Featured" />
-            <div className="home-content__section-hr" />
+        <div className="home">
+          <div className="home-section">
+            <div className="home-section__title">
+              <FormattedMessage id="Featured" />
+              <div className="home-section__title--hr" />
+            </div>
             <Button
               extraClass="primary-full"
               onClick={handleClickViewMore}
@@ -68,8 +70,9 @@ const Home = () => {
               ghost
             />
           </div>
+
           {institutionList.data.length > 0 && (
-            <div className="home-content__npo-cards">
+            <div className="home-npo-cards">
               {institutionList.data.map((institution: any) => (
                 <CardNonProfit
                   key={institution.id}
@@ -80,16 +83,22 @@ const Home = () => {
               ))}
             </div>
           )}
-          <div className="home-content__section top">
-            <div className="home-content__section-left">
-              <FormattedMessage id="web3.homepage.support.title" />
+
+          <div className="home-section second-section">
+            <div className="home-section__title">
+              <span>
+                <FormattedMessage id="web3.homepage.support.title" />
+              </span>
+              <div className="home-section__title--hr" />
             </div>
-            <div className="home-content__section-hr" />
-            <div className="home-content__section-right">
-              <FormattedMessage id="web3.homepage.support.subtitle" />
+            <div className="home-section__title">
+              <span>
+                <FormattedMessage id="web3.homepage.support.subtitle" />
+              </span>
             </div>
           </div>
-          <div className="home-content__section-columns">
+
+          <div className="home-callout-grid">
             <HomeCallout
               color="green"
               title="web3.homepage.box1.title"
@@ -111,10 +120,14 @@ const Home = () => {
               description="web3.homepage.box4.subtitle"
             />
           </div>
-          <div className="home-content__section">
-            <FormattedMessage id="web3.homepage.partners" />
-            <div className="home-content__section-hr" />
+
+          <div className="home-section">
+            <div className="home-section__title">
+              <FormattedMessage id="web3.homepage.partners" />
+              <div className="home-section__title--hr" />
+            </div>
           </div>
+
           <div style={{ marginTop: '78px', display: 'flex', gap: '24px' }}>
             <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
             <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
