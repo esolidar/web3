@@ -198,7 +198,7 @@ const InstitutionDetail = () => {
         title={institution.name}
         windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
         onCloseModal={() => setIsOpenShareModal(false)}
-        onClickCopyToClipboard={() => toast.success('Successfully copied URL')}
+        onClickCopyToClipboard={() => toast.success(intl.formatMessage({ id: 'web3.copied' }))}
       />
       <DonateFooter
         onClickDonate={handleClickDonate}

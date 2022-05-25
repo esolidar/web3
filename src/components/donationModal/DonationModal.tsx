@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-use-before-define */
-import React, { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
@@ -9,13 +9,14 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import TextFieldNumber from '@esolidar/toolkit/build/elements/textFieldNumber';
 import useToast from '../../hooks/useToast/useToast';
 import Props, { ModalBodyProps, Form } from './DonationModal.types';
+import LINKS from '../../constants/links';
 
 const DEFAULT_FORM: Form = {
   amount: null,
   errors: null,
 };
 
-const DonationModal: FC<Props> = ({
+const DonationModal = ({
   openModal,
   balance,
   nonProfitName,
@@ -24,6 +25,7 @@ const DonationModal: FC<Props> = ({
 }: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
   const [isDonateLoading, setIsDonateLoading] = useState<boolean>(false);
+  const [isDonateError, setIsDonateError] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
   const toast = useToast();
@@ -32,6 +34,7 @@ const DonationModal: FC<Props> = ({
 
   const resetModal = () => {
     setIsDonateLoading(false);
+    setIsDonateError(false);
     const funds = balance || 0;
     if (+funds === 0) {
       const newForm: Form = { ...form };
@@ -52,14 +55,13 @@ const DonationModal: FC<Props> = ({
     const newForm: Form = { ...form };
     let newValue: any = null;
     if (value && funds > 0) {
-      if (balance && newValue >= +balance) {
-        newValue = balance;
-      }
-      newValue = +value;
+      newValue = value;
+      if (parseFloat(value) > funds) newValue = funds;
       newForm.errors = null;
     }
     newForm.amount = newValue;
     setForm(newForm);
+    setIsDonateError(false);
   };
 
   const handleClickDonate = () => {
@@ -69,7 +71,7 @@ const DonationModal: FC<Props> = ({
         if (value) {
           setIsDonateLoading(false);
           toast.error(intl.formatMessage({ id: 'web3.error.alert' }));
-          setForm({ amount: null, errors: { transaction: true } });
+          setIsDonateError(true);
         }
       });
     }
@@ -99,7 +101,7 @@ const DonationModal: FC<Props> = ({
             extraClass={classnames({
               'primary-full': form.amount || isDonateLoading,
             })}
-            size="md"
+            size="lg"
             text={intl.formatMessage({ id: 'web3.donate' })}
             onClick={handleClickDonate}
             withLoading
@@ -107,18 +109,14 @@ const DonationModal: FC<Props> = ({
             disabled={!form.amount || form.amount === 0}
             fullWidth
           />
-          {form.errors?.transaction && (
+          {isDonateError && (
             <span className="donationModal__error">
               <FormattedMessage
                 id="web3.donateModal.error"
                 values={{
                   // @ts-ignore
                   a: chunks => (
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`${process.env.NEXT_PUBLIC_ESOLIDAR_HELP_URL}kb/guide/troubleshooting-dEsGbnLOMU/Steps/1496184`}
-                    >
+                    <a target="_blank" rel="noreferrer" href={LINKS.troubleshooting}>
                       {chunks}
                     </a>
                   ),
@@ -134,7 +132,7 @@ const DonationModal: FC<Props> = ({
 
 export default DonationModal;
 
-const ModalBody: FC<ModalBodyProps> = ({
+const ModalBody = ({
   balance,
   form = DEFAULT_FORM,
   shortcuts = [25, 50, 150, 500],
@@ -154,7 +152,7 @@ const ModalBody: FC<ModalBodyProps> = ({
       <div className="donationModal__balance">
         <div className="donationModal__balance-coin">
           <Button className="cusd-icon" icon={<Icon name="AtSign" />} type="icon" theme="light" />
-          <span>cUSD balance</span>
+          <span>{intl.formatMessage({ id: 'web3.balance' })}</span>
         </div>
         <div className="donationModal__balance-value">{balance} cUSD</div>
       </div>
@@ -162,17 +160,17 @@ const ModalBody: FC<ModalBodyProps> = ({
         <TextFieldNumber
           field="amount"
           id="amount"
-          suffix=" cUSD"
-          thousandSeparator
+          thousandSeparator={false}
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
           decimalScale={18}
-          placeholder="0.00 cUSD"
+          placeholder="0.00"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount}
           dataTestId="amount"
           allowNegative={false}
           disabled={isDonateLoading || !!errors?.amount}
+          renderText={() => <div>CUSD</div>}
         />
       </div>
       <div className="donationModal__shortcuts">
