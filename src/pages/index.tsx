@@ -7,21 +7,25 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
 import Button from '@esolidar/toolkit/build/elements/button';
-import Hero from '../components/Hero';
-import { useGetInstitutionListPrefetch } from '../api/hooks/useGetInstitutionList';
+import Hero from '../components/hero/Hero';
+import HomeCallout from '../components/homeCallout/HomeCallout';
+import useGetInstitutionList, {
+  useGetInstitutionListPrefetch,
+} from '../api/hooks/useGetInstitutionList';
 import getRoute from '../routes';
 import Modals from '../components/donationModal/Modals';
 
-const DiscoverPage = ({ dehydratedState }: any) => {
-  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
-  const { data } = dehydratedState?.queries?.[0].state.data.institutions || '';
-  const router = useRouter();
+const Home = () => {
   const intl: IntlShape = useIntl();
   const { address, connect } = useContractKit();
+  const router = useRouter();
 
-  const institutionWalletAddress = useRef('');
-  const nonProfitName = useRef('');
-  const nonProfitId = useRef(null);
+  const institutionWalletAddress = useRef<string>('');
+  const nonProfitName = useRef<string>('');
+  const nonProfitId = useRef<number | null>(null);
+  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+
+  const { data: institutionList } = useGetInstitutionList({});
 
   const handleClickDonate = useCallback(
     (institution: any) => {
@@ -31,19 +35,21 @@ const DiscoverPage = ({ dehydratedState }: any) => {
         (item: any) => item.default
       ).wallet_address;
 
-      if (address) {
-        setIsOpenDonationModal(true);
-      } else {
+      if (address) setIsOpenDonationModal(true);
+      else
         connect()
           .then(() => setIsOpenDonationModal(true))
           .catch((e: any) => console.log(e));
-      }
     },
     [isOpenDonationModal]
   );
 
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
+  };
+
+  const handleClickViewMore = () => {
+    router.push(getRoute.DISCOVER(String(router.locale)));
   };
 
   return (
@@ -54,31 +60,26 @@ const DiscoverPage = ({ dehydratedState }: any) => {
           <div className="home-content__section">
             <FormattedMessage id="Featured" />
             <div className="home-content__section-hr" />
-            <div className="home-content__section-view-more">
-              <Button
-                extraClass="link"
-                fullWidth={false}
-                ghost={false}
-                href={getRoute.DISCOVER(String(router.locale))}
-                iconRight={<Icon name="ArrowRight" />}
-                isLoading={false}
-                size="md"
-                text={intl.formatMessage({ id: 'web3.view.more' })}
-                theme="light"
-                type="button"
-              />
+            <Button
+              extraClass="primary-full"
+              onClick={handleClickViewMore}
+              iconRight={<Icon name="ArrowRight" />}
+              text={intl.formatMessage({ id: 'web3.view.more' })}
+              ghost
+            />
+          </div>
+          {institutionList.data.length > 0 && (
+            <div className="home-content__npo-cards">
+              {institutionList.data.map((institution: any) => (
+                <CardNonProfit
+                  key={institution.id}
+                  npo={institution}
+                  onClickDonate={() => handleClickDonate(institution)}
+                  onClickThumb={() => handleClickThumb(institution)}
+                />
+              ))}
             </div>
-          </div>
-          <div className="home-content__npo-cards">
-            {data.map((institution: any) => (
-              <CardNonProfit
-                key={institution.id}
-                npo={institution}
-                onClickDonate={() => handleClickDonate(institution)}
-                onClickThumb={() => handleClickThumb(institution)}
-              />
-            ))}
-          </div>
+          )}
           <div className="home-content__section top">
             <div className="home-content__section-left">
               <FormattedMessage id="web3.homepage.support.title" />
@@ -89,42 +90,26 @@ const DiscoverPage = ({ dehydratedState }: any) => {
             </div>
           </div>
           <div className="home-content__section-columns">
-            <div className="home-content__section-columns-item green">
-              <h4>
-                <FormattedMessage id="web3.homepage.box1.title" />
-              </h4>
-              <p>
-                <FormattedMessage id="web3.homepage.box1.subtitle" />
-              </p>
-              <div className="home-content__section-columns-item-footer" />
-            </div>
-            <div className="home-content__section-columns-item yellow">
-              <h4>
-                <FormattedMessage id="web3.homepage.box2.title" />
-              </h4>
-              <p>
-                <FormattedMessage id="web3.homepage.box2.subtitle" />
-              </p>
-              <div className="home-content__section-columns-item-footer" />
-            </div>
-            <div className="home-content__section-columns-item yellow">
-              <h4>
-                <FormattedMessage id="web3.homepage.box3.title" />
-              </h4>
-              <p>
-                <FormattedMessage id="web3.homepage.box3.subtitle" />
-              </p>
-              <div className="home-content__section-columns-item-footer" />
-            </div>
-            <div className="home-content__section-columns-item green">
-              <h4>
-                <FormattedMessage id="web3.homepage.box4.title" />
-              </h4>
-              <p>
-                <FormattedMessage id="web3.homepage.box4.subtitle" />
-              </p>
-              <div className="home-content__section-columns-item-footer" />
-            </div>
+            <HomeCallout
+              color="green"
+              title="web3.homepage.box1.title"
+              description="web3.homepage.box1.subtitle"
+            />
+            <HomeCallout
+              color="yellow"
+              title="web3.homepage.box2.title"
+              description="web3.homepage.box2.subtitle"
+            />
+            <HomeCallout
+              color="green"
+              title="web3.homepage.box3.title"
+              description="web3.homepage.box3.subtitle"
+            />
+            <HomeCallout
+              color="yellow"
+              title="web3.homepage.box4.title"
+              description="web3.homepage.box4.subtitle"
+            />
           </div>
           <div className="home-content__section">
             <FormattedMessage id="web3.homepage.partners" />
@@ -149,12 +134,12 @@ const DiscoverPage = ({ dehydratedState }: any) => {
   );
 };
 
-export default DiscoverPage;
+export default Home;
 
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch(queryClient, 3);
+  await useGetInstitutionListPrefetch({ queryClient, perPage: 3, search: null });
 
   return {
     props: {
