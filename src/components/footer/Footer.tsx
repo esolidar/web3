@@ -118,6 +118,20 @@ const Footer = () => {
         </div>
         <div className="footer-menu__social">
           <Button
+            extraClass="primary-full"
+            type="icon"
+            icon={<Icon name="Twitter" size="md" />}
+            onClick={() => window.open(SOCIAL_MEDIA.twitter, '_blank')}
+            ghost
+          />
+          <Button
+            extraClass="primary-full"
+            type="icon"
+            icon={<Icon name="Linkedin" size="md" />}
+            onClick={() => window.open(SOCIAL_MEDIA.linkedin, '_blank')}
+            ghost
+          />
+          {/* <Button
             href={SOCIAL_MEDIA.twitter}
             target="_blank"
             rel="noreferrer"
@@ -132,7 +146,7 @@ const Footer = () => {
             size="sm"
             type="link"
             icon={<Icon name="Linkedin" size="md" />}
-          />
+          /> */}
         </div>
       </div>
     </footer>

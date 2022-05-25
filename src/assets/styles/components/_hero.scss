@@ -26,12 +26,23 @@
     padding: 0 $distance-2;
     z-index: 3;
 
-    @media (max-width: map-get($breakpoints, md)) {
-      top: 100px;
+    &--illustration {
+      & > svg {
+        position: absolute;
 
-      & .hero__content--illustration {
+        &:nth-of-type(2) {
+          top: 160px;
+          left: 540px;
+        }
+      }
+
+      @media (max-width: map-get($breakpoints, md)) {
         display: none;
       }
+    }
+
+    @media (max-width: map-get($breakpoints, md)) {
+      top: 100px;
     }
 
     h1 {
