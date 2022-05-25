@@ -1,5 +1,4 @@
-/* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { dehydrate, QueryClient } from 'react-query';
