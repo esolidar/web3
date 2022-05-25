@@ -45,8 +45,8 @@ const InstitutionDetail = () => {
   const intl: IntlShape = useIntl();
   const nonProfitName = useRef('');
   const nonProfitId = useRef(null);
-  nonProfitName.current = institution.name;
-  nonProfitId.current = institution.id;
+  nonProfitName.current = institution?.name;
+  nonProfitId.current = institution?.id;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default

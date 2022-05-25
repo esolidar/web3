@@ -6,15 +6,19 @@ const useDonateCeloCUSD = () => {
 
   const donateWithCUSD = async (to: string, amount: string) => {
     try {
-      await performActions(async kit => {
+      const transactionHash = await performActions(async kit => {
         const cUSD = await kit.contracts.getStableToken();
         const value = kit.web3.utils.toWei(amount, 'ether');
-        await cUSD.transfer(to, value).sendAndWaitForReceipt({
+        const tx = await cUSD.transfer(to, value).send({
           from: kit.defaultAccount,
           gasPrice: kit.gasPrice,
         });
+        const hash = await tx.getHash();
+        await tx.waitReceipt();
+        return hash;
       });
-      console.log('sendTransaction succeeded');
+      console.log('sendTransaction succeeded: ');
+      return transactionHash;
     } catch (e) {
       console.log((e as Error).message);
       return e;

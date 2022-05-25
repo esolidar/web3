@@ -34,11 +34,7 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       <h3 className="card-contribute__header">
         {intl.formatMessage({ id: 'web3.CardContribute.title' })}
         <Tooltip
-          overlay={
-            <span className="text-left">
-              {intl.formatMessage({ id: 'web3.CardContribute.popover' })}
-            </span>
-          }
+          overlay={intl.formatMessage({ id: 'web3.CardContribute.popover' })}
           trigger={['hover', 'click']}
           tooltipBodyChild={<Icon name="InfoBold" size="sm" />}
         />
