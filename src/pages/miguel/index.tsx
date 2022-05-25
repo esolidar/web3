@@ -3,23 +3,18 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { dehydrate, QueryClient } from 'react-query';
-import Button from '@esolidar/toolkit/build/elements/button';
-import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../../api/hooks/useGetInstitutionList';
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
-import DonationModal from '../../components/donationModal';
 import RampCheckout from '../../components/RampCheckout'
 
 // TODO: gas price
 // TODO: success / error das transactions
 
 const Home = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-
   const intl = useIntl();
   const toMitch = '0x7335966f30FC589347793e3C2FE378549b8604B4';
 
@@ -59,24 +54,6 @@ const Home = () => {
     <div className="container">
       <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
-        <Button onClick={() => setOpenModal(true)} extraClass="primary-full" text="Donate" />
-
-        <Link
-          href={{
-            pathname: '/institution/[id]',
-            query: { id: 51 },
-          }}
-        >
-          <p>Go to institution 51</p>
-        </Link>
-        <Link
-          href={{
-            pathname: '/institution/[id]',
-            query: { id: 54 },
-          }}
-        >
-          <p>Go to institution 54</p>
-        </Link>
         {address ? (
           <>
           <RampCheckout 
