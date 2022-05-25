@@ -109,33 +109,12 @@
     }
 
     &__social {
-      // display: flex;
-      // gap: 16px;
-      // margin-left: $distance-8;
+      display: flex;
+      gap: $distance-1;
+      margin-left: $distance-8;
 
-      // @media (max-width: map-get($breakpoints, md)) {
-      //   margin-left: unset;
-      // }
-
-      &__social-icons {
-        display: flex;
-        padding-left: 5%;
-        @include svg-change-color(map-get($neutrals, 700));
-
-        a {
-          padding: 0 !important;
-          min-width: 0 !important;
-          gap: inherit !important;
-          height: auto !important;
-          &:first-child {
-            margin-right: $distance-2;
-          }
-        }
-
-        @media (max-width: map-get($breakpoints, md)) {
-          margin-top: $distance-2;
-          padding-left: 0;
-        }
+      @media (max-width: map-get($breakpoints, md)) {
+        margin-left: unset;
       }
     }
   }

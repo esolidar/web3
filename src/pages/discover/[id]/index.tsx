@@ -172,7 +172,7 @@ const InstitutionDetail = () => {
 
               <div className="nonprofit-detail__balance--amount">
                 <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
-                {npoBalance && <div style={{ whiteSpace: 'nowrap' }}>{`${npoBalance} cUSD`}</div>}
+                {npoBalance && <div>{`${npoBalance} cUSD`}</div>}
               </div>
             </div>
             <div className="nonprofit-detail__mission">
