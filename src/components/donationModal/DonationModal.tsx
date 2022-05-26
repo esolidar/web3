@@ -5,7 +5,6 @@ import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Button from '@esolidar/toolkit/build/elements/button';
-import Icon from '@esolidar/toolkit/build/elements/icon';
 import TextFieldNumber from '@esolidar/toolkit/build/elements/textFieldNumber';
 import useToast from '../../hooks/useToast/useToast';
 import Props, { ModalBodyProps, Form } from './DonationModal.types';
@@ -146,7 +145,11 @@ const ModalBody = ({
       </div>
       <div className="donationModal__balance">
         <div className="donationModal__balance-coin">
-          <Button className="cusd-icon" icon={<Icon name="AtSign" />} type="icon" theme="light" />
+          <img
+            src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/assets/cusd-color.svg`}
+            className="cusd-icon"
+            alt="celo-cusd"
+          />
           <span>{intl.formatMessage({ id: 'web3.balance' })}</span>
         </div>
         <div className="donationModal__balance-value">{balance} cUSD</div>

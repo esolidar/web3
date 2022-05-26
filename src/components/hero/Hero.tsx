@@ -85,16 +85,13 @@ const Hero = () => {
         <div className="hero__content">
           <div>
             <h1>
-              <FormattedMessage id="Maximize your impact " />
+              <FormattedMessage id="web3.hero.title" />
               <span>
-                <FormattedMessage id="with crypto" />
+                <FormattedMessage id="web3.hero.title.help" />
               </span>
             </h1>
             <p>
-              <FormattedMessage
-                id="We make the connection between donors and fundraisers more transparent, efficient and
-              rewarding"
-              />
+              <FormattedMessage id="web3.hero.subtitle" />
             </p>
             <div className="hero__content--actions">
               {!isSSR && (
@@ -114,7 +111,7 @@ const Hero = () => {
               )}
               <Button
                 extraClass="secondary"
-                text={intl.formatMessage({ id: 'Discover  causes' })}
+                text={intl.formatMessage({ id: 'web3.hero.causes' })}
                 size="lg"
                 onClick={handleClickDiscover}
                 ghost
