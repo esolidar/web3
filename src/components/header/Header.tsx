@@ -14,6 +14,8 @@ import truncateAddress from '../../utils/truncateAddress';
 import getRoute from '../../routes';
 import LogoWhite from './LogoWhite';
 import AppContext from '../../contexts/AppContext';
+import rampCheckout from '../../utils/rampCheckout';
+import openCeloAddress from '../../utils/openCeloAddress';
 
 interface WalletProps {
   address: any;
@@ -41,6 +43,8 @@ const Wallet = ({
 }: WalletProps) => {
   const intl = useIntl();
 
+  const { getBalances } = useGetBalance();
+
   return (
     <div className="wallet">
       {address ? (
@@ -48,11 +52,33 @@ const Wallet = ({
           dropdownItems={[
             {
               id: 0,
-              leftIcon: 'DeleteCircle',
+              leftIcon: 'ExternalLink',
+              text: intl.formatMessage({ id: 'View on Celo Explorer' }),
+              onClick: () => {
+                setIsNavVisible(false);
+                openCeloAddress(address);
+              },
+            },
+            {
+              id: 1,
+              leftIcon: 'X',
               text: intl.formatMessage({ id: 'web3.disconect' }),
               onClick: () => {
                 setIsNavVisible(false);
                 destroy();
+              },
+            },
+            {
+              id: 2,
+              divider: true,
+            },
+            {
+              id: 3,
+              leftIcon: 'CreditCard',
+              text: intl.formatMessage({ id: 'Add funds with card' }),
+              onClick: () => {
+                setIsNavVisible(false);
+                rampCheckout(getBalances, address, 'PT');
               },
             },
           ]}
