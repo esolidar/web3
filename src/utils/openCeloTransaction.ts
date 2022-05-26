@@ -3,7 +3,6 @@ const openCeloTransaction = (hash: string) => {
     '{{hash}}',
     hash
   );
-  console.log('url');
   window.open(url, '_blank');
 };
 
