@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
+import { DAPP_DESCRIPTION, DAPP_NAME } from '../constants/dapp';
 
 /* eslint-disable no-undef */
 interface Props {
@@ -24,39 +25,39 @@ const Head = () => (
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="https://static.esolidar.com/frontend/logo/esolidar/favicon-32x32.png?favicon-32=favicon"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/favicon-32x32.png?favicon-32=favicon`}
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="https://static.esolidar.com/frontend/logo/esolidar/favicon-16x16.png?favicon-32=favicon"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/favicon-16x16.png?favicon-32=favicon`}
     />
     <link rel="apple-touch-icon" href="/apple-icon.png" />
     <meta name="theme-color" content="#317EFB" />
-    <title>esolidar</title>
+    <title>{ DAPP_NAME }</title>
     <meta
       name="description"
-      content="Empowering philanthropy and ESG practice through blockchain"
+      content={ DAPP_DESCRIPTION }
     />
     <meta name="keywords" content="esolidar" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={ DAPP_DESCRIPTION } />
     <meta name="twitter:site" content="@esolidar" />
-    <meta name="twitter:title" content="esolidar" />
+    <meta name="twitter:title" content={ DAPP_NAME } />
     <meta
       name="twitter:description"
-      content="Empowering philanthropy and ESG practice through blockchain"
+      content={ DAPP_DESCRIPTION }
     />
     <meta name="twitter:creator" content="@esolidar" />
     <meta
       name="twitter:image:src"
       content={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/assets/web3-social-share.png`}
     />
-    <meta key="og:title" property="og:title" content="esolidar" />
+    <meta key="og:title" property="og:title" content={ DAPP_NAME } />
     <meta
       key="og:description"
       property="og:description"
-      content="Empowering philanthropy and ESG practice through blockchain"
+      content={ DAPP_DESCRIPTION }
     />
     <meta
       key="og:image"
