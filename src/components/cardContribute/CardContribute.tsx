@@ -58,14 +58,14 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       <div className="card-contribute__actions">
         <Button
           extraClass="primary-full"
-          text="Donate cUSD"
+          text={`${intl.formatMessage({ id: 'web3.donate' })} cUSD`}
           onClick={onClickDonate}
           size="lg"
           fullWidth
         />
         <Button
           extraClass="secondary"
-          text="Share"
+          text={intl.formatMessage({ id: 'web3.share' })}
           onClick={onClickShare}
           size="lg"
           iconLeft={<Icon name="Share3" />}

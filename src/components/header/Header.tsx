@@ -63,9 +63,7 @@ const Wallet = ({
             },
           ]}
           dropdownText={truncateAddress(address, 5)}
-          labelText={
-            lastBalanceRef.current !== null ? `${lastBalanceRef.current} cUSD` : '... cUSD'
-          }
+          labelText={lastBalanceRef.current !== null ? `${lastBalanceRef.current} cUSD` : '•••'}
           transparent={isBottonsTransparent}
           fullWidth={fullWidth}
         />
