@@ -35,15 +35,7 @@ const DonationModal = ({
   const resetModal = () => {
     setIsDonateLoading(false);
     setIsDonateError(false);
-    const funds = balance || 0;
-    if (+funds === 0) {
-      const newForm: Form = { ...form };
-      newForm.amount = null;
-      newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
-      setForm(newForm);
-    } else {
-      setForm(DEFAULT_FORM);
-    }
+    setForm(DEFAULT_FORM);
   };
 
   useEffect(() => {
@@ -59,6 +51,9 @@ const DonationModal = ({
       if (parseFloat(value) > funds) newValue = funds;
       newForm.errors = null;
     }
+    if (value && funds === 0) {
+      newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
+    }
     newForm.amount = newValue;
     setForm(newForm);
     setIsDonateError(false);
@@ -68,7 +63,7 @@ const DonationModal = ({
     if (form.amount && form.amount > 0 && balance && balance > 0) {
       setIsDonateLoading(true);
       onclickDonate(form).then((value: any) => {
-        if (value) {
+        if (value instanceof Error) {
           setIsDonateLoading(false);
           toast.error(intl.formatMessage({ id: 'web3.error.alert' }));
           setIsDonateError(true);
@@ -106,7 +101,7 @@ const DonationModal = ({
             onClick={handleClickDonate}
             withLoading
             isLoading={isDonateLoading}
-            disabled={!form.amount || form.amount === 0}
+            disabled={!form.amount || +form.amount === 0}
             fullWidth
           />
           {isDonateError && (

@@ -45,8 +45,8 @@ const InstitutionDetail = () => {
   const intl: IntlShape = useIntl();
   const nonProfitName = useRef('');
   const nonProfitId = useRef(null);
-  nonProfitName.current = institution.name;
-  nonProfitId.current = institution.id;
+  nonProfitName.current = institution?.name;
+  nonProfitId.current = institution?.id;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
@@ -82,7 +82,7 @@ const InstitutionDetail = () => {
         <meta name="twitter:title" content={institution.name} />
         <meta
           name="twitter:description"
-          content={institution.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about[String(router.locale)].substring(0, 120)}
         />
         <meta name="twitter:creator" content="@esolidar" />
         <meta
@@ -97,13 +97,13 @@ const InstitutionDetail = () => {
         <meta
           key="og:description"
           property="og:description"
-          content={institution.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about[String(router.locale)].substring(0, 120)}
         />
 
         <meta
           key="description"
           name="description"
-          content={institution.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about[String(router.locale)].substring(0, 120)}
         />
         <meta
           key="og:image"
@@ -171,14 +171,18 @@ const InstitutionDetail = () => {
               />
 
               <div className="nonprofit-detail__balance--amount">
-                <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
-                {npoBalance && <div>{`${npoBalance} cUSD`}</div>}
+                {npoBalance && (
+                  <>
+                    <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
+                    <div>{`${npoBalance} cUSD`}</div>
+                  </>
+                )}
               </div>
             </div>
             <div className="nonprofit-detail__mission">
               <h3>{intl.formatMessage({ id: 'web3.mission' })}</h3>
-              {!isSSR && institution.about && (
-                <p>{formatTextWithParagraphs(institution.about[String(router.locale)])}</p>
+              {!isSSR && institution?.about && (
+                <p>{formatTextWithParagraphs(institution?.about[String(router.locale)])}</p>
               )}
             </div>
           </div>

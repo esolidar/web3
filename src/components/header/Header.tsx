@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useEffect, useState, useContext } from 'react';
+import { useRef, useEffect, useState, useContext } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@esolidar/toolkit/build/elements/button';
@@ -23,6 +23,7 @@ interface WalletProps {
   connect: any;
   setIsNavVisible(val: boolean): void;
   isBottonsTransparent: boolean;
+  fullWidth: boolean;
 }
 
 interface Props {
@@ -37,12 +38,18 @@ const Wallet = ({
   connect,
   setIsNavVisible,
   isBottonsTransparent,
+  fullWidth,
 }: WalletProps) => {
   const intl = useIntl();
+  const lastBalanceRef = useRef<number>(balance);
+
+  useEffect(() => {
+    if (lastBalanceRef.current !== balance) lastBalanceRef.current = balance;
+  }, [balance]);
 
   return (
     <div className="wallet">
-      {address && balance >= 0 ? (
+      {address ? (
         <DropdownLabelGroup
           dropdownItems={[
             {
@@ -56,9 +63,9 @@ const Wallet = ({
             },
           ]}
           dropdownText={truncateAddress(address, 5)}
-          labelText={balance >= 0 ? `${balance} cUSD` : ''}
+          labelText={lastBalanceRef.current !== null ? `${lastBalanceRef.current} cUSD` : '•••'}
           transparent={isBottonsTransparent}
-          // fullWidth
+          fullWidth={fullWidth}
         />
       ) : (
         <Button
@@ -142,6 +149,7 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             connect={connect}
             setIsNavVisible={setIsNavVisible}
             isBottonsTransparent={isBottonsTransparent}
+            fullWidth={false}
           />
         </div>
       </nav>
@@ -168,7 +176,8 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
               destroy={destroy}
               connect={connect}
               setIsNavVisible={setIsNavVisible}
-              isBottonsTransparent={isBottonsTransparent}
+              isBottonsTransparent={false}
+              fullWidth
             />
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}

@@ -31,11 +31,7 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       <h3 className="card-contribute__header">
         {intl.formatMessage({ id: 'web3.CardContribute.title' })}
         <Tooltip
-          overlay={
-            <span className="text-left">
-              {intl.formatMessage({ id: 'web3.CardContribute.popover' })}
-            </span>
-          }
+          overlay={intl.formatMessage({ id: 'web3.CardContribute.popover' })}
           trigger={['hover', 'click']}
           tooltipBodyChild={<Icon name="InfoBold" size="sm" />}
         />
@@ -62,14 +58,14 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       <div className="card-contribute__actions">
         <Button
           extraClass="primary-full"
-          text="Donate cUSD"
+          text={`${intl.formatMessage({ id: 'web3.donate' })} cUSD`}
           onClick={onClickDonate}
           size="lg"
           fullWidth
         />
         <Button
           extraClass="secondary"
-          text="Share"
+          text={intl.formatMessage({ id: 'web3.share' })}
           onClick={onClickShare}
           size="lg"
           iconLeft={<Icon name="Share3" />}
