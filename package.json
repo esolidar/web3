@@ -17,7 +17,7 @@
     "@celo/contractkit": "^2.0.0",
     "@celo/utils": "^2.0.0",
     "@esolidar/i18n": "^0.337.0",
-    "@esolidar/toolkit": "^4.134.9",
+    "@esolidar/toolkit": "^4.134.12",
     "@ramp-network/ramp-instant-sdk": "^3.1.1",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
