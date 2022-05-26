@@ -1,8 +1,10 @@
 .footer {
-  padding: $distance-16 $distance-7 0 $distance-7;
+  margin: $distance-16 $distance-7 0 $distance-7;
 
   @media (max-width: map-get($breakpoints, md)) {
-    padding: $distance-3;
+    border-top: 1px solid map-get($neutrals, 200);
+    margin: $distance-3;
+    margin-top: 0;
     padding-top: $distance-5;
   }
 

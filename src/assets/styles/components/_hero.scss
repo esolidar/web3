@@ -85,6 +85,10 @@
 
       @media (max-width: map-get($breakpoints, xs)) {
         flex-direction: column;
+
+        button {
+          width: 100%;
+        }
       }
     }
   }
