@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useRef, useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '@esolidar/toolkit/build/elements/button';
@@ -13,7 +13,6 @@ import useGetBalance from '../../hooks/useGetBalance/useGetBalance';
 import truncateAddress from '../../utils/truncateAddress';
 import getRoute from '../../routes';
 import LogoWhite from './LogoWhite';
-import Logo from './Logo';
 import AppContext from '../../contexts/AppContext';
 
 interface WalletProps {
@@ -41,11 +40,6 @@ const Wallet = ({
   fullWidth,
 }: WalletProps) => {
   const intl = useIntl();
-  const lastBalanceRef = useRef<number>(balance);
-
-  useEffect(() => {
-    if (lastBalanceRef.current !== balance) lastBalanceRef.current = balance;
-  }, [balance]);
 
   return (
     <div className="wallet">
@@ -63,7 +57,7 @@ const Wallet = ({
             },
           ]}
           dropdownText={truncateAddress(address, 5)}
-          labelText={lastBalanceRef.current !== null ? `${lastBalanceRef.current} cUSD` : '•••'}
+          labelText={balance !== null ? `${balance} cUSD` : '•••'}
           transparent={isBottonsTransparent}
           fullWidth={fullWidth}
         />
@@ -116,11 +110,17 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
         <a className="home-logo">
           <div className="logo logo-web">
             {isHeaderTransparent && <LogoWhite />}
-            {!isHeaderTransparent && <Logo />}
+            {!isHeaderTransparent && (
+              <img
+                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/logo/esolidar-web3-desk.svg`}
+                className="white"
+                alt="esolidar"
+              />
+            )}
           </div>
 
           <img
-            src="https://static.esolidar.com/frontend/logo/esolidar/logo-xsmall.svg"
+            src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/logo/esolidar-web3-mobile.svg`}
             className="logo logo-mobile"
             alt="esolidar"
           />

@@ -96,6 +96,7 @@
 
     .logo-web {
       display: flex;
+      @include svg-change-color(map-get($base, white));
     }
     .logo-mobile {
       display: none;

@@ -103,21 +103,25 @@ const Home = () => {
               color="green"
               title="web3.homepage.box1.title"
               description="web3.homepage.box1.subtitle"
+              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/maximize.png`}
             />
             <HomeCallout
               color="yellow"
               title="web3.homepage.box2.title"
               description="web3.homepage.box2.subtitle"
-            />
-            <HomeCallout
-              color="green"
-              title="web3.homepage.box3.title"
-              description="web3.homepage.box3.subtitle"
+              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/donate.png`}
             />
             <HomeCallout
               color="yellow"
+              title="web3.homepage.box3.title"
+              description="web3.homepage.box3.subtitle"
+              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/fees.png`}
+            />
+            <HomeCallout
+              color="green"
               title="web3.homepage.box4.title"
               description="web3.homepage.box4.subtitle"
+              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/transparency.png`}
             />
           </div>
 
@@ -128,11 +132,35 @@ const Home = () => {
             </div>
           </div>
 
-          <div style={{ marginTop: '78px', display: 'flex', gap: '24px' }}>
-            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
-            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
-            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
-            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
+          <div className="home-partners-grid">
+            <div>
+              <img
+                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/celo.svg`}
+                className="partner-image"
+                alt="celo"
+              />
+            </div>
+            <div>
+              <img
+                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/harmony.svg`}
+                className="partner-image"
+                alt="harmony"
+              />
+            </div>
+            <div>
+              <img
+                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/impact-market.svg`}
+                className="partner-image"
+                alt="impact-market"
+              />
+            </div>
+            <div>
+              <img
+                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/clabs.svg`}
+                className="partner-image"
+                alt="clabs"
+              />
+            </div>
           </div>
         </div>
       </Viewport>
