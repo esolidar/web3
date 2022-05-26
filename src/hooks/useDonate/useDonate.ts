@@ -17,7 +17,7 @@ const useDonateCeloCUSD = () => {
         await tx.waitReceipt();
         return hash;
       });
-      console.log('sendTransaction succeeded: ');
+      console.log('sendTransaction succeeded');
       return transactionHash;
     } catch (e) {
       console.log((e as Error).message);
