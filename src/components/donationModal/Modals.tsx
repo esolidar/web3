@@ -25,6 +25,8 @@ const Modals = ({
   setOpenModal,
 }: Props) => {
   const [isOpenSuccess, setIsOpenSuccess] = useState<boolean>(false);
+  const [transactionHash, setTransactionHash] = useState<string>('');
+
   const { balance } = useContext(AppContext);
 
   const intl: IntlShape = useIntl();
@@ -39,10 +41,11 @@ const Modals = ({
   const handledonateWithCUSD = useCallback(
     (form: Form) =>
       donateWithCUSD(walletAddress, `${form.amount}`).then((value: any) => {
-        if (!value) {
+        if (!(value instanceof Error)) {
           if (address) getBalances();
           setIsOpenSuccess(true);
           setOpenModal(false);
+          setTransactionHash(value);
         }
         return Promise.resolve(value);
       }),
@@ -60,7 +63,7 @@ const Modals = ({
       />
       {/* TODO: add text and link to share (waiting for product team) */}
       <ThankYouModal
-        transitionID={walletAddress}
+        transactionID={`${transactionHash}`}
         nonProfitName={nonProfitName}
         openModal={isOpenSuccess}
         onCloseModal={() => setIsOpenSuccess(false)}

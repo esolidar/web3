@@ -129,6 +129,8 @@
 }
 .sdg-description-title {
   display: flex;
+  justify-content: space-between;
+
   svg {
     cursor: pointer;
   }
