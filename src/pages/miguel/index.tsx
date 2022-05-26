@@ -8,7 +8,6 @@ import useGetInstitutionList, {
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
-import RampCheckout from '../../components/RampCheckout'
 
 // TODO: gas price
 // TODO: success / error das transactions
@@ -55,10 +54,6 @@ const Home = () => {
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
         {address ? (
           <>
-          <RampCheckout 
-            userAddress={address}
-            selectedCountryCode="PT"
-            />
             <p>My address</p>
             {address}
             <button type="button" onClick={getBalances}>
