@@ -8,10 +8,14 @@
 }
 
 .home {
-  margin-bottom: 115px;
+  margin-bottom: 120px;
   position: relative;
   z-index: 9;
   padding: 0 $distance-2;
+
+  @media (max-width: map-get($breakpoints, xs)) {
+    margin-bottom: $distance-9;
+  }
 
   &-npo-cards {
     display: grid;
@@ -21,7 +25,7 @@
     z-index: 9;
     position: relative;
 
-    @media (max-width: map-get($breakpoints, xs)) {
+    @media (max-width: map-get($breakpoints, sm)) {
       display: flex;
       flex-direction: column;
     }
@@ -45,6 +49,9 @@
 
     @media (max-width: map-get($breakpoints, sm)) {
       align-items: flex-start;
+      font-size: 24px;
+      line-height: 32px;
+      margin-top: $distance-9;
 
       & .btn-esolidar {
         margin-top: $distance-1 / 2;
@@ -58,7 +65,7 @@
 
       @media (max-width: map-get($breakpoints, sm)) {
         flex-direction: column;
-        gap: $distance-5;
+        gap: $distance-4;
       }
 
       &--hr {
@@ -124,9 +131,22 @@
     grid-column-gap: $distance-4;
     grid-row-gap: $distance-4;
 
-    @media (max-width: map-get($breakpoints, xs)) {
+    @media (max-width: map-get($breakpoints, md)) {
       display: flex;
       flex-direction: column;
+
+      & > div:nth-child(1) {
+        order: 3;
+      }
+      & > div:nth-child(2) {
+        order: 4;
+      }
+      & > div:nth-child(3) {
+        order: 2;
+      }
+      & > div:nth-child(4) {
+        order: 1;
+      }
     }
   }
 
@@ -136,6 +156,10 @@
     padding: $distance-4 $distance-5;
     border-radius: $distance-2;
     overflow: hidden;
+
+    @media (max-width: map-get($breakpoints, xs)) {
+      height: 352px;
+    }
 
     &--green {
       background-color: get-rgba(map-get($turquoise, 500));
@@ -176,9 +200,29 @@
       background-color: map-get($base, white);
       border-radius: $distance-4 0 0 0;
 
+      background-position: top $distance-2 right $distance-4;
+      background-size: cover;
+      background-repeat: no-repeat;
+
       @media (max-width: map-get($breakpoints, xs)) {
-        display: none;
+        left: $distance-5;
+        background-position: top $distance-2 left $distance-1;
       }
+      @media (max-width: map-get($breakpoints, sm)) {
+        background-position: top $distance-2 left $distance-1;
+      }
+    }
+  }
+
+  &-partners-grid {
+    margin-top: $distance-9;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $distance-9;
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      flex-direction: column;
+      align-items: center;
     }
   }
 }
