@@ -9,9 +9,6 @@ import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
 
-// TODO: gas price
-// TODO: success / error das transactions
-
 const Home = () => {
   const intl = useIntl();
   const toMitch = '0x7335966f30FC589347793e3C2FE378549b8604B4';

@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { FormattedMessage, useIntl, IntlShape } from 'react-intl';
-import { dehydrate, QueryClient } from 'react-query';
+import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import Icon from '@esolidar/toolkit/build/elements/icon';
@@ -17,6 +17,7 @@ import Modals from '../components/donationModal/Modals';
 
 const Home = () => {
   const intl: IntlShape = useIntl();
+  const queryClient = useQueryClient();
   const { address, connect } = useContractKit();
   const router = useRouter();
 
@@ -43,6 +44,10 @@ const Home = () => {
     },
     [isOpenDonationModal]
   );
+
+  useEffect(() => {
+    queryClient.setQueryData('celoWalletBalance', 0);
+  }, []);
 
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));

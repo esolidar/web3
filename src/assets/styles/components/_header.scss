@@ -1,6 +1,5 @@
 .header {
   position: fixed;
-  // height: 80px;
   width: 100%;
   display: grid;
   grid-template-areas: 'home-logo nav';
@@ -65,7 +64,6 @@
     &.home-page-header {
       @include animate();
       background-color: transparent;
-      // background: map-get($blue, 800);
     }
 
     &.home-page-header-buttons {
