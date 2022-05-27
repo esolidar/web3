@@ -12,6 +12,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
+    background-color: get-rgba(map-get($base, black), 75);
 
     p {
       padding-top: $distance-4;

@@ -23,19 +23,16 @@ const celoContractAddresses: CeloContractAddress[] = [
   { address: String(process.env.NEXT_PUBLIC_CONTRACT_CEUR_ADDRES), name: 'ceur' },
 ];
 
-const queryKey: string = 'celoWalletBalance';
-const url = (wallet: string, contractAddress?: string): string =>
-  `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
-
 const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: Args) =>
   useQuery(
-    queryKey,
+    'celoWalletBalance',
     async () => {
       const contractAddress = celoContractAddresses.find(({ name }) => name === balanceOf)?.address;
 
-      if (contractAddress === undefined) throw new Error('Currency not find!');
+      if (contractAddress === undefined) throw new Error('Currency not found!');
 
-      const { data: response } = await axios.get(url(wallet, contractAddress));
+      const url = `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
+      const { data: response } = await axios.get(url);
 
       const value = toNumber(response.result);
       const truncatedValue = truncateNumber(value, 8);
@@ -45,6 +42,7 @@ const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: 
     {
       onSuccess: data => onSuccess && onSuccess(data),
       enabled,
+      initialData: 0,
     }
   );
 
