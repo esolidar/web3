@@ -174,7 +174,7 @@ const InstitutionDetail = () => {
             <div className="nonprofit-detail__mission">
               <h3>{intl.formatMessage({ id: 'web3.mission' })}</h3>
               {!isSSR && institution?.about && (
-                <p>{formatTextWithParagraphs(institution?.about?.[String(router.locale)])}</p>
+                <div>{formatTextWithParagraphs(institution?.about?.[String(router.locale)])}</div>
               )}
             </div>
           </div>

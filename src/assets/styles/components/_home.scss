@@ -13,8 +13,9 @@
   z-index: 9;
   padding: 0 $distance-2;
 
-  @media (max-width: map-get($breakpoints, xs)) {
+  @media (max-width: map-get($breakpoints, sm)) {
     margin-bottom: $distance-9;
+    padding: 0 $distance-3;
   }
 
   &-npo-cards {
@@ -158,7 +159,7 @@
     border-radius: $distance-2;
     overflow: hidden;
 
-    @media (max-width: map-get($breakpoints, xs)) {
+    @media (max-width: map-get($breakpoints, sm)) {
       height: 352px;
     }
 
@@ -205,7 +206,7 @@
       background-size: cover;
       background-repeat: no-repeat;
 
-      @media (max-width: map-get($breakpoints, xs)) {
+      @media (max-width: map-get($breakpoints, sm)) {
         left: $distance-5;
         background-position: top $distance-2 left $distance-1;
       }
