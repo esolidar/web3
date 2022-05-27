@@ -2,7 +2,7 @@
   width: 100%;
 
   @media (max-width: map-get($breakpoints, md)) {
-    padding: 0 $distance-3;
+    padding: 0;
   }
 
   .home__grid {

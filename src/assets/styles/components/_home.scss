@@ -132,6 +132,7 @@
     grid-row-gap: $distance-4;
 
     @media (max-width: map-get($breakpoints, md)) {
+      margin-top: $distance-9;
       display: flex;
       flex-direction: column;
 
@@ -200,7 +201,7 @@
       background-color: map-get($base, white);
       border-radius: $distance-4 0 0 0;
 
-      background-position: top $distance-2 right $distance-4;
+      background-position: top $distance-2 left $distance-4;
       background-size: cover;
       background-repeat: no-repeat;
 

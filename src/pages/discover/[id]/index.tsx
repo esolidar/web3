@@ -21,6 +21,7 @@ import getRoute from '../../../routes';
 import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
 import Modals from '../../../components/donationModal/Modals';
 import useCeloWalletBalance from '../../../api/hooks/useCeloWalletBalance';
+import { DAPP_NAME } from '../../../constants/dapp';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
@@ -69,10 +70,10 @@ const InstitutionDetail = () => {
   return (
     <>
       <Head>
-        <title key="title">{institution.name}</title>
+        <title key="title">{institution?.name}</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@esolidar" />
-        <meta name="twitter:title" content={institution.name} />
+        <meta name="twitter:title" content={DAPP_NAME} />
         <meta
           name="twitter:description"
           content={institution?.about?.[String(router.locale)].substring(0, 120)}
@@ -81,12 +82,12 @@ const InstitutionDetail = () => {
         <meta
           name="twitter:image:src"
           content={
-            institution.s3_cover_key
+            institution?.s3_cover_key
               ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
               : urlNoImage
           }
         />
-        <meta key="og:title" property="og:title" content={institution.name} />
+        <meta key="og:title" property="og:title" content={institution?.name} />
         <meta
           key="og:description"
           property="og:description"
@@ -102,23 +103,23 @@ const InstitutionDetail = () => {
           key="og:image"
           property="og:image"
           content={
-            institution.s3_cover_key
+            institution?.s3_cover_key
               ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
               : urlNoImage
           }
         />
-        <meta key="keywords" name="keywords" content={institution.name} />
+        <meta key="keywords" name="keywords" content={institution?.name} />
         <meta
           key="og:url"
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_DOMAIN}/${String(router.locale)}/discover/${
-            institution.id
+            institution?.id
           }`}
         />
         <link
           key="canonical"
           href={`${process.env.NEXT_PUBLIC_DOMAIN}${String(router.locale)}/discover/${
-            institution.id
+            institution?.id
           }`}
           rel="canonical"
         />
@@ -128,39 +129,39 @@ const InstitutionDetail = () => {
           breadcrumbs={[
             {
               handleClick: () => push(getRoute.HOME(String(router.locale))),
-              title: 'Home',
+              title: intl.formatMessage({ id: 'web3.home' }),
             },
             {
               handleClick: () => push(getRoute.DISCOVER(String(router.locale))),
-              title: 'Discover',
+              title: intl.formatMessage({ id: 'web3.institution.list.title' }),
             },
             {
-              title: institution.name,
+              title: institution?.name,
             },
           ]}
         />
-        <Title subtitle={institution.location} title={institution.name} />
+        <Title subtitle={institution?.location} title={institution?.name} />
         <div className="nonprofit-detail__columns">
           <div className="nonprofit-detail__columns--left">
             <CarouselLightbox
               listItems={[
                 {
-                  url: institution.s3_cover_key
+                  url: institution?.s3_cover_key
                     ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
                     : urlNoImage,
-                  altTag: institution.name,
+                  altTag: institution?.name,
                   type: 'photo',
                 },
               ]}
             />
             <div className="nonprofit-detail__balance">
               <ProfileAvatar
-                buttonText={institution.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
-                buttonUrl={institution.link}
+                buttonText={institution?.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
+                buttonUrl={institution?.link}
                 buttonIconRight={<Icon name="ExternalLink" size="xs" />}
                 isNameBold
-                name={institution.name}
-                thumb={institution.s3_image_key === '0' ? urlNoImage : institution.thumbs.thumb}
+                name={institution?.name}
+                thumb={institution?.s3_image_key === '0' ? urlNoImage : institution?.thumbs.thumb}
               />
 
               {nonprofitBalance !== undefined && nonprofitBalance > 0 && (
@@ -179,18 +180,18 @@ const InstitutionDetail = () => {
           </div>
           <div className="nonprofit-detail__columns--right">
             <CardContribute
-              name={institution.name}
+              name={institution?.name}
               address={institutionWalletAddress}
               onClickDonate={handleClickDonate}
               onClickShare={() => setIsOpenShareModal(true)}
             />
-            <CardSDG sdgList={institution.ods} />
+            <CardSDG sdgList={institution?.ods} />
           </div>
         </div>
       </div>
       <ShareModal
         openModal={isOpenShareModal}
-        title={institution.name}
+        title={institution?.name}
         windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
         onCloseModal={() => setIsOpenShareModal(false)}
         onClickCopyToClipboard={() => toast.success(intl.formatMessage({ id: 'web3.copied' }))}
