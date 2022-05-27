@@ -41,6 +41,10 @@
 
       .wallet {
         padding-bottom: $distance-3;
+
+        & > button {
+          width: 100%;
+        }
       }
 
       .header__menu-item {

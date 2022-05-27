@@ -59,7 +59,7 @@ const Home = () => {
         <div className="home">
           <div className="home-section">
             <div className="home-section__title">
-              <FormattedMessage id="Featured" />
+              <FormattedMessage id="web3.featured" />
               <div className="home-section__title--hr" />
             </div>
             <Button
@@ -71,7 +71,7 @@ const Home = () => {
             />
           </div>
 
-          {institutionList.data.length > 0 && (
+          {institutionList?.data.length > 0 && (
             <div className="home-npo-cards">
               {institutionList.data.map((institution: any) => (
                 <CardNonProfit

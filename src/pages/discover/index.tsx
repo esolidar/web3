@@ -125,7 +125,7 @@ const List = () => {
             // size="md"
             onChange={handleSearch}
             value={search}
-            placeholder="Search for nonprofits or causes..."
+            placeholder={intl.formatMessage({ id: 'web3.seach.placeholder' })}
             field="term"
             leftIcon={{
               name: 'Search',
@@ -174,21 +174,17 @@ const List = () => {
         <div className="loading-npo-list">
           <Loading />
           <h3>
-            <FormattedMessage id="Searching..." />
+            <FormattedMessage id="web3.searching" />
           </h3>
           <p>
-            <FormattedMessage id="Please wait while we are searching for “Walk” nonprofits or causes" />
+            <FormattedMessage id="web3.searching.message" values={{ search }} />
           </p>
         </div>
       )}
       {total > 0 && !isLoading && (
         <div>
           <div className="npo-list-count">
-            <FormattedMessage
-              id="{total} nonprofits or causes"
-              defaultMessage="{total} nonprofits or causes"
-              values={{ total }}
-            />{' '}
+            {total} <FormattedMessage id="web3.seach.results" />
           </div>
           <div className="home__grid">
             {institutionList.map((page: any) => (

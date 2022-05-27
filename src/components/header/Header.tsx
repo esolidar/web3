@@ -53,7 +53,7 @@ const Wallet = ({
             {
               id: 0,
               leftIcon: 'ExternalLink',
-              text: intl.formatMessage({ id: 'View on Celo Explorer' }),
+              text: intl.formatMessage({ id: 'web3.view.celo' }),
               onClick: () => {
                 setIsNavVisible(false);
                 openCeloAddress(address);
@@ -75,7 +75,7 @@ const Wallet = ({
             {
               id: 3,
               leftIcon: 'CreditCard',
-              text: intl.formatMessage({ id: 'Add funds with card' }),
+              text: intl.formatMessage({ id: 'web3.add.founds' }),
               onClick: () => {
                 setIsNavVisible(false);
                 rampCheckout(getBalances, address, 'PT');
