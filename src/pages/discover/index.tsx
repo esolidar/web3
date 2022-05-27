@@ -138,7 +138,7 @@ const List = () => {
   const odsFilterOptions = getTranslatedSDGArray(sdgList, intl);
 
   return (
-    <div className="home">
+    <div>
       <Breadcrumbs
         breadcrumbs={[
           {
@@ -225,7 +225,7 @@ const List = () => {
           <div className="npo-list-count">
             {total} <FormattedMessage id="web3.seach.results" />
           </div>
-          <div className="home__grid">
+          <div className="list__grid">
             {institutionList?.pages.map((page: any) => (
               <Fragment key={`npo-${page}`}>
                 {page.map((institution: any) => (

@@ -17,6 +17,7 @@ import AppProvider from '../providers/AppProvider';
 import '@celo-tools/use-contractkit/lib/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
+import { DAPP_DESCRIPTION, DAPP_NAME } from '../constants/dapp';
 
 export type ILocale = {
   [key in string]: string;
@@ -56,10 +57,10 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
   return (
     <ContractKitProvider
       dapp={{
-        name: 'use-contractkit demo',
-        description: 'A demo DApp to showcase functionality',
-        url: 'https://use-contractkit.vercel.app',
-        icon: 'https://use-contractkit.vercel.app/favicon.ico',
+        name: DAPP_NAME,
+        description: DAPP_DESCRIPTION,
+        url: String(process.env.NEXT_PUBLIC_DOMAIN),
+        icon: `${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/favicon.ico`,
       }}
       actionModal={{
         reactModalProps: {
