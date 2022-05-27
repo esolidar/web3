@@ -26,7 +26,7 @@ const useGetInstitutionList = ({ search, odsId = [], perPage = 3, onSuccess }: A
       const params: string = queryString.stringify({
         has_celo_wallet: Number(true),
         name: search ? `%${search}%` : undefined,
-        ods_id: odsId.length > 0 ? odsId.flatMap(i => i.value).join() : undefined,
+        ods_id: odsId.length > 0 ? odsId.join(',') : undefined,
         per_page: perPage,
       });
       const { data: response } = await axios.get(url(params));
@@ -59,7 +59,7 @@ export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }:
       const params: string = queryString.stringify({
         has_celo_wallet: Number(true),
         name: search ? `%${search}%` : undefined,
-        ods_id: odsId.length > 0 ? odsId.flatMap(i => i.value).join() : undefined,
+        ods_id: odsId.length > 0 ? odsId.join(',') : undefined,
         page: pageParam,
       });
       const { data: response } = await axios.get(url(params));

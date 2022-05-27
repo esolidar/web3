@@ -1,4 +1,3 @@
-// import { useIntl } from 'react-intl';
 import { IntlShape, useIntl } from 'react-intl';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import Tooltip from '@esolidar/toolkit/build/elements/tooltip';

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import Head from 'next/head';
 import { dehydrate, QueryClient } from 'react-query';
@@ -37,16 +37,9 @@ const InstitutionDetail = () => {
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
-  const [npoBalance, setNpoBalance] = useState<number | null>(null);
 
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
-
-  const intl: IntlShape = useIntl();
-  const nonProfitName = useRef('');
-  const nonProfitId = useRef(null);
-  nonProfitName.current = institution?.name;
-  nonProfitId.current = institution?.id;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
@@ -57,9 +50,9 @@ const InstitutionDetail = () => {
     balanceOf: 'cusd',
   });
 
-  useEffect(() => {
-    if (nonprofitBalance) setNpoBalance(nonprofitBalance);
-  }, [nonprofitBalance]);
+  const intl: IntlShape = useIntl();
+  const nonProfitName = useRef(institution.name || '');
+  const nonProfitId = useRef(institution.id || null);
 
   const handleClickDonate = useCallback(() => {
     if (address) {
@@ -82,7 +75,7 @@ const InstitutionDetail = () => {
         <meta name="twitter:title" content={institution.name} />
         <meta
           name="twitter:description"
-          content={institution?.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about?.[String(router.locale)].substring(0, 120)}
         />
         <meta name="twitter:creator" content="@esolidar" />
         <meta
@@ -97,13 +90,13 @@ const InstitutionDetail = () => {
         <meta
           key="og:description"
           property="og:description"
-          content={institution?.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about?.[String(router.locale)].substring(0, 120)}
         />
 
         <meta
           key="description"
           name="description"
-          content={institution?.about[String(router.locale)].substring(0, 120)}
+          content={institution?.about?.[String(router.locale)].substring(0, 120)}
         />
         <meta
           key="og:image"
@@ -170,19 +163,17 @@ const InstitutionDetail = () => {
                 thumb={institution.s3_image_key === '0' ? urlNoImage : institution.thumbs.thumb}
               />
 
-              <div className="nonprofit-detail__balance--amount">
-                {npoBalance && (
-                  <>
-                    <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
-                    <div>{`${npoBalance} cUSD`}</div>
-                  </>
-                )}
-              </div>
+              {nonprofitBalance !== undefined && nonprofitBalance > 0 && (
+                <div className="nonprofit-detail__balance--amount">
+                  <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
+                  <div>{`${nonprofitBalance} cUSD`}</div>
+                </div>
+              )}
             </div>
             <div className="nonprofit-detail__mission">
               <h3>{intl.formatMessage({ id: 'web3.mission' })}</h3>
               {!isSSR && institution?.about && (
-                <p>{formatTextWithParagraphs(institution?.about[String(router.locale)])}</p>
+                <p>{formatTextWithParagraphs(institution?.about?.[String(router.locale)])}</p>
               )}
             </div>
           </div>
