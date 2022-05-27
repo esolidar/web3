@@ -6,20 +6,11 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import Button from '@esolidar/toolkit/build/elements/button';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import getOdsList from '@esolidar/toolkit/build/utils/getOdsList';
+import odsExternasLinks from '../../constants/odsExternalLinks';
 
 interface Props {
   sdgList: any;
 }
-
-export type IOdsPopoverLink = {
-  [key in string]: string;
-};
-
-const odsPopoverLink: IOdsPopoverLink = {
-  pt: 'https://www.ods.pt/',
-  en: 'https://brasil.un.org/pt-br/',
-  br: 'https://sdgs.un.org/goals',
-};
 
 const CardSDG = ({ sdgList }: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -69,7 +60,7 @@ const CardSDG = ({ sdgList }: Props) => {
             <Button
               className="popover-btn m-0 p-0"
               extraClass="link"
-              href={odsPopoverLink[String(router.locale)] || odsPopoverLink.en}
+              href={odsExternasLinks[String(router.locale)] || odsExternasLinks}
               target="_blank"
               text={intl.formatMessage({ id: 'toolkit.learn-more' })}
               size="sm"

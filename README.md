@@ -10,7 +10,7 @@
 
 Empowering philanthropy and ESG practice through blockchain.
 
-A dedicated Dapp on top of Celo where any nonprofit, susteinable project or cause can choose to receive Celo stablecoins as donations (cUSD).
+A dedicated Dapp on top of Celo where any nonprofit, sustainable project or cause can choose to receive Celo stablecoins as donations (cUSD).
 
 ## Table of Contents
 

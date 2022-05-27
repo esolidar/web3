@@ -25,3 +25,6 @@ declare module '@esolidar/toolkit/build/elements/textFieldNumber';
 declare module '@esolidar/toolkit/build/hooks/useDebounce';
 declare module '@esolidar/toolkit/build/hooks/useIsFirstRender';
 declare module '@esolidar/toolkit/build/elements/tooltip';
+declare module '@esolidar/toolkit/build/utils/addUrlParam';
+declare module '@esolidar/toolkit/build/utils/getUrlParam';
+declare module '@esolidar/toolkit/build/utils/removeUrlParam';
