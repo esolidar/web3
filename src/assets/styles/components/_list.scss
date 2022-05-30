@@ -1,0 +1,130 @@
+.list__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: $distance-4;
+  grid-row-gap: 0;
+  z-index: 0;
+  position: relative;
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: map-get($breakpoints, md)) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.filters {
+  margin-top: $distance-5;
+  display: flex;
+  gap: $distance-2;
+
+  @media (max-width: map-get($breakpoints, sm)) {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__search {
+    width: 420px;
+
+    .form-group {
+      margin-bottom: $distance-3;
+    }
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      width: 100%;
+
+      & .form-group {
+        margin-bottom: $distance-2;
+      }
+    }
+  }
+
+  &__field {
+    width: 350px;
+
+    @media (max-width: map-get($breakpoints, sm)) {
+      width: 100%;
+
+      & .esolidar-select {
+        max-width: unset;
+
+        & .esolidar-select__control {
+          width: 100%;
+        }
+      }
+    }
+
+    .multi-select-component {
+      margin-bottom: $distance-3;
+    }
+  }
+}
+
+.loading-npo-list {
+  min-height: 400px;
+  padding: 95px 0;
+  text-align: center;
+
+  h3 {
+    margin-top: $distance-3;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: map-get($base, Black);
+  }
+
+  p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($neutrals, 700);
+  }
+}
+
+.no-result-npo-list {
+  min-height: 400px;
+  text-align: center;
+
+  h3 {
+    margin-top: $distance-3;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: map-get($base, Black);
+  }
+
+  p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($neutrals, 700);
+  }
+}
+
+.npo-list-count {
+  margin-bottom: $distance-3;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: map-get($base, Black);
+}
+.sdg-description-title {
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    cursor: pointer;
+  }
+}
+.sdg-description {
+  .modal-content {
+    padding-bottom: $distance-3;
+  }
+}

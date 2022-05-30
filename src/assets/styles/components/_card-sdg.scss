@@ -1,0 +1,39 @@
+.card-sdg {
+  border: 1px solid map-get($neutrals, 200);
+  border-radius: $border-radius-1;
+  padding: $distance-3;
+  width: 100%;
+
+  &__header {
+    margin-top: 0;
+
+    & .popover-component-trigger {
+      vertical-align: text-top;
+      margin-left: $distance-1;
+    }
+  }
+
+  &__info {
+    &-icon {
+      cursor: pointer;
+      margin-left: $distance-1;
+
+      &:hover,
+      &:focus,
+      &:active {
+        @include svg-change-color(map-get($theme-colors, primary));
+      }
+    }
+
+    &-modal {
+      .modal-body {
+        padding-bottom: $distance-3 !important;
+      }
+    }
+  }
+
+  &__header-description {
+    margin-top: $distance-1;
+    margin-bottom: $distance-3;
+  }
+}

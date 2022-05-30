@@ -1,0 +1,104 @@
+.nonprofit-detail {
+  & > p {
+    color: map-get($turquoise, 500);
+  }
+
+  & .component-title {
+    margin-bottom: $distance-5;
+  }
+
+  &__columns {
+    display: flex;
+    gap: $distance-5;
+
+    @media (max-width: map-get($breakpoints, md)) {
+      gap: 0;
+    }
+
+    & > * {
+      flex: 100% 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &--right {
+      gap: $distance-3;
+      max-width: 400px;
+      width: 100%;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        max-width: unset;
+        border-bottom: 1px solid map-get($neutrals, 200);
+        padding: $distance-7 0;
+      }
+    }
+
+    @media (max-width: map-get($breakpoints, md)) {
+      flex-direction: column;
+    }
+
+    & .nonprofit-detail__balance {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: $distance-5;
+      border-bottom: 1px solid map-get($neutrals, 200);
+      padding-bottom: $distance-5;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $distance-3;
+        border-top: 1px solid map-get($neutrals, 200);
+        padding-top: $distance-5;
+        order: 3;
+      }
+
+      &--amount {
+        display: flex;
+        flex-direction: column;
+
+        > div {
+          &:last-of-type {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 700;
+            color: map-get($base, black);
+            white-space: nowrap;
+            text-align: end;
+
+            @media (max-width: map-get($breakpoints, md)) {
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+
+    & .nonprofit-detail__mission {
+      margin-top: $distance-8;
+
+      h3 {
+        margin-bottom: $distance-2;
+      }
+
+      @media (max-width: map-get($breakpoints, md)) {
+        margin-top: $distance-4;
+      }
+
+      & > p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: map-get($base, black);
+      }
+    }
+  }
+  .profile-avatar__info--name {
+    max-width: 250px;
+  }
+  .profile-avatar__info--link {
+    font-weight: 400;
+    align-items: baseline !important;
+  }
+}

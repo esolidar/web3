@@ -1,0 +1,123 @@
+.footer {
+  margin: $distance-16 $distance-7 0 $distance-7;
+
+  @media (max-width: map-get($breakpoints, md)) {
+    border-top: 1px solid map-get($neutrals, 200);
+    margin: $distance-3;
+    margin-top: 0;
+    padding-top: $distance-5;
+  }
+
+  &-detail {
+    @media (max-width: map-get($breakpoints, md)) {
+      padding-bottom: 96px;
+    }
+  }
+
+  &-copyright {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: map-get($neutrals, 700);
+  }
+
+  &-menu {
+    display: flex;
+    align-items: center;
+    gap: $distance-2;
+    font-size: 14px;
+    line-height: 20px;
+    color: map-get($neutrals, 700);
+    padding: $distance-5 0;
+
+    @media (max-width: map-get($breakpoints, md)) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $distance-3;
+    }
+
+    &__item {
+      font-weight: 600;
+
+      a {
+        text-decoration: none;
+        color: map-get($neutrals, 700);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &--separator {
+        margin: 0 $distance-3;
+        background: map-get($neutrals, 200);
+        width: 1px;
+        height: 20px;
+
+        @media (max-width: map-get($breakpoints, md)) {
+          margin: $distance-3 0;
+          width: 100%;
+          height: 1px;
+        }
+      }
+    }
+
+    & .powered-by-esolidar {
+      @media (max-width: map-get($breakpoints, md)) {
+        display: none;
+      }
+
+      a {
+        font-weight: 600;
+        text-decoration: none;
+        color: map-get($neutrals, 700);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.mobile {
+        display: none;
+
+        @media (max-width: map-get($breakpoints, md)) {
+          display: initial !important;
+        }
+      }
+    }
+
+    &__lang {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        justify-content: space-between;
+        margin-left: unset;
+        width: 100%;
+      }
+
+      &--dropdown {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: $distance-2;
+
+        @media (max-width: map-get($breakpoints, md)) {
+          gap: $distance-1;
+        }
+      }
+    }
+
+    &__social {
+      display: flex;
+      gap: $distance-1;
+      margin-left: $distance-8;
+
+      @media (max-width: map-get($breakpoints, md)) {
+        margin-left: unset;
+      }
+    }
+  }
+}

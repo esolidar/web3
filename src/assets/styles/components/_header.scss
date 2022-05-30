@@ -1,0 +1,155 @@
+.header {
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'home-logo nav';
+  align-items: center;
+  z-index: 99;
+  background-color: map-get($base, white);
+
+  a {
+    text-decoration: none;
+  }
+
+  @media (max-width: map-get($breakpoints, md)) {
+    .mobile-menu-burger {
+      margin-left: auto;
+      padding: 20px $distance-3;
+    }
+
+    .logo-web {
+      display: none;
+    }
+    .logo-mobile {
+      display: flex;
+      padding: 20px $distance-3;
+    }
+
+    &__menu {
+      display: none;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: map-get($base, white);
+      padding: $distance-2 $distance-3;
+
+      .wallet {
+        padding-bottom: $distance-3;
+
+        & > button {
+          width: 100%;
+        }
+      }
+
+      .header__menu-item {
+        a {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 28px;
+          color: map-get($base, Black);
+          text-decoration: none;
+          display: block;
+          padding: $distance-2 0;
+        }
+      }
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, md)) {
+    &.home-page-header {
+      @include animate();
+      background-color: transparent;
+    }
+
+    &.home-page-header-buttons {
+      @include animate();
+
+      .btn-esolidar {
+        color: map-get($base, white);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+
+        &:hover {
+          background-color: transparent !important;
+        }
+      }
+
+      .header__menu-item {
+        a {
+          color: map-get($base, white);
+        }
+      }
+
+      .esolidar-dropdown__toggle {
+        .DropdownLabelGroup__dropdown-text {
+          color: map-get($base, white);
+        }
+      }
+    }
+
+    .mobile-menu-burger,
+    .mobile-menu {
+      display: none;
+    }
+
+    .logo-web {
+      display: flex;
+      @include svg-change-color(map-get($base, white));
+    }
+    .logo-mobile {
+      display: none;
+    }
+
+    .home-logo {
+      margin-right: auto;
+
+      .logo {
+        margin-left: $distance-4;
+      }
+    }
+
+    &__menu {
+      display: flex;
+      gap: $distance-2;
+      margin-left: auto;
+
+      &-item {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        a {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 24px;
+          text-decoration: none;
+          color: map-get($base, Black);
+          padding: $distance-4 $distance-2;
+        }
+
+        &.active,
+        &:hover {
+          &::after {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-bottom: 5px solid map-get($turquoise, 500);
+          }
+        }
+      }
+
+      &-connect-button {
+        display: flex;
+        align-items: center;
+        padding-right: $distance-4;
+      }
+    }
+  }
+}

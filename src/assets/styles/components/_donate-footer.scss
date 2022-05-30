@@ -1,0 +1,30 @@
+.donate-footer {
+  position: fixed;
+  display: flex;
+  gap: $distance-2;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: $distance-3;
+  background-color: map-get($base, white);
+  box-shadow: 0px 16px 48px rgba(26, 27, 28, 0.04), 0px 4px 24px rgba(26, 27, 28, 0.04);
+  z-index: 99;
+
+  @media (min-width: map-get($breakpoints, md)) {
+    display: none;
+  }
+
+  &__share {
+    &--icon {
+      @media (min-width: map-get($breakpoints, sm)) {
+        display: none;
+      }
+    }
+
+    &--text {
+      @media (max-width: map-get($breakpoints, sm)) {
+        display: none;
+      }
+    }
+  }
+}

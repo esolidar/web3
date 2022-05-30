@@ -1,0 +1,37 @@
+// eSolidar Toolkit Styles
+@import '~@esolidar/toolkit/build/assets/sass/variables';
+@import '~@esolidar/toolkit/build/assets/sass/mixins';
+@import '~@esolidar/toolkit/build/assets/sass/functions';
+@import '~@esolidar/toolkit/build/assets/sass/fonts';
+
+// Web3 Styles
+@import './assets/styles/misc';
+
+// eSolidar Toolkit Vendors Styles
+@import '~@esolidar/toolkit/build/assets/sass/vendors/index';
+
+// eSolidar Toolkit Components Styles
+@import '~@esolidar/toolkit/build/assets/sass/main';
+@import '~@esolidar/toolkit/build/assets/sass/components/index';
+
+// Web3 Components Styles
+@import './assets/styles/components/index';
+
+h1,
+h3,
+h4,
+h5 {
+  color: map-get($main-text-colors, title) !important;
+  font-weight: 700 !important;
+}
+
+h2 {
+  font-weight: 600 !important;
+  margin-bottom: $distance-2 !important;
+}
+
+body {
+  font-family: map-get($fonts, main);
+  font-weight: 400;
+  margin: 0;
+}

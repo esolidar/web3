@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches: ['main', 'testing']
+
+jobs:
+  codacy-coverage-reporter:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    name: codacy-coverage-reporter
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          always-auth: true
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com
+          scope: '@esolidar'
+
+      - name: Node version
+        run: node -v
+
+      - name: Install dependencies
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Run lint tests
+        run: yarn test:lint

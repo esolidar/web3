@@ -1,0 +1,170 @@
+.donationModal {
+  &__subtitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($base, black);
+    margin-bottom: $distance-4;
+  }
+  &__balance {
+    width: 100%;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: map-get($background, secondary);
+    padding: $distance-2 20px;
+    border-radius: $border-radius-1;
+    margin-bottom: $distance-3;
+
+    &-coin {
+      max-width: 200px;
+      color: map-get($main-text-colors, dark);
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+
+      .cusd-icon {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        text-decoration: none;
+        justify-content: center;
+        display: inline-flex;
+        vertical-align: middle;
+        align-items: center;
+        border: 0px;
+        position: relative;
+        margin-right: $distance-1;
+        background-color: map-get($positive, 300);
+        cursor: auto;
+      }
+    }
+
+    &-value {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 21px;
+      line-height: 26px;
+      color: map-get($base, black);
+    }
+  }
+  &__amount {
+    position: relative;
+    margin-bottom: $distance-4;
+    .input-label-component__label {
+      margin-bottom: $distance-2;
+    }
+
+    .form-group input.form-control {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      -webkit-appearance: none;
+      appearance: none;
+      z-index: 1;
+      color: map-get($neutrals, 900);
+      padding: $distance-2 $distance-3 $distance-2 $distance-3;
+      height: calc(28px + $distance-3);
+
+      &::placeholder {
+        color: map-get($neutrals, 400);
+      }
+    }
+
+    .textfield-number {
+      position: relative;
+
+      &::after {
+        content: 'cUSD';
+        position: absolute;
+        top: 13px;
+        right: $distance-3;
+        bottom: 18px;
+        color: map-get($neutrals, 400);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28px;
+      }
+
+      &:focus-within {
+        &::after {
+          color: map-get($neutrals, 900);
+        }
+      }
+    }
+  }
+  &__shortcuts {
+    span {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: map-get($base, black);
+    }
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $distance-2;
+      margin-top: $distance-3;
+    }
+    &-item {
+      display: flex;
+      flex: 1 1 45%;
+      align-items: center;
+      justify-content: center;
+      padding: $distance-2;
+      border-radius: $border-radius-1;
+      background-color: get-rgba(map-get($turquoise, 500), 8);
+      font-style: normal;
+      font-weight: 700;
+      font-size: 21px;
+      line-height: 26px;
+      color: map-get($turquoise, 500);
+      min-height: 80px;
+      border: 0px;
+
+      &:hover,
+      &:active,
+      &:focus,
+      &.active {
+        background-color: get-rgba(map-get($turquoise, 500), 24);
+      }
+
+      span {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        color: map-get($turquoise, 500);
+      }
+    }
+  }
+  &__button-disabled.disabled {
+    width: 100%;
+    color: map-get($neutrals, 400);
+    background-color: map-get($background, secondary);
+    border: 1px solid map-get($neutrals, 200);
+    opacity: 1;
+
+    &.isLoadind {
+      opacity: 1;
+    }
+  }
+  &__error {
+    color: map-get($negative, 500);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
+
+    a {
+      color: map-get($negative, 500);
+      text-decoration: underline;
+    }
+  }
+}

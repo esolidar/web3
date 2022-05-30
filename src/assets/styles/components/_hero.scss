@@ -1,0 +1,95 @@
+.hero {
+  position: relative;
+  height: 790px;
+  width: 100%;
+
+  &__background {
+    height: 790px;
+    width: 100%;
+    background-image: linear-gradient(map-get($blue, 800), map-get($blue, 800));
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10vw), 0 100%);
+  }
+
+  & #shape-1,
+  & #shape-2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+  }
+
+  &__content {
+    position: absolute;
+    top: 130px;
+    display: flex;
+    gap: 77px;
+    padding: 0 $distance-2;
+    z-index: 3;
+
+    &--illustration {
+      & > svg {
+        position: absolute;
+
+        &:nth-of-type(2) {
+          top: 160px;
+          left: 540px;
+        }
+      }
+
+      @media (max-width: map-get($breakpoints, md)) {
+        display: none;
+      }
+    }
+
+    @media (max-width: map-get($breakpoints, md)) {
+      top: 100px;
+    }
+
+    h1 {
+      width: 510px;
+      font-size: 56px;
+      line-height: 64px;
+      letter-spacing: -0.02em;
+      color: map-get($base, white) !important;
+      margin-top: 29px;
+
+      span {
+        background: -webkit-linear-gradient(60deg, #48d9c9, #e1d69c);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @media (max-width: map-get($breakpoints, sm)) {
+        width: 100%;
+      }
+    }
+
+    p {
+      width: 510px;
+      font-size: 24px;
+      line-height: 32px;
+      color: map-get($base, white);
+      padding: 0;
+
+      @media (max-width: map-get($breakpoints, sm)) {
+        width: 100%;
+      }
+    }
+
+    &--actions {
+      display: flex;
+      align-items: center;
+      gap: $distance-2;
+      padding-top: $distance-6;
+
+      @media (max-width: map-get($breakpoints, sm)) {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

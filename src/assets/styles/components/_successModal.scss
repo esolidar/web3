@@ -1,0 +1,148 @@
+.successModal {
+  &__subtitle {
+    color: map-get($base, black);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &__transition {
+    margin-top: $distance-4;
+
+    &-title {
+      color: map-get($neutrals, 700);
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    &-id {
+      color: #120636;
+      @extend .successModal__subtitle;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+      svg {
+        margin-left: 10px;
+      }
+    }
+    &-icon {
+      cursor: pointer;
+
+      &:hover,
+      &:focus,
+      &:active {
+        @include svg-change-color(map-get($theme-colors, primary));
+      }
+    }
+  }
+  &__separator {
+    border-top: 2px solid map-get($neutrals, 200);
+    margin-top: $distance-4;
+    margin-bottom: $distance-4;
+  }
+  &__share {
+    &-title {
+      @extend .successModal__subtitle;
+      margin-bottom: $distance-1;
+    }
+    &-subtitle {
+      @extend .successModal__transition-title;
+    }
+    &-icons {
+      display: flex;
+      margin-top: $distance-3;
+      margin-bottom: $distance-1;
+      gap: $distance-2;
+
+      ul {
+        padding: 0;
+        margin: 0px;
+        flex-grow: 1;
+
+        li {
+          list-style: none;
+          margin-bottom: $distance-2;
+
+          a {
+            display: block;
+            cursor: pointer;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            color: map-get($base, black);
+            text-decoration: none;
+            padding: $distance-1;
+            border-radius: $border-radius-1;
+
+            &:active,
+            &:visited {
+              background-color: map-get($neutrals, 100);
+            }
+            &:hover {
+              background-color: map-get($background, secondary);
+            }
+            &:focus {
+              background-color: map-get($base, white);
+              box-shadow: 0px 0px 0px 4px get-rgba(map-get($theme-colors, primary), 8);
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+              text-decoration: none;
+            }
+
+            .share-icon {
+              font-size: 16px;
+              text-decoration: none;
+              justify-content: center;
+              border-radius: 50%;
+              height: 40px;
+              width: 40px;
+              display: inline-flex;
+              vertical-align: middle;
+              align-items: center;
+              border: 0px;
+              cursor: pointer;
+              position: relative;
+              margin-right: $distance-2;
+
+              &:focus,
+              &:hover,
+              &:active {
+                color: map-get($base, white);
+                text-decoration: none;
+                outline: none;
+              }
+            }
+            .share-facebook {
+              background-color: get-rgba(map-get($social, facebook), 8);
+              @include svg-change-color(map-get($social, facebook));
+            }
+            .share-twitter {
+              background-color: get-rgba(map-get($social, twitter), 8);
+              @include svg-change-color(map-get($social, twitter));
+            }
+            .share-linkedin {
+              background-color: get-rgba(map-get($social, linkedin), 8);
+              @include svg-change-color(map-get($social, linkedin));
+            }
+            .share-email {
+              background-color: get-rgba(map-get($social, email), 8);
+              @include svg-change-color(map-get($social, email));
+            }
+            .share-whatsapp {
+              background-color: get-rgba(map-get($social, whatsApp), 8);
+              @include svg-change-color(map-get($social, whatsApp));
+              font-size: 19px;
+            }
+            .share-link {
+              background-color: map-get($neutrals, 400);
+            }
+          }
+        }
+      }
+    }
+  }
+}

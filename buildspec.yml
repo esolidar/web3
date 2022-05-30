@@ -1,0 +1,57 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo Setting env var to $NODE_ENV
+      - echo Listing files
+      - ls -al
+    finally:
+      - echo end of install phase
+  pre_build:
+    commands:
+      - pip install --upgrade pip
+      - pip install awscli --upgrade --user
+      - echo Logging in to Amazon ECR...
+      - echo `aws --version`
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region eu-west-1)
+      - echo `date +%s` > timestamp
+      - echo Docker login
+      - docker login --username $DOCKER_LOGIN --password $DOCKER_TOKEN
+      - NGINX_IMAGE=$REPO_NGINX/$NODE_ENV
+      - NGINX_REPOSITORY_URI=$REPOSITORY_URI/$NGINX_IMAGE
+      - IMAGE_NAME=$REPO/$NODE_ENV
+      - REPOSITORY_URI=$REPOSITORY_URI/$IMAGE_NAME
+      - IMAGE_TAG="$(date +%s)"
+      - echo Generating new version image $IMAGE_TAG
+    finally:
+      - echo end of pre_build phase
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image for web3...
+      - docker build -t $REPOSITORY_URI:latest -f docker/build/web3.dockerfile --build-arg NODE_ENV=$NODE_ENV --build-arg NPM_TOKEN=$NPM_TOKEN .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - echo Building the Docker image for Nnginx reverse proxy...
+      - docker build -t $NGINX_REPOSITORY_URI:latest -f docker/build/nginx.dockerfile .
+      - docker tag $NGINX_REPOSITORY_URI:latest $NGINX_REPOSITORY_URI:$IMAGE_TAG
+    finally:
+      - echo end of build phase
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker web3 images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Pushing the Docker nginx reverse proxy images...
+      - docker push $NGINX_REPOSITORY_URI:latest
+      - docker push $NGINX_REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"esolidar-web3-%s","imageUri":"%s"}, {"name":"esolidar-web3-nginx-%s","imageUri":"%s"}]' $NODE_ENV $REPOSITORY_URI:latest $NODE_ENV $NGINX_REPOSITORY_URI:latest > imagedefinitions.json
+    finally:
+      - echo end of post_build phase
+artifacts:
+  files: imagedefinitions.json
