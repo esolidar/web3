@@ -80,7 +80,7 @@ export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }:
         return page ?? false;
       },
       select: (data: any) => ({
-        total: data.pages[0].institutions.total,
+        total: data.pages?.[0].institutions.total,
         pages: data.pages.flatMap((item: any) => [item.institutions.data]),
         pageParams: [...data.pageParams],
       }),
