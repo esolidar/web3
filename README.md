@@ -25,10 +25,10 @@ A dedicated Dapp on top of Celo where any nonprofit, sustainable project or caus
 
 ## Install
 
-Create an .env.local file in root directory with the content of the following file:
+Create an .env.local file in root directory:
 
 ```
-.env.example
+cp .env.example .env.local
 ```
 
 Install dependencies:
