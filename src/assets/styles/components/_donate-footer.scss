@@ -16,13 +16,13 @@
 
   &__share {
     &--icon {
-      @media (min-width: map-get($breakpoints, xs)) {
+      @media (min-width: map-get($breakpoints, sm)) {
         display: none;
       }
     }
 
     &--text {
-      @media (max-width: map-get($breakpoints, xs)) {
+      @media (max-width: map-get($breakpoints, sm)) {
         display: none;
       }
     }

@@ -75,7 +75,7 @@ const Wallet = ({
             {
               id: 3,
               leftIcon: 'CreditCard',
-              text: intl.formatMessage({ id: 'web3.add.founds' }),
+              text: intl.formatMessage({ id: 'web3.add.founs' }),
               onClick: () => {
                 setIsNavVisible(false);
                 rampCheckout(getBalances, address, 'PT');

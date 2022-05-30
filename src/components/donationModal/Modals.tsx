@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
+import { useQueryClient } from 'react-query';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import DonationModal from '.';
@@ -28,6 +29,7 @@ const Modals = ({
   const [transactionHash, setTransactionHash] = useState<string>('');
 
   const { balance } = useContext(AppContext);
+  const queryClient = useQueryClient();
 
   const intl: IntlShape = useIntl();
   const donateWithCUSD = useDonateCeloCUSD();
@@ -43,6 +45,7 @@ const Modals = ({
       donateWithCUSD(walletAddress, `${form.amount}`).then((value: any) => {
         if (!(value instanceof Error)) {
           if (address) getBalances();
+          queryClient.refetchQueries('celoWalletBalance');
           setIsOpenSuccess(true);
           setOpenModal(false);
           setTransactionHash(value);

@@ -3,7 +3,7 @@
 ![esolidar](https://static.esolidar.com/frontend/assets/web3-social-share.png)
 
 [![Latest Github release](https://img.shields.io/github/release/Martinsos/edlib.svg)](https://github.com/esolidar/web3/releases/latest)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/31c7e814239047ccb71c98b61a97be12)](https://www.codacy.com/gh/esolidar/web3/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=esolidar/web3&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/31c7e814239047ccb71c98b61a97be12)](https://www.codacy.com/gh/esolidar/web3/dashboard?utm_source=github.com&utm_medium=referral&utm_content=esolidar/web3&utm_campaign=Badge_Grade)
 ![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/esolidar/web3/blob/main/LICENSE)
@@ -23,15 +23,40 @@ A dedicated Dapp on top of Celo where any nonprofit, sustainable project or caus
     - [Security Vulnerabilities](#security-vulnerabilities)
     - [Support](#support)
 
-### Install
+## Install
 
-### Supported Wallets
+Create an .env.local file in root directory with the content of the following file:
+
+```
+.env.example
+```
+
+Install dependencies:
+
+```
+yarn
+```
+
+Start dev server:
+
+```
+yarn dev
+```
+
+## Tech Stack
+
+- [Nextjs](https://nextjs.org/docs)
+- [Typescript](https://www.typescriptlang.org/)
+- [React Query](https://react-query.tanstack.com/)
+- [@celo/contractkit](https://docs.celo.org/developer-guide/contractkit)
+
+## Supported Wallets
 
 - MetaMask
 - Valora
 - WalletConnect
 
-### Links
+## Links
 
 - [esolidar.com](https://www.esolidar.com)
 - [web3.esolidar.com](https://web3.esolidar.com)
@@ -40,16 +65,16 @@ A dedicated Dapp on top of Celo where any nonprofit, sustainable project or caus
 - [Issue tracker](https://github.com/esolidar/web3/issues)
 - [Source code](https://github.com/esolidar/web3)
 
-### License
+## License
 
->You can check out the full license [here](https://github.com/esolidar/web3/blob/main/LICENSE)
+> You can check out the full license [here](https://github.com/esolidar/web3/blob/main/LICENSE)
 
 This project is licensed under the terms of the **Apache License 2.0** license.
 
-### Security Vulnerabilities
+## Security Vulnerabilities
 
 If you discover a security vulnerability within esolidar web3 repository, please create an issue on this repo. All security vulnerabilities will be promptly addressed.
 
-### Support
+## Support
 
 Struggling with anything esolidar web3 related? Jump into the [Issue tracker](https://github.com/esolidar/web3/issues) and ask for help any time.
