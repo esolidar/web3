@@ -6,51 +6,41 @@ import ROOT_URL from '../../constants/apiUrl';
 interface Args {
   search?: string;
   odsId?: any[];
-  perPage?: number;
   onSuccess?(data: any): void;
-}
-
-interface ArgsPrefetch {
-  queryClient: QueryClient;
-  search?: string | null;
-  perPage?: number;
 }
 
 const queryKey: string = 'getInstitutionList';
 const url = (params: string): string => `${ROOT_URL}institutions${params && `?${params}`}`;
 
-const useGetInstitutionList = ({ search, odsId = [], perPage = 3, onSuccess }: Args) =>
+const useGetInstitutionList = ({ search, odsId = [], onSuccess }: Args) =>
   useQuery(
     [queryKey, search, odsId],
     async () => {
       const params: string = queryString.stringify({
         has_celo_wallet: Number(true),
         name: search ? `%${search}%` : undefined,
-        ods_id: odsId.length > 0 ? odsId.join(',') : undefined,
-        per_page: perPage,
+        ods_id: odsId.length > 0 ? odsId.flatMap(i => i.value).join() : undefined,
       });
       const { data: response } = await axios.get(url(params));
-      return response.data.institutions;
+      return response.data;
     },
     {
       onSuccess: data => onSuccess && onSuccess(data),
     }
   );
 
-export const useGetInstitutionListPrefetch = async ({
-  queryClient,
-  perPage = 6,
-  search = '',
-}: ArgsPrefetch) => {
-  await queryClient.prefetchQuery([queryKey, search, []], async () => {
+export const useGetInstitutionListPrefetch = async (queryClient: QueryClient, perPage = 6) => {
+  await queryClient.prefetchQuery(queryKey, async () => {
     const params: string = queryString.stringify({
       has_celo_wallet: Number(true),
       per_page: perPage,
     });
     const { data: response } = await axios.get(url(params));
-    return response.data.institutions;
+    return response.data;
   });
 };
+
+export default useGetInstitutionList;
 
 export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }: Args) =>
   useInfiniteQuery(
@@ -59,7 +49,7 @@ export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }:
       const params: string = queryString.stringify({
         has_celo_wallet: Number(true),
         name: search ? `%${search}%` : undefined,
-        ods_id: odsId.length > 0 ? odsId.join(',') : undefined,
+        ods_id: odsId.length > 0 ? odsId.flatMap(i => i.value).join() : undefined,
         page: pageParam,
       });
       const { data: response } = await axios.get(url(params));
@@ -80,11 +70,9 @@ export const useGetInstitutionListInfinite = ({ search, odsId = [], onSuccess }:
         return page ?? false;
       },
       select: (data: any) => ({
-        total: data.pages?.[0].institutions.total,
+        total: data.pages[0].institutions.total,
         pages: data.pages.flatMap((item: any) => [item.institutions.data]),
         pageParams: [...data.pageParams],
       }),
     }
   );
-
-export default useGetInstitutionList;

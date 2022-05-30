@@ -10,12 +10,12 @@ interface shareProps {
 }
 
 export interface ModalBodyProps extends shareProps {
-  transactionID: string;
+  transitionID: string;
   nonProfitName: string;
 }
 
 interface Props {
-  transactionID: string;
+  transitionID: string;
   nonProfitName: string;
   shareProps: shareProps;
   openModal: boolean;

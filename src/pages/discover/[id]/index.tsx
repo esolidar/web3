@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import Head from 'next/head';
 import { dehydrate, QueryClient } from 'react-query';
@@ -21,7 +21,6 @@ import getRoute from '../../../routes';
 import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
 import Modals from '../../../components/donationModal/Modals';
 import useCeloWalletBalance from '../../../api/hooks/useCeloWalletBalance';
-import { DAPP_NAME } from '../../../constants/dapp';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
@@ -38,9 +37,16 @@ const InstitutionDetail = () => {
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+  const [npoBalance, setNpoBalance] = useState<number | null>(null);
 
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
+
+  const intl: IntlShape = useIntl();
+  const nonProfitName = useRef('');
+  const nonProfitId = useRef(null);
+  nonProfitName.current = institution.name;
+  nonProfitId.current = institution.id;
 
   const institutionWalletAddress = institution.celo_wallet.find(
     (item: any) => item.default
@@ -51,9 +57,9 @@ const InstitutionDetail = () => {
     balanceOf: 'cusd',
   });
 
-  const intl: IntlShape = useIntl();
-  const nonProfitName = useRef(institution.name || '');
-  const nonProfitId = useRef(institution.id || null);
+  useEffect(() => {
+    if (nonprofitBalance) setNpoBalance(nonprofitBalance);
+  }, [nonprofitBalance]);
 
   const handleClickDonate = useCallback(() => {
     if (address) {
@@ -70,56 +76,56 @@ const InstitutionDetail = () => {
   return (
     <>
       <Head>
-        <title key="title">{institution?.name}</title>
+        <title key="title">{institution.name}</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@esolidar" />
-        <meta name="twitter:title" content={DAPP_NAME} />
+        <meta name="twitter:title" content={institution.name} />
         <meta
           name="twitter:description"
-          content={institution?.about?.[String(router.locale)].substring(0, 120)}
+          content={institution.about[String(router.locale)].substring(0, 120)}
         />
         <meta name="twitter:creator" content="@esolidar" />
         <meta
           name="twitter:image:src"
           content={
-            institution?.s3_cover_key
+            institution.s3_cover_key
               ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
               : urlNoImage
           }
         />
-        <meta key="og:title" property="og:title" content={institution?.name} />
+        <meta key="og:title" property="og:title" content={institution.name} />
         <meta
           key="og:description"
           property="og:description"
-          content={institution?.about?.[String(router.locale)].substring(0, 120)}
+          content={institution.about[String(router.locale)].substring(0, 120)}
         />
 
         <meta
           key="description"
           name="description"
-          content={institution?.about?.[String(router.locale)].substring(0, 120)}
+          content={institution.about[String(router.locale)].substring(0, 120)}
         />
         <meta
           key="og:image"
           property="og:image"
           content={
-            institution?.s3_cover_key
+            institution.s3_cover_key
               ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
               : urlNoImage
           }
         />
-        <meta key="keywords" name="keywords" content={institution?.name} />
+        <meta key="keywords" name="keywords" content={institution.name} />
         <meta
           key="og:url"
           property="og:url"
           content={`${process.env.NEXT_PUBLIC_DOMAIN}/${String(router.locale)}/discover/${
-            institution?.id
+            institution.id
           }`}
         />
         <link
           key="canonical"
           href={`${process.env.NEXT_PUBLIC_DOMAIN}${String(router.locale)}/discover/${
-            institution?.id
+            institution.id
           }`}
           rel="canonical"
         />
@@ -129,72 +135,70 @@ const InstitutionDetail = () => {
           breadcrumbs={[
             {
               handleClick: () => push(getRoute.HOME(String(router.locale))),
-              title: intl.formatMessage({ id: 'web3.home' }),
+              title: 'Home',
             },
             {
               handleClick: () => push(getRoute.DISCOVER(String(router.locale))),
-              title: intl.formatMessage({ id: 'web3.institution.list.title' }),
+              title: 'Discover',
             },
             {
-              title: institution?.name,
+              title: institution.name,
             },
           ]}
         />
-        <Title subtitle={institution?.location} title={institution?.name} />
+        <Title subtitle={institution.location} title={institution.name} />
         <div className="nonprofit-detail__columns">
           <div className="nonprofit-detail__columns--left">
             <CarouselLightbox
               listItems={[
                 {
-                  url: institution?.s3_cover_key
+                  url: institution.s3_cover_key
                     ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
                     : urlNoImage,
-                  altTag: institution?.name,
+                  altTag: institution.name,
                   type: 'photo',
                 },
               ]}
             />
             <div className="nonprofit-detail__balance">
               <ProfileAvatar
-                buttonText={institution?.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
-                buttonUrl={institution?.link}
+                buttonText={institution.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
+                buttonUrl={institution.link}
                 buttonIconRight={<Icon name="ExternalLink" size="xs" />}
                 isNameBold
-                name={institution?.name}
-                thumb={institution?.s3_image_key === '0' ? urlNoImage : institution?.thumbs.thumb}
+                name={institution.name}
+                thumb={institution.s3_image_key === '0' ? urlNoImage : institution.thumbs.thumb}
               />
 
-              {nonprofitBalance !== undefined && nonprofitBalance > 0 && (
-                <div className="nonprofit-detail__balance--amount">
-                  <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
-                  <div>{`${nonprofitBalance} cUSD`}</div>
-                </div>
-              )}
+              <div className="nonprofit-detail__balance--amount">
+                <div className="body-small">{intl.formatMessage({ id: 'web3.raised' })}</div>
+                {npoBalance && <div style={{ whiteSpace: 'nowrap' }}>{`${npoBalance} cUSD`}</div>}
+              </div>
             </div>
             <div className="nonprofit-detail__mission">
               <h3>{intl.formatMessage({ id: 'web3.mission' })}</h3>
-              {!isSSR && institution?.about && (
-                <div>{formatTextWithParagraphs(institution?.about?.[String(router.locale)])}</div>
+              {!isSSR && institution.about && (
+                <p>{formatTextWithParagraphs(institution.about[String(router.locale)])}</p>
               )}
             </div>
           </div>
           <div className="nonprofit-detail__columns--right">
             <CardContribute
-              name={institution?.name}
+              name={institution.name}
               address={institutionWalletAddress}
               onClickDonate={handleClickDonate}
               onClickShare={() => setIsOpenShareModal(true)}
             />
-            <CardSDG sdgList={institution?.ods} />
+            <CardSDG sdgList={institution.ods} />
           </div>
         </div>
       </div>
       <ShareModal
         openModal={isOpenShareModal}
-        title={institution?.name}
+        title={institution.name}
         windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
         onCloseModal={() => setIsOpenShareModal(false)}
-        onClickCopyToClipboard={() => toast.success(intl.formatMessage({ id: 'web3.copied' }))}
+        onClickCopyToClipboard={() => toast.success('Successfully copied URL')}
       />
       <DonateFooter
         onClickDonate={handleClickDonate}

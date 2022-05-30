@@ -1,21 +1,21 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-use-before-define */
-import { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { IntlShape, useIntl, FormattedMessage } from 'react-intl';
 import classnames from 'classnames';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Button from '@esolidar/toolkit/build/elements/button';
+import Icon from '@esolidar/toolkit/build/elements/icon';
 import TextFieldNumber from '@esolidar/toolkit/build/elements/textFieldNumber';
 import useToast from '../../hooks/useToast/useToast';
 import Props, { ModalBodyProps, Form } from './DonationModal.types';
-import LINKS from '../../constants/links';
 
 const DEFAULT_FORM: Form = {
   amount: null,
   errors: null,
 };
 
-const DonationModal = ({
+const DonationModal: FC<Props> = ({
   openModal,
   balance,
   nonProfitName,
@@ -24,7 +24,6 @@ const DonationModal = ({
 }: Props) => {
   const [form, setForm] = useState<Form>(DEFAULT_FORM);
   const [isDonateLoading, setIsDonateLoading] = useState<boolean>(false);
-  const [isDonateError, setIsDonateError] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
   const toast = useToast();
@@ -33,8 +32,15 @@ const DonationModal = ({
 
   const resetModal = () => {
     setIsDonateLoading(false);
-    setIsDonateError(false);
-    setForm(DEFAULT_FORM);
+    const funds = balance || 0;
+    if (+funds === 0) {
+      const newForm: Form = { ...form };
+      newForm.amount = null;
+      newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
+      setForm(newForm);
+    } else {
+      setForm(DEFAULT_FORM);
+    }
   };
 
   useEffect(() => {
@@ -46,26 +52,24 @@ const DonationModal = ({
     const newForm: Form = { ...form };
     let newValue: any = null;
     if (value && funds > 0) {
-      newValue = value;
-      if (parseFloat(value) > funds) newValue = funds;
+      if (balance && newValue >= +balance) {
+        newValue = balance;
+      }
+      newValue = +value;
       newForm.errors = null;
-    }
-    if (value && funds === 0) {
-      newForm.errors = { amount: intl.formatMessage({ id: 'web3.donateModal.no.balance' }) };
     }
     newForm.amount = newValue;
     setForm(newForm);
-    setIsDonateError(false);
   };
 
   const handleClickDonate = () => {
     if (form.amount && form.amount > 0 && balance && balance > 0) {
       setIsDonateLoading(true);
       onclickDonate(form).then((value: any) => {
-        if (value instanceof Error) {
+        if (value) {
           setIsDonateLoading(false);
           toast.error(intl.formatMessage({ id: 'web3.error.alert' }));
-          setIsDonateError(true);
+          setForm({ amount: null, errors: { transaction: true } });
         }
       });
     }
@@ -95,22 +99,26 @@ const DonationModal = ({
             extraClass={classnames({
               'primary-full': form.amount || isDonateLoading,
             })}
-            size="lg"
+            size="md"
             text={intl.formatMessage({ id: 'web3.donate' })}
             onClick={handleClickDonate}
             withLoading
             isLoading={isDonateLoading}
-            disabled={!form.amount || +form.amount === 0}
+            disabled={!form.amount || form.amount === 0}
             fullWidth
           />
-          {isDonateError && (
+          {form.errors?.transaction && (
             <span className="donationModal__error">
               <FormattedMessage
                 id="web3.donateModal.error"
                 values={{
                   // @ts-ignore
                   a: chunks => (
-                    <a target="_blank" rel="noreferrer" href={LINKS.troubleshooting}>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`${process.env.NEXT_PUBLIC_ESOLIDAR_HELP_URL}kb/guide/troubleshooting-dEsGbnLOMU/Steps/1496184`}
+                    >
                       {chunks}
                     </a>
                   ),
@@ -126,7 +134,7 @@ const DonationModal = ({
 
 export default DonationModal;
 
-const ModalBody = ({
+const ModalBody: FC<ModalBodyProps> = ({
   balance,
   form = DEFAULT_FORM,
   shortcuts = [25, 50, 150, 500],
@@ -145,12 +153,8 @@ const ModalBody = ({
       </div>
       <div className="donationModal__balance">
         <div className="donationModal__balance-coin">
-          <img
-            src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/assets/cusd-color.svg`}
-            className="cusd-icon"
-            alt="celo-cusd"
-          />
-          <span>{intl.formatMessage({ id: 'web3.balance' })}</span>
+          <Button className="cusd-icon" icon={<Icon name="AtSign" />} type="icon" theme="light" />
+          <span>cUSD balance</span>
         </div>
         <div className="donationModal__balance-value">{balance} cUSD</div>
       </div>
@@ -158,17 +162,17 @@ const ModalBody = ({
         <TextFieldNumber
           field="amount"
           id="amount"
-          thousandSeparator={false}
+          suffix=" cUSD"
+          thousandSeparator
           label={intl.formatMessage({ id: 'web3.donateModal.amount' })}
           decimalScale={18}
-          placeholder="0.00"
+          placeholder="0.00 cUSD"
           value={amount}
           onChange={(e: any) => onChangeForm(e)}
           error={errors?.amount}
           dataTestId="amount"
           allowNegative={false}
           disabled={isDonateLoading || !!errors?.amount}
-          renderText={() => <div>CUSD</div>}
         />
       </div>
       <div className="donationModal__shortcuts">

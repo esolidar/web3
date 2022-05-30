@@ -26,15 +26,6 @@
         margin-left: 10px;
       }
     }
-    &-icon {
-      cursor: pointer;
-
-      &:hover,
-      &:focus,
-      &:active {
-        @include svg-change-color(map-get($theme-colors, primary));
-      }
-    }
   }
   &__separator {
     border-top: 2px solid map-get($neutrals, 200);
@@ -52,40 +43,23 @@
     &-icons {
       display: flex;
       margin-top: $distance-3;
-      margin-bottom: $distance-1;
-      gap: $distance-2;
 
       ul {
         padding: 0;
-        margin: 0px;
-        flex-grow: 1;
+        margin: 0 $distance-1 0 $distance-1;
+        flex: 0 0 50%;
 
         li {
           list-style: none;
-          margin-bottom: $distance-2;
+          margin-bottom: $distance-4;
 
           a {
-            display: block;
             cursor: pointer;
             font-style: normal;
             font-weight: 400;
             font-size: 16px;
             color: map-get($base, black);
             text-decoration: none;
-            padding: $distance-1;
-            border-radius: $border-radius-1;
-
-            &:active,
-            &:visited {
-              background-color: map-get($neutrals, 100);
-            }
-            &:hover {
-              background-color: map-get($background, secondary);
-            }
-            &:focus {
-              background-color: map-get($base, white);
-              box-shadow: 0px 0px 0px 4px get-rgba(map-get($theme-colors, primary), 8);
-            }
 
             &:hover,
             &:active,

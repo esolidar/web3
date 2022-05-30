@@ -8,12 +8,10 @@ import Button from '@esolidar/toolkit/build/elements/button';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import truncateAddress from '../../utils/truncateAddress';
 import Props, { ModalBodyProps } from './SuccessModal.types';
-import openCeloTransaction from '../../utils/openCeloTransaction';
-import useToast from '../../hooks/useToast/useToast';
-import LINKS from '../../constants/links';
+import openCeloAddress from '../../utils/openCeloAddress';
 
 const SuccessModal: FC<Props> = ({
-  transactionID,
+  transitionID,
   nonProfitName,
   openModal,
   onCloseModal,
@@ -31,7 +29,7 @@ const SuccessModal: FC<Props> = ({
       backdrop="static"
       showFooter={false}
       bodyChildren={
-        <ModalBody {...shareProps} transactionID={transactionID} nonProfitName={nonProfitName} />
+        <ModalBody {...shareProps} transitionID={transitionID} nonProfitName={nonProfitName} />
       }
     />
   );
@@ -40,7 +38,7 @@ const SuccessModal: FC<Props> = ({
 export default SuccessModal;
 
 const ModalBody: FC<ModalBodyProps> = ({
-  transactionID,
+  transitionID,
   nonProfitName,
   title = '',
   showFacebook = true,
@@ -54,7 +52,6 @@ const ModalBody: FC<ModalBodyProps> = ({
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
 
   const intl: IntlShape = useIntl();
-  const toast = useToast();
 
   const fbShare = () => {
     const url = `https://www.facebook.com/sharer/sharer.php?display=popup&u=${windowLocationHref}&quote=${title}`;
@@ -65,7 +62,6 @@ const ModalBody: FC<ModalBodyProps> = ({
 
   const handleClickCopyToClipboard = () => {
     navigator.clipboard.writeText(windowLocationHref);
-    toast.success(intl.formatMessage({ id: 'web3.copied' }));
   };
 
   return (
@@ -86,21 +82,19 @@ const ModalBody: FC<ModalBodyProps> = ({
         </div>
         <div className="successModal__transition-id">
           <span
-            onClick={() => openCeloTransaction(transactionID)}
-            onKeyDown={() => openCeloTransaction(transactionID)}
+            onClick={() => openCeloAddress(transitionID)}
+            onKeyDown={() => openCeloAddress(transitionID)}
             role="presentation"
           >
-            {truncateAddress(transactionID, 6)}
+            {truncateAddress(transitionID, 5)}
           </span>
-          <span className="successModal__transition-icon">
-            <Icon
-              name="InfoBold"
-              size="sm"
-              onClick={() => {
-                setOpenModalInfo(true);
-              }}
-            />
-          </span>
+          <Icon
+            name="InfoBold"
+            size="sm"
+            onClick={() => {
+              setOpenModalInfo(true);
+            }}
+          />
         </div>
       </div>
       <div className="successModal__separator" />
@@ -259,7 +253,9 @@ const ModalBody: FC<ModalBodyProps> = ({
             <Button
               className="popover-btn m-0 p-0"
               extraClass="link"
-              href={LINKS.blockchainTransactions}
+              href={intl.formatMessage({
+                id: 'web3.successModal.blockchain.learn.more.url',
+              })}
               target="_blank"
               text={intl.formatMessage({ id: 'learn.more' })}
               size="sm"

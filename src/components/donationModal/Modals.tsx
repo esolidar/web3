@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
-import { useQueryClient } from 'react-query';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import DonationModal from '.';
@@ -26,10 +25,7 @@ const Modals = ({
   setOpenModal,
 }: Props) => {
   const [isOpenSuccess, setIsOpenSuccess] = useState<boolean>(false);
-  const [transactionHash, setTransactionHash] = useState<string>('');
-
   const { balance } = useContext(AppContext);
-  const queryClient = useQueryClient();
 
   const intl: IntlShape = useIntl();
   const donateWithCUSD = useDonateCeloCUSD();
@@ -43,12 +39,10 @@ const Modals = ({
   const handledonateWithCUSD = useCallback(
     (form: Form) =>
       donateWithCUSD(walletAddress, `${form.amount}`).then((value: any) => {
-        if (!(value instanceof Error)) {
+        if (!value) {
           if (address) getBalances();
-          queryClient.refetchQueries('celoWalletBalance');
           setIsOpenSuccess(true);
           setOpenModal(false);
-          setTransactionHash(value);
         }
         return Promise.resolve(value);
       }),
@@ -66,12 +60,20 @@ const Modals = ({
       />
       {/* TODO: add text and link to share (waiting for product team) */}
       <ThankYouModal
-        transactionID={`${transactionHash}`}
+        transitionID={walletAddress}
         nonProfitName={nonProfitName}
         openModal={isOpenSuccess}
         onCloseModal={() => setIsOpenSuccess(false)}
         shareProps={{
-          title: intl.formatMessage({ id: 'web3.share.text' }, { nonProfitName }),
+          title: intl.formatMessage(
+            { id: 'web3.share.text' },
+            {
+              nonProfitName,
+              url: `${process.env.NEXT_PUBLIC_DOMAIN}/${String(
+                intl.locale
+              )}/discover/${nonProfitId}`,
+            }
+          ),
           windowLocationHref: `${process.env.NEXT_PUBLIC_DOMAIN}/${String(
             intl.locale
           )}/discover/${nonProfitId}`,
