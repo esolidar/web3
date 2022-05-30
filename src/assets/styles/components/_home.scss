@@ -1,9 +1,9 @@
 .app {
-  padding-top: 130px;
+  padding-top: 80px;
   min-height: calc(100vh - 200px);
 
-  @media (max-width: map-get($breakpoints, md)) {
-    padding-top: 80px;
+  @media (min-width: map-get($breakpoints, md)) {
+    padding-top: 130px;
   }
 }
 
@@ -11,7 +11,7 @@
   margin-bottom: 120px;
   position: relative;
   z-index: 9;
-  padding: 0 $distance-2;
+  padding: 0 $distance-3;
 
   @media (max-width: map-get($breakpoints, sm)) {
     margin-bottom: $distance-9;
