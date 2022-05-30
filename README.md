@@ -6,7 +6,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/31c7e814239047ccb71c98b61a97be12)](https://www.codacy.com/gh/esolidar/web3/dashboard?utm_source=github.com&utm_medium=referral&utm_content=esolidar/web3&utm_campaign=Badge_Grade)
 ![Build](https://github.com/esolidar/web3/actions/workflows/main.yml/badge.svg)
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://web3.testesolidar.com)
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/esolidar/web3/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Empowering philanthropy and ESG practice through blockchain.
 
