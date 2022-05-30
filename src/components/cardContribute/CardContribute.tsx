@@ -1,6 +1,7 @@
+// import { useIntl } from 'react-intl';
 import { IntlShape, useIntl } from 'react-intl';
 import Icon from '@esolidar/toolkit/build/elements/icon';
-import Tooltip from '@esolidar/toolkit/build/elements/tooltip';
+import Popover from '@esolidar/toolkit/build/elements/popover';
 import Button from '@esolidar/toolkit/build/elements/button';
 import truncateAddress from '../../utils/truncateAddress';
 import useToast from '../../hooks/useToast/useToast';
@@ -18,27 +19,30 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
   const intl: IntlShape = useIntl();
   const toast = useToast();
 
+  // const valora = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=celo://wallet/pay?address=0x7F38B1585d55A9bc881da27e2FB927d0db30fD41&displayName=esolidar&chld=L%7C0`;
+  // const metamask = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=wc:099df4c1-8d6d-4432-b6b1-f8fe5e243efe@1?bridge=https%3A%2F%2Fz.bridge.walletconnect.org&key=2625629f0670a8a5d660471621a727effbdaf28d32b23fa7a34ccfa143779bb7&displayName=esolidar&chld=L%7C0`;
+  const qrData = generateValoraQRCode(address, name);
+  const qrCodeImage = `https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=${qrData}&displayName=esolidar&chld=L%7C0`;
+
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(address);
-    toast.success(intl.formatMessage({ id: 'web3.copied' }));
+    toast.success('Successfully copied address');
   };
-
-  const qrCode = generateValoraQRCode(address, name);
 
   return (
     <div className="card-contribute">
       <h3 className="card-contribute__header">
         {intl.formatMessage({ id: 'web3.CardContribute.title' })}
-        <Tooltip
-          overlay={intl.formatMessage({ id: 'web3.CardContribute.popover' })}
-          trigger={['hover', 'click']}
-          tooltipBodyChild={<Icon name="InfoBold" size="sm" />}
+        <Popover
+          overlayTrigger={<Icon name="InfoBold" size="sm" />}
+          size="md"
+          popoverBodyChildren={<p>{intl.formatMessage({ id: 'web3.CardContribute.popover' })}</p>}
         />
       </h3>
       <p className="card-contribute__header-description body-small">
         {intl.formatMessage({ id: 'web3.CardContribute.subtitle' }, { nonProfitName: name })}
       </p>
-      <img className="card-contribute__qr-code" alt={String(address)} src={qrCode} />
+      <img className="card-contribute__qr-code" alt={String(address)} src={qrCodeImage} />
       <div className="card-contribute__address">
         <Button
           extraClass="link"
@@ -57,14 +61,14 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       <div className="card-contribute__actions">
         <Button
           extraClass="primary-full"
-          text={`${intl.formatMessage({ id: 'web3.donate' })} cUSD`}
+          text="Donate cUSD"
           onClick={onClickDonate}
           size="lg"
           fullWidth
         />
         <Button
           extraClass="secondary"
-          text={intl.formatMessage({ id: 'web3.share' })}
+          text="Share"
           onClick={onClickShare}
           size="lg"
           iconLeft={<Icon name="Share3" />}

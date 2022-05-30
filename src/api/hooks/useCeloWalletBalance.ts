@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import toNumber from '../../utils/convertAmount';
-import truncateNumber from '../../utils/truncateNumber';
 
 declare type currencies = 'celo' | 'cusd' | 'ceur';
 
@@ -23,26 +22,26 @@ const celoContractAddresses: CeloContractAddress[] = [
   { address: String(process.env.NEXT_PUBLIC_CONTRACT_CEUR_ADDRES), name: 'ceur' },
 ];
 
+const queryKey: string = 'celoWalletBalance';
+const url = (wallet: string, contractAddress?: string): string =>
+  `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
+
 const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: Args) =>
   useQuery(
-    'celoWalletBalance',
+    queryKey,
     async () => {
       const contractAddress = celoContractAddresses.find(({ name }) => name === balanceOf)?.address;
 
-      if (contractAddress === undefined) throw new Error('Currency not found!');
+      if (contractAddress === undefined) throw new Error('Currency not find!');
 
-      const url = `${process.env.NEXT_PUBLIC_EXPLORER_API}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${wallet}`;
-      const { data: response } = await axios.get(url);
-
+      const { data: response } = await axios.get(url(wallet, contractAddress));
       const value = toNumber(response.result);
-      const truncatedValue = truncateNumber(value, 8);
 
-      return truncatedValue;
+      return +value.toFixed(4);
     },
     {
       onSuccess: data => onSuccess && onSuccess(data),
       enabled,
-      initialData: 0,
     }
   );
 

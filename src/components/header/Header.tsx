@@ -13,9 +13,8 @@ import useGetBalance from '../../hooks/useGetBalance/useGetBalance';
 import truncateAddress from '../../utils/truncateAddress';
 import getRoute from '../../routes';
 import LogoWhite from './LogoWhite';
+import Logo from './Logo';
 import AppContext from '../../contexts/AppContext';
-import rampCheckout from '../../utils/rampCheckout';
-import openCeloAddress from '../../utils/openCeloAddress';
 
 interface WalletProps {
   address: any;
@@ -23,8 +22,6 @@ interface WalletProps {
   destroy(): void;
   connect: any;
   setIsNavVisible(val: boolean): void;
-  isBottonsTransparent: boolean;
-  fullWidth: boolean;
 }
 
 interface Props {
@@ -32,60 +29,27 @@ interface Props {
   isBottonsTransparent: boolean;
 }
 
-const Wallet = ({
-  address,
-  balance,
-  destroy,
-  connect,
-  setIsNavVisible,
-  isBottonsTransparent,
-  fullWidth,
-}: WalletProps) => {
+const Wallet = ({ address, balance, destroy, connect, setIsNavVisible }: WalletProps) => {
   const intl = useIntl();
-
-  const { getBalances } = useGetBalance();
 
   return (
     <div className="wallet">
-      {address ? (
+      {address && balance >= 0 ? (
         <DropdownLabelGroup
           dropdownItems={[
             {
               id: 0,
-              leftIcon: 'ExternalLink',
-              text: intl.formatMessage({ id: 'web3.view.celo' }),
-              onClick: () => {
-                setIsNavVisible(false);
-                openCeloAddress(address);
-              },
-            },
-            {
-              id: 1,
-              leftIcon: 'X',
+              leftIcon: 'DeleteCircle',
               text: intl.formatMessage({ id: 'web3.disconect' }),
               onClick: () => {
                 setIsNavVisible(false);
                 destroy();
               },
             },
-            {
-              id: 2,
-              divider: true,
-            },
-            {
-              id: 3,
-              leftIcon: 'CreditCard',
-              text: intl.formatMessage({ id: 'web3.add.founs' }),
-              onClick: () => {
-                setIsNavVisible(false);
-                rampCheckout(getBalances, address, 'PT');
-              },
-            },
           ]}
           dropdownText={truncateAddress(address, 5)}
-          labelText={balance !== null ? `${balance} cUSD` : '•••'}
-          transparent={isBottonsTransparent}
-          fullWidth={fullWidth}
+          labelText={balance >= 0 ? `${balance} cUSD` : ''}
+          // fullWidth
         />
       ) : (
         <Button
@@ -133,26 +97,23 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
       )}
     >
       <Link href={getRoute.HOME(String(router.locale))}>
+
         <a className="home-logo">
           <div className="logo logo-web">
             {isHeaderTransparent && <LogoWhite />}
-            {!isHeaderTransparent && (
-              <img
-                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/logo/esolidar-web3-desk.svg`}
-                className="white"
-                alt="esolidar"
-              />
-            )}
+            {!isHeaderTransparent && <Logo />}
           </div>
 
           <img
-            src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/logo/esolidar-web3-mobile.svg`}
+            src="https://static.esolidar.com/frontend/logo/esolidar/logo-xsmall.svg"
             className="logo logo-mobile"
             alt="esolidar"
           />
         </a>
+
       </Link>
       <nav className="header__menu">
+        
         <div className={classnames('header__menu-item', { active: locationIncludes('discover') })}>
           <Link href={getRoute.DISCOVER(String(router.locale))}>
             <a>
@@ -160,13 +121,17 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             </a>
           </Link>
         </div>
-        {/* <div
-          className={classnames('header__menu-item', { active: locationIncludes('how-it-works') })}
-        >
-          <Link href="/how-it-works">
-            <a>How it works</a>
-          </Link>
-        </div> */}
+
+        {
+          /* <div
+            className={classnames('header__menu-item', { active: locationIncludes('how-it-works') })}
+          >
+            <Link href="/how-it-works">
+              <a>How it works</a>
+            </Link>
+          </div> */
+        }
+
         <div className="header__menu-connect-button">
           <Wallet
             address={address}
@@ -174,8 +139,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             destroy={destroy}
             connect={connect}
             setIsNavVisible={setIsNavVisible}
-            isBottonsTransparent={isBottonsTransparent}
-            fullWidth={false}
           />
         </div>
       </nav>
@@ -202,8 +165,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
               destroy={destroy}
               connect={connect}
               setIsNavVisible={setIsNavVisible}
-              isBottonsTransparent={false}
-              fullWidth
             />
             <div
               className={classnames('header__menu-item', { active: locationIncludes('discover') })}

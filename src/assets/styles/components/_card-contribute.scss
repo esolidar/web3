@@ -11,16 +11,9 @@
   &__header {
     margin-top: 0;
 
-    & .tooltipOverlay {
+    & .popover-component-trigger {
       vertical-align: text-top;
       margin-left: $distance-1;
-      cursor: pointer;
-
-      &:hover,
-      &:focus,
-      &:active {
-        @include svg-change-color(map-get($theme-colors, primary));
-      }
     }
   }
 

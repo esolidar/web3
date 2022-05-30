@@ -1,7 +1,7 @@
-import { useState, useRef, Fragment, ChangeEvent, useCallback, useEffect } from 'react';
+import { useState, useRef, Fragment, ChangeEvent, useCallback } from 'react';
 import { FormattedMessage, useIntl, IntlShape } from 'react-intl';
 import { useRouter } from 'next/router';
-import { dehydrate, QueryClient, useQueryClient } from 'react-query';
+import { dehydrate, QueryClient } from 'react-query';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
@@ -14,9 +14,6 @@ import useDebounce from '@esolidar/toolkit/build/hooks/useDebounce';
 import useIntersectionObserverInfiniteScroll from '@esolidar/toolkit/build/hooks/useIntersectionObserverInfiniteScroll';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import Loading from '@esolidar/toolkit/build/components/loading';
-import addUrlParam from '@esolidar/toolkit/build/utils/addUrlParam';
-import getUrlParam from '@esolidar/toolkit/build/utils/getUrlParam';
-import removeUrlParam from '@esolidar/toolkit/build/utils/removeUrlParam';
 import {
   useGetInstitutionListPrefetch,
   useGetInstitutionListInfinite,
@@ -25,58 +22,40 @@ import useGetSdg from '../../api/hooks/useGetSdg';
 import { Sdg } from '../../interfaces/sdg';
 import getRoute from '../../routes';
 import Modals from '../../components/donationModal/Modals';
-import odsExternasLinks from '../../constants/odsExternalLinks';
+
+// TODO: gas price
+// TODO: success / error das transactions
 
 interface SdgOption {
   value: number;
   label: string;
 }
 
-const getTranslatedSDGArray = (array: any, intl: any) =>
-  array?.map((sdg: Sdg) => ({
-    value: sdg.id,
-    label: `${sdg.ods_id}. ${intl.formatMessage({ id: sdg.tag_name })}`,
-  }));
+let sdgOptions: SdgOption[] = [];
+let institutionList: any = [];
 
 const List = () => {
+  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+  const [search, setSearch] = useState<string | undefined>('');
+  const [odsId, setOdsId] = useState<SdgOption[]>([]);
+  const [total, setTotal] = useState<number>(0);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const debouncedSearch = useDebounce(search, 500);
+
   const intl: IntlShape = useIntl();
-  const queryClient = useQueryClient();
   const { address, connect } = useContractKit();
   const institutionWalletAddress = useRef('');
   const nonProfitName = useRef('');
   const nonProfitId = useRef(null);
   const router = useRouter();
 
-  const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
-  const [search, setSearch] = useState<string | undefined>(getUrlParam('search') || '');
-  const [odsId, setOdsId] = useState<any>(
-    getUrlParam('ods') ? decodeURIComponent(getUrlParam('ods')).split(',') : []
-  );
-  const [osdFilterValue, setOsdFilterValue] = useState<any>([]);
-
-  const [institutionList, setInstitutionList] = useState<any>({});
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const debouncedSearch = useDebounce(search, 500);
-
-  const { data: sdgList } = useGetSdg({
-    onSuccess: data => {
-      if (odsId.length > 0) {
-        setOsdFilterValue(
-          getTranslatedSDGArray(
-            data.filter((sdg: any) => odsId.includes(String(sdg.id))),
-            intl
-          )
-        );
-      }
-    },
-  });
-
-  const { isLoading, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
+  const { isLoading, isFetching, data, isFetchingNextPage, fetchNextPage, hasNextPage, status } =
     useGetInstitutionListInfinite({
       search: debouncedSearch,
       odsId,
       onSuccess: data => {
-        setInstitutionList(data);
+        setTotal(data.total);
+        institutionList = data.pages;
       },
     });
 
@@ -85,9 +64,20 @@ const List = () => {
     target: loadMoreButtonRef,
     onIntersect: fetchNextPage,
     enabled: hasNextPage,
-    page: institutionList?.pages?.length,
+    page: data?.pages.length,
     root: null,
     status,
+  });
+
+  useGetSdg({
+    onSuccess: data => {
+      if (sdgOptions.length === 0) {
+        sdgOptions = data.map((item: Sdg) => ({
+          value: item.id,
+          label: `${item.ods_id} - ${intl.formatMessage({ id: item.tag_name })}`,
+        }));
+      }
+    },
   });
 
   const handleClickDonate = useCallback(
@@ -97,29 +87,16 @@ const List = () => {
       institutionWalletAddress.current = institution.celo_wallet.find(
         (item: any) => item.default
       ).wallet_address;
-
-      if (address) setIsOpenDonationModal(true);
-      else
+      if (address) {
+        setIsOpenDonationModal(true);
+      } else {
         connect()
           .then(() => setIsOpenDonationModal(true))
           .catch((e: any) => console.log(e));
+      }
     },
-    [isOpenDonationModal, address]
+    [isOpenDonationModal]
   );
-
-  useEffect(() => {
-    queryClient.setQueryData('celoWalletBalance', 0);
-  }, []);
-
-  useEffect(() => {
-    if (search) addUrlParam('search', search);
-    else removeUrlParam('search');
-  }, [search]);
-
-  useEffect(() => {
-    if (odsId.length > 0) addUrlParam('ods', encodeURIComponent(odsId.join(',')));
-    else removeUrlParam('ods');
-  }, [odsId]);
 
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
@@ -129,16 +106,14 @@ const List = () => {
     setSearch(e.target.value);
   };
 
-  const handleFilterOds = (e: SdgOption[]) => {
-    setOsdFilterValue(e);
-    setOdsId(e.flatMap((ods: SdgOption) => ods.value));
+  const odsLink = (): string => {
+    if (String(router.locale) === 'pt') return 'https://www.ods.pt/';
+    if (String(router.locale) === 'br') return 'https://brasil.un.org/pt-br/';
+    return 'https://sdgs.un.org/goals';
   };
 
-  const { total } = institutionList;
-  const odsFilterOptions = getTranslatedSDGArray(sdgList, intl);
-
   return (
-    <div>
+    <div className="home">
       <Breadcrumbs
         breadcrumbs={[
           {
@@ -157,9 +132,10 @@ const List = () => {
       <div className="filters">
         <div className="filters__search">
           <TextField
+            // size="md"
             onChange={handleSearch}
             value={search}
-            placeholder={intl.formatMessage({ id: 'web3.seach.placeholder' })}
+            placeholder="Search for nonprofits or causes..."
             field="term"
             leftIcon={{
               name: 'Search',
@@ -168,7 +144,7 @@ const List = () => {
             rightIcon={
               search
                 ? {
-                    name: 'DeleteCircleBold',
+                    name: 'DeleteCircle',
                     onClick: () => setSearch(''),
                     show: true,
                   }
@@ -179,13 +155,13 @@ const List = () => {
         <div className="filters__field">
           <MultiSelectField
             name="sdg"
-            onChange={handleFilterOds}
+            onChange={(e: any) => setOdsId(e)}
             showSelectAll={false}
             valueText={intl.formatMessage({ id: 'projects.filter.ods' })}
             size="md"
             menuWidth="450px"
-            value={osdFilterValue}
-            options={odsFilterOptions}
+            value=""
+            options={sdgOptions}
             labelHeader={
               <span className="sdg-description-title">
                 <FormattedMessage id="sdg.description.1" />
@@ -201,32 +177,28 @@ const List = () => {
           />
         </div>
       </div>
-      {isLoading && search === '' && (
+      {isLoading && (
         <div className="loading-npo-list">
           <Loading />
           <h3>
-            <FormattedMessage id="Loading..." />
-          </h3>
-        </div>
-      )}
-      {isLoading && search !== '' && (
-        <div className="loading-npo-list">
-          <Loading />
-          <h3>
-            <FormattedMessage id="web3.searching" />
+            <FormattedMessage id="Searching..." />
           </h3>
           <p>
-            <FormattedMessage id="web3.searching.message" values={{ search }} />
+            <FormattedMessage id="Please wait while we are searching for “Walk” nonprofits or causes" />
           </p>
         </div>
       )}
       {total > 0 && !isLoading && (
         <div>
           <div className="npo-list-count">
-            {total} <FormattedMessage id="web3.seach.results" />
+            <FormattedMessage
+              id="{total} nonprofits or causes"
+              defaultMessage="{total} nonprofits or causes"
+              values={{ total }}
+            />{' '}
           </div>
-          <div className="list__grid">
-            {institutionList?.pages.map((page: any) => (
+          <div className="home__grid">
+            {institutionList.map((page: any) => (
               <Fragment key={`npo-${page}`}>
                 {page.map((institution: any) => (
                   <CardNonProfit
@@ -290,7 +262,7 @@ const List = () => {
             <Button
               className="popover-btn m-0 p-0"
               extraClass="link"
-              href={odsExternasLinks[String(router.locale)] || odsExternasLinks.en}
+              href={odsLink()}
               target="_blank"
               text={intl.formatMessage({ id: 'learn.more' })}
               size="sm"
@@ -305,7 +277,7 @@ const List = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch({ queryClient });
+  await useGetInstitutionListPrefetch(queryClient);
 
   return {
     props: {

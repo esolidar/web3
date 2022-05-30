@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .web3 {
   &__connect-modal {
     position: fixed;
@@ -12,11 +13,6 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-color: get-rgba(map-get($base, black), 75);
-
-    p {
-      padding-top: $distance-4;
-    }
 
     & > div:first-of-type {
       z-index: 1000;
@@ -25,10 +21,6 @@
 
   &__viewport {
     padding: 0 $distance-3;
-  }
-
-  &__getBalance-modal {
-    display: none;
   }
 }
 
@@ -49,9 +41,4 @@
     background-color: transparent;
     border: unset;
   }
-}
-
-.tooltip .rc-tooltip-inner {
-  font-family: map-get($fonts, main);
-  text-align: left !important;
 }

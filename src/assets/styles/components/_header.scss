@@ -1,5 +1,6 @@
 .header {
   position: fixed;
+  // height: 80px;
   width: 100%;
   display: grid;
   grid-template-areas: 'home-logo nav';
@@ -40,10 +41,6 @@
 
       .wallet {
         padding-bottom: $distance-3;
-
-        & > button {
-          width: 100%;
-        }
       }
 
       .header__menu-item {
@@ -64,6 +61,7 @@
     &.home-page-header {
       @include animate();
       background-color: transparent;
+      // background: map-get($blue, 800);
     }
 
     &.home-page-header-buttons {
@@ -98,7 +96,6 @@
 
     .logo-web {
       display: flex;
-      @include svg-change-color(map-get($base, white));
     }
     .logo-mobile {
       display: none;

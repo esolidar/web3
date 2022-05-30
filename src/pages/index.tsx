@@ -1,32 +1,27 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { FormattedMessage, useIntl, IntlShape } from 'react-intl';
-import { dehydrate, QueryClient, useQueryClient } from 'react-query';
+import { dehydrate, QueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
 import CardNonProfit from '@esolidar/toolkit/build/components/card/nonProfit';
 import Button from '@esolidar/toolkit/build/elements/button';
-import Hero from '../components/hero/Hero';
-import HomeCallout from '../components/homeCallout/HomeCallout';
-import useGetInstitutionList, {
-  useGetInstitutionListPrefetch,
-} from '../api/hooks/useGetInstitutionList';
+import Hero from '../components/Hero';
+import { useGetInstitutionListPrefetch } from '../api/hooks/useGetInstitutionList';
 import getRoute from '../routes';
 import Modals from '../components/donationModal/Modals';
 
-const Home = () => {
-  const intl: IntlShape = useIntl();
-  const queryClient = useQueryClient();
-  const { address, connect } = useContractKit();
-  const router = useRouter();
-
-  const institutionWalletAddress = useRef<string>('');
-  const nonProfitName = useRef<string>('');
-  const nonProfitId = useRef<number | null>(null);
+const DiscoverPage = ({ dehydratedState }: any) => {
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+  const { data } = dehydratedState?.queries?.[0]?.state?.data?.institutions || '';
+  const router = useRouter();
+  const intl: IntlShape = useIntl();
+  const { address, connect } = useContractKit();
 
-  const { data: institutionList } = useGetInstitutionList({});
+  const institutionWalletAddress = useRef('');
+  const nonProfitName = useRef('');
+  const nonProfitId = useRef(null);
 
   const handleClickDonate = useCallback(
     (institution: any) => {
@@ -36,136 +31,110 @@ const Home = () => {
         (item: any) => item.default
       ).wallet_address;
 
-      if (address) setIsOpenDonationModal(true);
-      else
+      if (address) {
+        setIsOpenDonationModal(true);
+      } else {
         connect()
           .then(() => setIsOpenDonationModal(true))
           .catch((e: any) => console.log(e));
+      }
     },
     [isOpenDonationModal]
   );
 
-  useEffect(() => {
-    queryClient.setQueryData('celoWalletBalance', 0);
-  }, []);
-
   const handleClickThumb = (institution: any) => {
     router.push(getRoute.nonProfit.DETAIL(String(router.locale), institution.id));
-  };
-
-  const handleClickViewMore = () => {
-    router.push(getRoute.DISCOVER(String(router.locale)));
   };
 
   return (
     <>
       <Hero />
       <Viewport centred size="xl">
-        <div className="home">
-          <div className="home-section">
-            <div className="home-section__title">
-              <FormattedMessage id="web3.featured" />
-              <div className="home-section__title--hr" />
-            </div>
-            <Button
-              extraClass="primary-full"
-              onClick={handleClickViewMore}
-              iconRight={<Icon name="ArrowRight" />}
-              text={intl.formatMessage({ id: 'web3.view.more' })}
-              ghost
-            />
-          </div>
-
-          {institutionList?.data.length > 0 && (
-            <div className="home-npo-cards">
-              {institutionList.data.map((institution: any) => (
-                <CardNonProfit
-                  key={institution.id}
-                  npo={institution}
-                  onClickDonate={() => handleClickDonate(institution)}
-                  onClickThumb={() => handleClickThumb(institution)}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="home-section second-section">
-            <div className="home-section__title">
-              <span>
-                <FormattedMessage id="web3.homepage.support.title" />
-              </span>
-              <div className="home-section__title--hr" />
-            </div>
-            <div className="home-section__title">
-              <span>
-                <FormattedMessage id="web3.homepage.support.subtitle" />
-              </span>
-            </div>
-          </div>
-
-          <div className="home-callout-grid">
-            <HomeCallout
-              color="green"
-              title="web3.homepage.box1.title"
-              description="web3.homepage.box1.subtitle"
-              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/maximize.png`}
-            />
-            <HomeCallout
-              color="yellow"
-              title="web3.homepage.box2.title"
-              description="web3.homepage.box2.subtitle"
-              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/donate.png`}
-            />
-            <HomeCallout
-              color="yellow"
-              title="web3.homepage.box3.title"
-              description="web3.homepage.box3.subtitle"
-              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/fees.png`}
-            />
-            <HomeCallout
-              color="green"
-              title="web3.homepage.box4.title"
-              description="web3.homepage.box4.subtitle"
-              image={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/benefits/transparency.png`}
-            />
-          </div>
-
-          <div className="home-section">
-            <div className="home-section__title">
-              <FormattedMessage id="web3.homepage.partners" />
-              <div className="home-section__title--hr" />
-            </div>
-          </div>
-
-          <div className="home-partners-grid">
-            <div>
-              <img
-                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/celo.svg`}
-                className="partner-image"
-                alt="celo"
+        <div className="home-content">
+          <div className="home-content__section">
+            <FormattedMessage id="Featured" />
+            <div className="home-content__section-hr" />
+            <div className="home-content__section-view-more">
+              <Button
+                extraClass="link"
+                fullWidth={false}
+                ghost={false}
+                href={getRoute.DISCOVER(String(router.locale))}
+                iconRight={<Icon name="ArrowRight" />}
+                isLoading={false}
+                size="md"
+                text={intl.formatMessage({ id: 'web3.view.more' })}
+                theme="light"
+                type="button"
               />
             </div>
-            <div>
-              <img
-                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/harmony.svg`}
-                className="partner-image"
-                alt="harmony"
+          </div>
+          <div className="home-content__npo-cards">
+            {data?.map((institution: any) => (
+              <CardNonProfit
+                key={institution.id}
+                npo={institution}
+                onClickDonate={() => handleClickDonate(institution)}
+                onClickThumb={() => handleClickThumb(institution)}
               />
+            ))}
+          </div>
+          <div className="home-content__section top">
+            <div className="home-content__section-left">
+              <FormattedMessage id="web3.homepage.support.title" />
             </div>
-            <div>
-              <img
-                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/impact-market.svg`}
-                className="partner-image"
-                alt="impact-market"
-              />
+            <div className="home-content__section-hr" />
+            <div className="home-content__section-right">
+              <FormattedMessage id="web3.homepage.support.subtitle" />
             </div>
-            <div>
-              <img
-                src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/partners/clabs.svg`}
-                className="partner-image"
-                alt="clabs"
-              />
+          </div>
+          <div className="home-content__section-columns">
+            <div className="home-content__section-columns-item green">
+              <h4>
+                <FormattedMessage id="web3.homepage.box1.title" />
+              </h4>
+              <p>
+                <FormattedMessage id="web3.homepage.box1.subtitle" />
+              </p>
+              <div className="home-content__section-columns-item-footer" />
             </div>
+            <div className="home-content__section-columns-item yellow">
+              <h4>
+                <FormattedMessage id="web3.homepage.box2.title" />
+              </h4>
+              <p>
+                <FormattedMessage id="web3.homepage.box2.subtitle" />
+              </p>
+              <div className="home-content__section-columns-item-footer" />
+            </div>
+            <div className="home-content__section-columns-item yellow">
+              <h4>
+                <FormattedMessage id="web3.homepage.box3.title" />
+              </h4>
+              <p>
+                <FormattedMessage id="web3.homepage.box3.subtitle" />
+              </p>
+              <div className="home-content__section-columns-item-footer" />
+            </div>
+            <div className="home-content__section-columns-item green">
+              <h4>
+                <FormattedMessage id="web3.homepage.box4.title" />
+              </h4>
+              <p>
+                <FormattedMessage id="web3.homepage.box4.subtitle" />
+              </p>
+              <div className="home-content__section-columns-item-footer" />
+            </div>
+          </div>
+          <div className="home-content__section">
+            <FormattedMessage id="web3.homepage.partners" />
+            <div className="home-content__section-hr" />
+          </div>
+          <div style={{ marginTop: '78px', display: 'flex', gap: '24px' }}>
+            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
+            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
+            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
+            <div style={{ border: '1px solid #ccc', width: '100px', height: '35px' }} />
           </div>
         </div>
       </Viewport>
@@ -180,12 +149,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default DiscoverPage;
 
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch({ queryClient, perPage: 3, search: null });
+  await useGetInstitutionListPrefetch(queryClient, 3);
 
   return {
     props: {

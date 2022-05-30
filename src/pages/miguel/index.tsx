@@ -1,13 +1,18 @@
+/* eslint-disable no-use-before-define */
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { dehydrate, QueryClient } from 'react-query';
+import Link from 'next/link';
 import useGetInstitutionList, {
   useGetInstitutionListPrefetch,
 } from '../../api/hooks/useGetInstitutionList';
 import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
 import useDonateCeloCUSD from '../../hooks/useDonate/useDonate';
 import truncateAddress from '../../utils/truncateAddress';
+
+// TODO: gas price
+// TODO: success / error das transactions
 
 const Home = () => {
   const intl = useIntl();
@@ -26,7 +31,6 @@ const Home = () => {
   const getTotalBalance = async () => {
     await performActions(async kit => {
       const totalBalance = await kit.getTotalBalance(toMitch);
-
       console.log(totalBalance);
     });
   };
@@ -49,6 +53,22 @@ const Home = () => {
     <div className="container">
       <main className="main">
         <h1>{intl.formatMessage({ id: 'home-page' })}</h1>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 51 },
+          }}
+        >
+          <p>Go to institution 51</p>
+        </Link>
+        <Link
+          href={{
+            pathname: '/institution/[id]',
+            query: { id: 54 },
+          }}
+        >
+          <p>Go to institution 54</p>
+        </Link>
         {address ? (
           <>
             <p>My address</p>
@@ -85,7 +105,7 @@ const Home = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient();
 
-  await useGetInstitutionListPrefetch({ queryClient });
+  await useGetInstitutionListPrefetch(queryClient);
 
   return {
     props: {

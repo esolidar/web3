@@ -4,22 +4,6 @@ import { useRouter } from 'next/router';
 import Dropdown from '@esolidar/toolkit/build/elements/dropdown';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { SUPPORTED_LOCALES } from '../../constants/locales';
-import SOCIAL_MEDIA from '../../constants/socialMedia';
-
-const footerItems = [
-  {
-    href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}policy`,
-    text: 'web3.privacy.policy',
-  },
-  {
-    href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}terms`,
-    text: 'web3.terms.conditions',
-  },
-  {
-    href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}cookies`,
-    text: 'web3.cookie.policy',
-  },
-];
 
 const Footer = () => {
   const router = useRouter();
@@ -48,12 +32,12 @@ const Footer = () => {
   )?.name;
 
   return (
-    <footer className={`footer ${isInstitutionDetailPage && 'footer-detail'}`}>
-      <div className="footer-copyright">
+    <footer className={`footer-component ${isInstitutionDetailPage && 'footer-component__detail'}`}>
+      <div className="footer-component__copyright">
         <FormattedMessage id="web3.copyright.note" />
       </div>
 
-      <div className="footer-menu">
+      <div className="footer-component__menu">
         <div>
           {intl.formatMessage(
             {
@@ -62,38 +46,53 @@ const Footer = () => {
             { year }
           )}
         </div>
-        {footerItems.map(item => (
-          <div className="footer-menu__item">
-            <a href={item.href} target="_blank" rel="noreferrer">
-              <FormattedMessage id={item.text} />
-            </a>
-          </div>
-        ))}
-        <div className="footer-menu__item--separator" />
-        <div className="powered-by-esolidar">
-          Powered by{' '}
-          <a href={process.env.NEXT_PUBLIC_ESOLIDAR_URL} target="_blank" rel="noreferrer">
-            esolidar
+        <div className="footer-component__menu-item">
+          <a
+            href={`${process.env.NEXT_PUBLIC_ESOLIDAR_URL}policy`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FormattedMessage id="web3.privacy.policy" />
           </a>
         </div>
+        <div className="footer-component__menu-item">
+          <a href={`${process.env.NEXT_PUBLIC_ESOLIDAR_URL}terms`} target="_blank" rel="noreferrer">
+            <FormattedMessage id="web3.terms.conditions" />
+          </a>
+        </div>
+        <div className="footer-component__menu-item">
+          <a
+            href={`${process.env.NEXT_PUBLIC_ESOLIDAR_URL}cookies`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FormattedMessage id="web3.cookie.policy" />
+          </a>
+        </div>
+        <div className="footer-component__menu-item-separator" />
+        <div className="power-by-esolidar">
+          Powered by <strong>esolidar</strong>
+        </div>
 
-        <div className="footer-menu__lang">
-          <div className="powered-by-esolidar mobile">
-            Powered by{' '}
-            <a href={process.env.NEXT_PUBLIC_ESOLIDAR_URL} target="_blank" rel="noreferrer">
-              esolidar
-            </a>
+        <div className="change-language">
+          <div className="power-by-esolidar-mobile">
+            Powered by <strong>esolidar</strong>
           </div>
-          <div className="footer-menu__lang--dropdown">
+          <div className="change-lang">
             <Icon name="Language" />
             <Dropdown
               customButton={
                 <Button
-                  extraClass="primary-full"
-                  text={currentLocale}
-                  iconRight={<Icon name="ChevronDown" />}
-                  size="sm"
+                  extraClass="primary-full btn-change-lang"
                   ghost
+                  iconRight={<Icon name="ChevronUp" />}
+                  isLoading={false}
+                  onClick={() => {}}
+                  size="sm"
+                  text={currentLocale}
+                  theme="light"
+                  type="button"
+                  withLoading={false}
                 />
               }
               items={[
@@ -103,12 +102,12 @@ const Footer = () => {
                   text: SUPPORTED_LOCALES.PT.name,
                 },
                 {
-                  id: 1,
+                  id: 0,
                   onClick: () => handleChangeLang(SUPPORTED_LOCALES.BR.id),
                   text: SUPPORTED_LOCALES.BR.name,
                 },
                 {
-                  id: 2,
+                  id: 0,
                   onClick: () => handleChangeLang(SUPPORTED_LOCALES.EN.id),
                   text: SUPPORTED_LOCALES.EN.name,
                 },
@@ -116,37 +115,9 @@ const Footer = () => {
             />
           </div>
         </div>
-        <div className="footer-menu__social">
-          <Button
-            extraClass="primary-full"
-            type="icon"
-            icon={<Icon name="Twitter" size="md" />}
-            onClick={() => window.open(SOCIAL_MEDIA.twitter, '_blank')}
-            ghost
-          />
-          <Button
-            extraClass="primary-full"
-            type="icon"
-            icon={<Icon name="Linkedin" size="md" />}
-            onClick={() => window.open(SOCIAL_MEDIA.linkedin, '_blank')}
-            ghost
-          />
-          {/* <Button
-            href={SOCIAL_MEDIA.twitter}
-            target="_blank"
-            rel="noreferrer"
-            size="sm"
-            type="link"
-            icon={<Icon name="Twitter" size="md" />}
-          />
-          <Button
-            href={SOCIAL_MEDIA.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            size="sm"
-            type="link"
-            icon={<Icon name="Linkedin" size="md" />}
-          /> */}
+        <div className="footer-component__social-icons">
+          <Icon name="Twitter" size="md" />
+          <Icon name="Linkedin" size="md" />
         </div>
       </div>
     </footer>
