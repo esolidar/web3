@@ -5,6 +5,9 @@ import { ethers } from 'ethers'
 import truncateAddress from '../../utils/truncateAddress'
 import { useEffect, useState } from 'react'
 import Countdown from 'react-countdown';
+import FormData from 'form-data';
+import axios from 'axios'
+
 
 // ABIs
 import ERC721EsolidarSweepstake from '../../abi/ERC721EsolidarSweepstake.json'
@@ -38,6 +41,7 @@ export default function Home(){
     try{
       await performActions(async (kit) => {        
         const res = await contractSweepstake.methods.getAllSweepstakes().call();
+        console.log('allSweepstakes', res)
         setAllSweepstakes(res)
       })
     }catch(e){
@@ -47,6 +51,7 @@ export default function Home(){
       const JsonRpcProvider = new CeloProvider(process.env.NEXT_PUBLIC_JSON_RPC_PROVIDER)
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_ESOLIDAR_SWEEPSTAKE, Sweepstake, JsonRpcProvider)        
       const res = await contract.getAllSweepstakes()      
+      console.log(res)
       setAllSweepstakes(res)
     }
 
@@ -117,9 +122,9 @@ export default function Home(){
         preConfirm: async (amount) => {   
 
             const contractERC20 = new kit.web3.eth.Contract(ERC20, 
-              token == 'pEUR' ? process.env.NEXT_PUBLIC_PREXIS_TEST_EUR :
-              token == 'pUSD' ? process.env.NEXT_PUBLIC_PREXIS_TEST_USD :
-              token == 'pBRL' ? process.env.NEXT_PUBLIC_PREXIS_TEST_BRL :
+              token == 'pEUR' ? process.env.NEXT_PUBLIC_CEUR :
+              token == 'pUSD' ? process.env.NEXT_PUBLIC_CUSD :
+              token == 'pBRL' ? process.env.NEXT_PUBLIC_CBRL :
               null
               )
             
@@ -230,10 +235,11 @@ export default function Home(){
     margin: '2px',
   }
 
+
     return (
         <div>            
             <div className='row'>
-              <div>
+              <div>               
                   <Navbar/>
               </div>
               <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
@@ -241,7 +247,7 @@ export default function Home(){
               </div>
                 {allSweepstakes && allSweepstakes?.map((sweepstake, id) => {
 
-                  if(sweepstake[8] !== true) return
+                  if(sweepstake[9] !== true) return
 
                   return (
                     <div key={id} className='col-md-4 my-4'>
@@ -249,30 +255,33 @@ export default function Home(){
                         <Card.Body>
                           <Card.Title>NFT ID: {typeof sweepstake[0] == 'object' ? sweepstake[0].toNumber() : sweepstake[0]}</Card.Title>
                           <Card.Subtitle className="mb-2 text-muted">
-                            { sweepstake[1] == address ?
+                            { sweepstake[2] == address ?
                               <span>You are the owner</span>
                             :
-                              <span>Owner: {truncateAddress(sweepstake[1], 5)}</span> 
+                              <span>Owner: {truncateAddress(sweepstake[2], 5)}</span> 
                             }
-                          </Card.Subtitle>
+                          </Card.Subtitle>                              
                           <Card.Text>Token: {
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_BRL ? 'pBRL' :
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_EUR ? 'pEUR' :
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_USD ? 'pUSD' :
-                            truncateAddress(sweepstake[2], 5)
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CBRL ? 'pBRL' :
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CEUR ? 'pEUR' :
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CUSD ? 'pUSD' :
+                            truncateAddress(sweepstake[3], 5)
                           }</Card.Text>
-                          <Card.Text>Total Staked: {ethers.utils.formatEther(sweepstake[4])}</Card.Text>
-                          <Card.Text>Time: {CountdownTimer(typeof sweepstake[3] === 'object' ? sweepstake[3].toNumber() * 1000 : sweepstake[3] * 1000)}</Card.Text>
+                          <Card.Text>Total Staked: {ethers.utils.formatEther(sweepstake[5])}</Card.Text>
+                          <Card.Text>Time: {CountdownTimer(typeof sweepstake[4] === 'object' ? sweepstake[4].toNumber() * 1000 : sweepstake[4] * 1000)}</Card.Text>
+                          <Card.Text>
+                          <span>Metadata: { sweepstake[1] }</span>
+                          </Card.Text>
                           <button style={buttonStyle} 
                           onClick={() => beforeStake(
                             typeof sweepstake[0] == 'object' ? sweepstake[0].toNumber() : sweepstake[0],
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_BRL ? 'pBRL' :
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_EUR ? 'pEUR' :
-                            sweepstake[2] === process.env.NEXT_PUBLIC_PREXIS_TEST_USD ? 'pUSD' :
-                            truncateAddress(sweepstake[2], 5)
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CBRL ? 'pBRL' :
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CEUR ? 'pEUR' :
+                            sweepstake[3] === process.env.NEXT_PUBLIC_CUSD ? 'pUSD' :
+                            truncateAddress(sweepstake[3], 5)
                             )}>STAKE
                           </button>
-                          { sweepstake[1] == address ?
+                          { sweepstake[2] == address ?
                             <button style={buttonStyle} onClick={() => draw(sweepstake[0])}>
                               DRAW
                             </button>
