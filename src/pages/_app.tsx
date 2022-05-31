@@ -55,7 +55,6 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
   const contractkitNetwork = process.env.NEXT_PUBLIC_ENV === 'production' ? Mainnet : Alfajores;
 
   return (
-    // <WagmiConfig client={clientWagmi}>
     <ContractKitProvider
       dapp={{
         name: 'use-contractkit demo',
@@ -96,7 +95,6 @@ const App = ({ Component, pageProps, initialProps }: Props) => {
         </QueryClientProvider>
       </IntlProvider>
     </ContractKitProvider>
-    // </WagmiConfig>
   );
 };
 
