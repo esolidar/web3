@@ -48,6 +48,15 @@ export default function Navbar(){
                 :
                 null
             }
+
+            { address != null && isCharity ?
+                <Nav.Item as="li">
+                    <Nav.Link href="/sweepstake/mintform" eventKey="link-1">Create sweepstake</Nav.Link>
+                </Nav.Item>
+                :
+                null
+            }
+
             { address != null ?
                 <Nav.Item as="li">
                     <Nav.Link href="/sweepstake/mydonations" eventKey="link-2">My Donations</Nav.Link>
