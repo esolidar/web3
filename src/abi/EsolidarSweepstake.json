@@ -260,6 +260,11 @@
           "type": "uint256"
         },
         {
+          "internalType": "string",
+          "name": "_uri",
+          "type": "string"
+        },
+        {
           "internalType": "address",
           "name": "_owner",
           "type": "address"
@@ -343,88 +348,6 @@
     },
     {
       "inputs": [],
-      "name": "getActiveSweepstakes",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint256",
-              "name": "tokenId",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "owner",
-              "type": "address"
-            },
-            {
-              "internalType": "address",
-              "name": "erc20Token",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "duration",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "totalStakedTokens",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "winner",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "drawTimestamp",
-              "type": "uint256"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "address",
-                  "name": "donor",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "totalStaked",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "cumulative",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct EsolidarSweepstake.Donors[]",
-              "name": "donors",
-              "type": "tuple[]"
-            },
-            {
-              "internalType": "bool",
-              "name": "active",
-              "type": "bool"
-            },
-            {
-              "internalType": "bool",
-              "name": "destroyed",
-              "type": "bool"
-            }
-          ],
-          "internalType": "struct EsolidarSweepstake.Sweepstake[]",
-          "name": "activeSweepstakes",
-          "type": "tuple[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "getAllSweepstakes",
       "outputs": [
         {
@@ -435,6 +358,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
+            },
+            {
               "internalType": "address",
               "name": "owner",
               "type": "address"
@@ -499,88 +427,6 @@
           ],
           "internalType": "struct EsolidarSweepstake.Sweepstake[]",
           "name": "activeSweepstakes",
-          "type": "tuple[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getInactiveSweepstakes",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint256",
-              "name": "tokenId",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "owner",
-              "type": "address"
-            },
-            {
-              "internalType": "address",
-              "name": "erc20Token",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "duration",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "totalStakedTokens",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address",
-              "name": "winner",
-              "type": "address"
-            },
-            {
-              "internalType": "uint256",
-              "name": "drawTimestamp",
-              "type": "uint256"
-            },
-            {
-              "components": [
-                {
-                  "internalType": "address",
-                  "name": "donor",
-                  "type": "address"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "totalStaked",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "cumulative",
-                  "type": "uint256"
-                }
-              ],
-              "internalType": "struct EsolidarSweepstake.Donors[]",
-              "name": "donors",
-              "type": "tuple[]"
-            },
-            {
-              "internalType": "bool",
-              "name": "active",
-              "type": "bool"
-            },
-            {
-              "internalType": "bool",
-              "name": "destroyed",
-              "type": "bool"
-            }
-          ],
-          "internalType": "struct EsolidarSweepstake.Sweepstake[]",
-          "name": "inactiveSweepstakes",
           "type": "tuple[]"
         }
       ],
@@ -658,6 +504,11 @@
               "internalType": "uint256",
               "name": "tokenId",
               "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "uri",
+              "type": "string"
             },
             {
               "internalType": "address",
@@ -784,6 +635,11 @@
           "type": "uint256"
         },
         {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        },
+        {
           "internalType": "address",
           "name": "owner",
           "type": "address"
@@ -854,3 +710,4 @@
       "type": "function"
     }
   ]
+
