@@ -30,6 +30,7 @@ export default function searchTokenByID(context){
   
     async function getNftDetails(){
       const nftDetails = await contractSweepstake.methods.getSweepstakeWithDonors(query.id).call()
+      console.log('nftDetails: ', nftDetails)
       setCurrentNft(nftDetails)
     }
 
@@ -54,24 +55,21 @@ export default function searchTokenByID(context){
             <Card.Body>
               <Card.Title>NFT ID: {currentNft[0]}</Card.Title>
               <Card.Text>
-                Owner: {currentNft[1]}
+                Owner: {currentNft[2]}
               </Card.Text>
               <Card.Text>
-                Token: {currentNft[2]}
+                Token: {currentNft[3]}
               </Card.Text>
             </Card.Body>
             <ListGroup className="list-group-flush">
-              <ListGroupItem>Duration: {currentNft[3]}</ListGroupItem>
-              <ListGroupItem>Total Staked: {currentNft[4]}</ListGroupItem>
-              <ListGroupItem>Winner: {currentNft[5]}</ListGroupItem>
-              <ListGroupItem>DrawTimeStamp: {currentNft[6]}</ListGroupItem>
-              <ListGroupItem>Active: {currentNft[8] == true ? 'Active' : 'Deactive'}</ListGroupItem>
-              <ListGroupItem>Destroyed: {currentNft[9] == true ? 'Destroyed' : 'Not Destroyed'}</ListGroupItem>
+              <ListGroupItem>Duration: {currentNft[4]}</ListGroupItem>
+              <ListGroupItem>Total Staked: {currentNft[5]}</ListGroupItem>
+              <ListGroupItem>Winner: {currentNft[6]}</ListGroupItem>
+              <ListGroupItem>DrawTimeStamp: {currentNft[7]}</ListGroupItem>
+              <ListGroupItem>Active: {currentNft[9] == true ? 'Active' : 'Deactive'}</ListGroupItem>
+              <ListGroupItem>Destroyed: {currentNft[10] == true ? 'Destroyed' : 'Not Destroyed'}</ListGroupItem>
+              <ListGroupItem>Metadado: {currentNft[1]}</ListGroupItem>
             </ListGroup>
-            <Card.Body>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
           </Card>
           </div>
 
@@ -83,7 +81,7 @@ export default function searchTokenByID(context){
               </tr>
             </thead>
             <tbody>
-              { currentNft[7]?.map((donor) => {                
+              { currentNft[8]?.map((donor) => {                
                 return (
                   <tr>      
                     <td>{donor[0]}</td>
