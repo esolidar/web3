@@ -1,0 +1,3 @@
+[submodule "sweepstake-contracts"]
+	path = sweepstake-contracts
+	url = https://github.com/prexislabs/esolidar-sweepstake-contracts.git
