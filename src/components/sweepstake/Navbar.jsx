@@ -43,7 +43,7 @@ export default function Navbar(){
 
             { address != null && isCharity ?
                 <Nav.Item as="li">
-                    <Nav.Link href="/sweepstake/mysweepstakes" eventKey="link-1">My Sweepstakes</Nav.Link>
+                    <Nav.Link href="/sweepstake/mintform" eventKey="link-1">Create Sweepstake</Nav.Link>
                 </Nav.Item>
                 :
                 null
@@ -51,11 +51,12 @@ export default function Navbar(){
 
             { address != null && isCharity ?
                 <Nav.Item as="li">
-                    <Nav.Link href="/sweepstake/mintform" eventKey="link-1">Create sweepstake</Nav.Link>
+                    <Nav.Link href="/sweepstake/mysweepstakes" eventKey="link-1">My Sweepstakes</Nav.Link>
                 </Nav.Item>
                 :
                 null
             }
+
 
             { address != null ?
                 <Nav.Item as="li">
