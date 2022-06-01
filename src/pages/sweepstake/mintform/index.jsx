@@ -7,6 +7,7 @@ import ReactAudioPlayer from 'react-audio-player'
 import ERC721EsolidarSweepstake from '../../../abi/ERC721EsolidarSweepstake.json'
 import { sweetAlertError, sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert'
 import { useContractKit } from '@celo-tools/use-contractkit'
+import Navbar from '../../../components/sweepstake/Navbar'
 
 export default function MintForm() {
 
@@ -171,7 +172,7 @@ export default function MintForm() {
   return (
 
     <form className="mint-form" onSubmit={e => e.preventDefault()}>
-
+      <Navbar/>
       <div className="flex flex-col md:flex-row gap-20 justify-center">
         <div>
           {/* ===> FILE  */}
