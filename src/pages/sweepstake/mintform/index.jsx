@@ -56,7 +56,7 @@ export default function MintForm() {
     }
 
     if (event.target.files[0].size / (1024 * 1024) > 50) {
-      setTextImage("File cannot be greater than 50MB")
+      setErrorMessage("File cannot be greater than 50MB")
       return
     }
 
