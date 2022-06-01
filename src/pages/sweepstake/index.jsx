@@ -5,8 +5,6 @@ import { ethers } from 'ethers'
 import truncateAddress from '../../utils/truncateAddress'
 import { useEffect, useState } from 'react'
 import Countdown from 'react-countdown';
-import FormData from 'form-data';
-import axios from 'axios'
 
 
 // ABIs
@@ -41,7 +39,6 @@ export default function Home(){
     try{
       await performActions(async (kit) => {        
         const res = await contractSweepstake.methods.getAllSweepstakes().call();
-        console.log('allSweepstakes', res)
         setAllSweepstakes(res)
       })
     }catch(e){
