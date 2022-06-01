@@ -48,7 +48,6 @@ export default function MyDonors(){
     }
 
     async function getAllSweepstakesContract(){       
-        console.log('Executando') 
         try{
           await performActions(async (kit) => {        
             const res = await contractSweepstake.methods.getAllSweepstakes().call();
@@ -191,8 +190,6 @@ export default function MyDonors(){
         <div>        
                 <div>
                     <Navbar/>
-                    <button onClick={() => getAllSweepstakesContract()}>getAllSweepstakes</button>
-                    <button onClick={() => console.log(allSweepstakes)}>AllSweepstakes</button>
                 </div>
                 <div className="flex justify-center my-2">
                     <h1 className="text-3xl">My Donations</h1>

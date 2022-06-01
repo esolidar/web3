@@ -317,7 +317,6 @@ export default function MySweepstakes(){
 
             {/* Withdraw button */}            
                 { tokensToWithDraw?.map((token, index) => {          
-                    console.log(token)          
                     return (
                         <button className='d-flex flex-column align-items-center rounded-4' style={buttonStyle} onClick={() => withdraw(token[0])}>
                             <span>Claim {

@@ -30,7 +30,6 @@ export default function searchTokenByID(context){
   
     async function getNftDetails(){
       const nftDetails = await contractSweepstake.methods.getSweepstakeWithDonors(query.id).call()
-      console.log('nftDetails: ', nftDetails)
       setCurrentNft(nftDetails)
     }
 
