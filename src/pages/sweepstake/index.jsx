@@ -48,7 +48,6 @@ export default function Home(){
       const JsonRpcProvider = new CeloProvider(process.env.NEXT_PUBLIC_JSON_RPC_PROVIDER)
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_ESOLIDAR_SWEEPSTAKE, Sweepstake, JsonRpcProvider)        
       const res = await contract.getAllSweepstakes()      
-      console.log(res)
       setAllSweepstakes(res)
     }
 
