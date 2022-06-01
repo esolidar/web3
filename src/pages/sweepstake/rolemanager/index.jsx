@@ -1,10 +1,10 @@
 import { useContractKit } from '@celo-tools/use-contractkit'
 
 // ABI
-import ERC721EsolidarSweepstake from '../../../utils/sweepstake/sweetalert'
+import ERC721EsolidarSweepstake from '../../../abi/ERC721EsolidarSweepstake.json'
 
 // Sweetalert
-import { SwalQuestion, sweetAlertError, sweetAlertSuccess } from '../../../utils/sweetalert'
+import { SwalQuestion, sweetAlertError, sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert'
 import Navbar from '../../../components/sweepstake/Navbar'
 
 export default function roleManager(){
