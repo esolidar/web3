@@ -73,6 +73,13 @@ export default function MintForm() {
   }
 
   const processValues = async () => {
+
+    const MINTER = await contractERC721EsolidarSweepstake.methods.hasRole(process.env.NEXT_PUBLIC_MINTER_ROLE, address).call()
+    if(MINTER == false){
+      setErrorMessage("You must be a charity to perform this action")
+      return
+    }
+
     await performActions(async (kit) => {
       let totalBalance = await kit.getTotalBalance(address)
       if(!(totalBalance > 0)){
@@ -81,11 +88,8 @@ export default function MintForm() {
       }
     })
 
-    const MINTER = await contractERC721EsolidarSweepstake.methods.hasRole(process.env.NEXT_PUBLIC_MINTER_ROLE, address).call()
-    if(MINTER == false){
-      setErrorMessage("You must be a charity to perform this action")
-      return
-    }
+
+
 
     setErrorMessage('')
 
