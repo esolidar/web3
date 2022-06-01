@@ -72,6 +72,13 @@ export default function MintForm() {
   }
 
   const processValues = async () => {
+
+    const MINTER = await contractERC721EsolidarSweepstake.methods.hasRole(process.env.NEXT_PUBLIC_MINTER_ROLE, address).call()
+    if(MINTER == false){
+      setErrorMessage("You must be a charity to perform this action")
+      return
+    }
+
     setErrorMessage('')
 
     try {
@@ -133,7 +140,30 @@ export default function MintForm() {
       })
 
     } catch (e) {
-      console.log(e)
+      
+      // If Generic error
+      if(e.message == 'Internal JSON-RPC error.'){
+        setErrorMessage('Error interacting with the smart contract')
+      }
+
+      if(e.message){
+        setErrorMessage(e.message)
+        return
+      }
+      if(e.data?.message){
+        setErrorMessage(e.data.message)
+        return
+      }
+      if(e.data?.reason){
+        setErrorMessage(e.reason)
+        return
+      }
+      if(e.reason){
+        setErrorMessage(e.reason)
+        return
+      }
+
+      // Generic error
       setErrorMessage('Error interacting with the smart contract')
     }
   }
