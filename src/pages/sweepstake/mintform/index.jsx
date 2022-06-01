@@ -73,6 +73,13 @@ export default function MintForm() {
   }
 
   const processValues = async () => {
+    await performActions(async (kit) => {
+      let totalBalance = await kit.getTotalBalance(address)
+      if(!(totalBalance > 0)){
+        sweetAlertError("You don't have enough CELO to mint")
+        return
+      }
+    })
 
     const MINTER = await contractERC721EsolidarSweepstake.methods.hasRole(process.env.NEXT_PUBLIC_MINTER_ROLE, address).call()
     if(MINTER == false){
