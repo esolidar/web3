@@ -76,7 +76,7 @@ export default function MintForm() {
     await performActions(async (kit) => {
       let totalBalance = await kit.getTotalBalance(address)
       if(!(totalBalance > 0)){
-        sweetAlertError("You don't have enough CELO to mint")
+        setErrorMessage("You don't have enough CELO to mint")
         return
       }
     })
