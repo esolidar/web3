@@ -5,7 +5,7 @@ const openRamp = (getBalance: () => Promise<void>, userAddress: string, selected
   new RampInstantSDK({
     url: process.env.NEXT_PUBLIC_ENV !== 'production' ? 'https://ri-widget-staging.firebaseapp.com/' : undefined,
     hostAppName: DAPP_NAME,
-    hostLogoUrl: `${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/logo-xsmall.svg`,
+    hostLogoUrl: `${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/logo.svg`,
     swapAsset: 'CELO_CUSD',
     variant: 'auto',
     userAddress,
