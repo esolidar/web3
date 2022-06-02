@@ -10,18 +10,18 @@ import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
 import ShareModal from '@esolidar/toolkit/build/components/shareModal';
-import CardContribute from '../../../components/cardContribute/CardContribute';
-import CardSDG from '../../../components/cardSDG/CardSDG';
-import DonateFooter from '../../../components/donateFooter/DonateFooter';
+import CardContribute from '../../components/cardContribute/CardContribute';
+import CardSDG from '../../components/cardSDG/CardSDG';
+import DonateFooter from '../../components/donateFooter/DonateFooter';
 import useGetInstitutionDetail, {
   useGetInstitutionDetailPrefetch,
-} from '../../../api/hooks/useGetInstitutionDetail';
-import useToast from '../../../hooks/useToast/useToast';
-import getRoute from '../../../routes';
-import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
-import Modals from '../../../components/donationModal/Modals';
-import useCeloWalletBalance from '../../../api/hooks/useCeloWalletBalance';
-import { DAPP_NAME } from '../../../constants/dapp';
+} from '../../api/hooks/useGetInstitutionDetail';
+import useToast from '../../hooks/useToast/useToast';
+import getRoute from '../../routes';
+import useIsSSR from '../../hooks/useIsSSR/useIsSSR';
+import Modals from '../../components/donationModal/Modals';
+import useCeloWalletBalance from '../../api/hooks/useCeloWalletBalance';
+import { DAPP_NAME } from '../../constants/dapp';
 
 const formatTextWithParagraphs = (value: string) =>
   // eslint-disable-next-line react/no-array-index-key
