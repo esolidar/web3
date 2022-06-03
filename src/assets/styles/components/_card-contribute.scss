@@ -40,6 +40,12 @@
     margin: 28px 0;
     @include svg-change-color(map-get($turquoise, 500));
 
+    &-cusd-icon {
+      width: 32px;
+      height: 32px;
+      margin-left: $distance-2;
+    }
+
     & > .btn-link {
       padding: 0;
     }
