@@ -16,7 +16,7 @@
     "@celo-tools/use-contractkit": "^3.1.0",
     "@celo/contractkit": "^2.0.0",
     "@celo/utils": "^2.0.0",
-    "@esolidar/i18n": "^0.343.0",
+    "@esolidar/i18n": "^0.345.0",
     "@esolidar/toolkit": "^4.135.00",
     "@ramp-network/ramp-instant-sdk": "^3.1.1",
     "axios": "^0.27.2",
