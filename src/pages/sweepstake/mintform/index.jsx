@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useContractKit } from '@celo-tools/use-contractkit';
@@ -27,7 +28,7 @@ const MintForm = () => {
   const [token, setToken] = useState();
   const [errorMessage, setErrorMessage] = useState();
 
-  const fileHandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const fileHandleChange = event => {
     // Verify if the user cancel the file
     if (event.target.files[0] === undefined || event.target.files[0] == null) return;
 

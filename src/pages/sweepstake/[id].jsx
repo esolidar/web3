@@ -10,7 +10,7 @@ const searchTokenByID = () => {
   const { query } = useRouter();
   const { kit } = useContractKit();
 
-  const [currentNft, setCurrentNft] = useState<any>(0);
+  const [currentNft, setCurrentNft] = useState(0);
 
   const contractSweepstake = new kit.web3.eth.Contract(
     Sweepstake,
@@ -64,7 +64,7 @@ const searchTokenByID = () => {
           </tr>
         </thead>
         <tbody>
-          {currentNft[8]?.map((donor: any) => (
+          {currentNft[8]?.map(donor => (
             <tr>
               <td>{donor[0]}</td>
               <td>{ethers.utils.formatEther(donor[1])}</td>

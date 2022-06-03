@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios';
 import formidable from 'formidable';
 import fs from 'fs';
@@ -16,7 +17,7 @@ export const config = {
   },
 };
 
-const sendJSONToIPFS = async (json: any) => {
+const sendJSONToIPFS = async json => {
   const formData = new FormData();
   formData.append('file', json);
 
@@ -34,10 +35,10 @@ const sendJSONToIPFS = async (json: any) => {
   }
 };
 
-const post = async (req: any, res: any) => {
+const post = async (req, res) => {
   const form = new formidable.IncomingForm();
 
-  form.parse(req, async (err: any, fields: any, files: any) => {
+  form.parse(req, async (err, fields, files) => {
     if (err) {
       return res
         .status(500)
@@ -58,7 +59,7 @@ const post = async (req: any, res: any) => {
   });
 };
 
-const sendFileToIPFS = async (file: any) => {
+const sendFileToIPFS = async file => {
   const formData = new FormData();
   formData.append('file', fs.createReadStream(file.filepath));
 
@@ -83,7 +84,7 @@ const sendFileToIPFS = async (file: any) => {
   }
 };
 
-const sendFileToS3 = async (file: any, newFileName: any) => {
+const sendFileToS3 = async (file, newFileName) => {
   const fileContent = fs.createReadStream(file.filepath);
 
   const params = {
@@ -92,33 +93,33 @@ const sendFileToS3 = async (file: any, newFileName: any) => {
     Body: fileContent,
   };
 
-  s3.upload(params, (err: any, data: any) => {
+  s3.upload(params, (err, data) => {
     if (err) throw err;
     console.log(`File uploaded: ${data.Location}`);
   });
 };
 
-const sendJsonToS3 = async (json: any, newFileName: any) => {
+const sendJsonToS3 = async (json, newFileName) => {
   const params = {
     Bucket: process.env.S3_UPLOAD_BUCKET,
     Key: newFileName,
     Body: json,
   };
 
-  s3.upload(params, (err: any, data: any) => {
+  s3.upload(params, (err, data) => {
     if (err) throw err;
     console.log(`Json uploaded: ${data.Location}`);
   });
 };
 
 // GET
-const get = async (req: any, res: any) => {
+const get = async (req, res) => {
   const form = new formidable.IncomingForm();
 
-  form.parse(req, async (fields: any) => res.status(200).json(JSON.stringify(fields)));
+  form.parse(req, async fields => res.status(200).json(JSON.stringify(fields)));
 };
 
-export default (req: any, res: any) => {
+export default (req, res) => {
   req.method === 'POST'
     ? post(req, res)
     : req.method === 'PUT'

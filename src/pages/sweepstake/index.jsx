@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import Countdown from 'react-countdown';
 import { useContractKit } from '@celo-tools/use-contractkit';
@@ -19,12 +20,12 @@ import {
 } from '../../utils/sweepstake/sweetalert';
 import Navbar from '../../components/sweepstake/Navbar';
 
-interface CustomCardProps {
-  sweepstake: any;
-  beforeStake(nftID: number, token: string): any;
-  address: string;
-  draw(nftID: number): any;
-}
+// interface CustomCardProps {
+//   sweepstake: any;
+//   beforeStake(nftID: number, token: string): any;
+//   address: string;
+//   draw(nftID: number): any;
+// }
 
 const tokenMap = {
   pEUR: String(process.env.NEXT_PUBLIC_CEUR),
@@ -41,7 +42,7 @@ const buttonStyle = {
   margin: '2px',
 };
 
-const getAddressToken = (address: string) => {
+const getAddressToken = address => {
   const tokenList = Object.values(tokenMap);
   const addressIsValidToken = tokenList.some(token => token === address);
 
@@ -52,7 +53,7 @@ const getAddressToken = (address: string) => {
   return truncateAddress(address, 5);
 };
 
-const CountdownTimer = (date: string | number | Date) => (
+const CountdownTimer = date => (
   <Countdown
     autoStart
     date={date}
@@ -73,7 +74,7 @@ const CountdownTimer = (date: string | number | Date) => (
   />
 );
 
-const CustomCard = ({ sweepstake, beforeStake, address, draw }: CustomCardProps) => {
+const CustomCard = ({ sweepstake, beforeStake, address, draw }) => {
   const nftID = typeof sweepstake[0] === 'object' ? Number(sweepstake[0]) : sweepstake[0];
 
   return (
@@ -158,7 +159,7 @@ const Home = () => {
   //   process.env.NEXT_PUBLIC_ERC721_ESOLIDAR_SWEEPSTAKE
   // );
 
-  const StakeNFT = async (nftID: number, amount: string) => {
+  const StakeNFT = async (nftID, amount) => {
     try {
       await performActions(async () => {
         const gasLimit = await contractSweepstake.methods
@@ -188,12 +189,7 @@ const Home = () => {
     }
   };
 
-  const addMoreAllowance = async (
-    amount: number,
-    token: any,
-    currentAllowance: number,
-    nftID: number
-  ) => {
+  const addMoreAllowance = async (amount, token, currentAllowance, nftID) => {
     const remaining = amount - currentAllowance;
 
     try {
@@ -233,7 +229,7 @@ const Home = () => {
     }
   };
 
-  const beforeStake = async (nftID: number, token: string) => {
+  const beforeStake = async (nftID, token) => {
     await Swal.fire({
       title: token,
       input: 'text',
@@ -287,7 +283,7 @@ const Home = () => {
     });
   };
 
-  const draw = async (nftID: number) => {
+  const draw = async nftID => {
     try {
       await performActions(async () => {
         const gasLimit = await contractSweepstake.methods.draw(nftID).estimateGas();
@@ -314,7 +310,7 @@ const Home = () => {
         {sweepstakesList.length > 0 &&
           sweepstakesList
             .filter(sweepstake => !!sweepstake[9])
-            .map((sweepstake: any) => (
+            .map(sweepstake => (
               <div key={sweepstake.tokenId} className="col-md-4 my-4">
                 <CustomCard
                   sweepstake={sweepstake}

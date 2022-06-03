@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { ethers } from 'ethers';
@@ -10,24 +11,24 @@ import ERC721EsolidarSweepstake from '../../../abi/ERC721EsolidarSweepstake.json
 import Sweepstake from '../../../abi/EsolidarSweepstake.json';
 import { sweetAlertError, sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert';
 
-interface NFT {
-  nftID: string;
-  nftTokenURI: string;
-  nftOwner: string;
-  nftErc20token: string;
-  nftDuration: string;
-  nftTotalStaked: string;
-  nftWinner: string;
-  nftDrawTimestamp: string;
-  nftActive: string;
-  nftDestroyed: string;
-}
+// interface NFT {
+//   nftID: string;
+//   nftTokenURI: string;
+//   nftOwner: string;
+//   nftErc20token: string;
+//   nftDuration: string;
+//   nftTotalStaked: string;
+//   nftWinner: string;
+//   nftDrawTimestamp: string;
+//   nftActive: string;
+//   nftDestroyed: string;
+// }
 
-interface CardProps {
-  nft: NFT;
-  draw(nftID: number): void;
-  cancelCampaing(nftID: number): void;
-}
+// interface CardProps {
+//   nft: NFT;
+//   draw(nftID: number): void;
+//   cancelCampaing(nftID: number): void;
+// }
 
 const tokenMap = {
   pEUR: String(process.env.NEXT_PUBLIC_CEUR),
@@ -35,7 +36,7 @@ const tokenMap = {
   pBRL: String(process.env.NEXT_PUBLIC_CBRL),
 };
 
-const getAddressToken = (address: string) => {
+const getAddressToken = address => {
   const tokenList = Object.values(tokenMap);
   const addressIsValidToken = tokenList.some(token => token === address);
 
@@ -46,7 +47,7 @@ const getAddressToken = (address: string) => {
   return truncateAddress(address, 5);
 };
 
-const getERC20Token = (address: string) => {
+const getERC20Token = address => {
   const tokenList = Object.values(tokenMap);
   const addressIsValidToken = tokenList.some(token => token === address);
 
@@ -57,7 +58,7 @@ const getERC20Token = (address: string) => {
   return null;
 };
 
-const CountdownTimer = (date: string | number | Date) => (
+const CountdownTimer = date => (
   <Countdown
     autoStart
     date={date}
@@ -80,7 +81,7 @@ const CountdownTimer = (date: string | number | Date) => (
 
 const buttonStyle = { border: '1px solid cyan', borderRadius: '4px', padding: '5px' };
 
-const Card = ({ nft, draw, cancelCampaing }: CardProps) => {
+const Card = ({ nft, draw, cancelCampaing }) => {
   const {
     nftID,
     nftTokenURI,
@@ -162,7 +163,7 @@ const MySweepstakes = () => {
   const [tokensToWithDraw, setTokensToWithDraw] = useState([]);
   const [allSweepstakes, setAllSweepstakes] = useState([]);
 
-  const renderCampaings = (campaing: 'active' | 'completed' | 'canceled') => {
+  const renderCampaings = campaing => {
     if (campaing === 'active') {
       setShowActive(true);
       setShowCompleted(false);
@@ -262,7 +263,7 @@ const MySweepstakes = () => {
 
             getAllSweepstakesContract();
           });
-        } catch (e: any) {
+        } catch (e) {
           if (
             e?.reason?.includes(
               '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
@@ -275,7 +276,7 @@ const MySweepstakes = () => {
     });
   };
 
-  const cancelCampaing = async (nftID: number) => {
+  const cancelCampaing = async nftID => {
     try {
       await performActions(async () => {
         const gasLimit = await contractERC721EsolidarSweepstake.methods.burn(nftID).estimateGas();
@@ -297,7 +298,7 @@ const MySweepstakes = () => {
     }
   };
 
-  const draw = async (nftID: number) => {
+  const draw = async nftID => {
     try {
       await performActions(async () => {
         const gasLimit = await contractSweepstake.methods.draw(Number(nftID)).estimateGas();
@@ -319,7 +320,7 @@ const MySweepstakes = () => {
     }
   };
 
-  const withdraw = async (erc20: string) => {
+  const withdraw = async erc20 => {
     try {
       await performActions(async () => {
         const gasLimit = await contractSweepstake.methods.withdraw(erc20).estimateGas();

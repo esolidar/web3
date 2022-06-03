@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import { useContractKit } from '@celo-tools/use-contractkit';
 // import Countdown from 'react-countdown';
@@ -8,22 +9,22 @@ import Navbar from '../../../components/sweepstake/Navbar';
 import Sweepstake from '../../../abi/EsolidarSweepstake.json';
 import { sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert';
 
-interface NFT {
-  nftID: string;
-  nftTokenURI: string;
-  nftOwner: string;
-  nftErc20token: string;
-  nftDuration: string;
-  nftTotalStaked: string;
-  nftWinner: string;
-  nftDrawTimestamp: string;
-  nftActive: string;
-  nftDestroyed: string;
-}
+// interface NFT {
+//   nftID: string;
+//   nftTokenURI: string;
+//   nftOwner: string;
+//   nftErc20token: string;
+//   nftDuration: string;
+//   nftTotalStaked: string;
+//   nftWinner: string;
+//   nftDrawTimestamp: string;
+//   nftActive: string;
+//   nftDestroyed: string;
+// }
 
-interface CardProps {
-  nft: NFT;
-}
+// interface CardProps {
+//   nft: NFT;
+// }
 
 const tokenMap = {
   pEUR: String(process.env.NEXT_PUBLIC_CEUR),
@@ -31,7 +32,7 @@ const tokenMap = {
   pBRL: String(process.env.NEXT_PUBLIC_CBRL),
 };
 
-const getAddressToken = (address: string) => {
+const getAddressToken = address => {
   const tokenList = Object.values(tokenMap);
   const addressIsValidToken = tokenList.some(token => token === address);
 
@@ -42,7 +43,7 @@ const getAddressToken = (address: string) => {
   return truncateAddress(address, 5);
 };
 
-const getERC20Token = (address: string) => {
+const getERC20Token = address => {
   const tokenList = Object.values(tokenMap);
   const addressIsValidToken = tokenList.some(token => token === address);
 
@@ -53,7 +54,7 @@ const getERC20Token = (address: string) => {
   return null;
 };
 
-const Card = ({ nft }: CardProps) => {
+const Card = ({ nft }) => {
   const {
     nftID,
     nftTokenURI,
@@ -112,7 +113,7 @@ const Card = ({ nft }: CardProps) => {
   );
 };
 
-const arrayColumn = (array: any[], column: any) => array.map(item => item[column]);
+const arrayColumn = (array, column) => array.map(item => item[column]);
 
 const MyDonors = () => {
   const buttonStyle = { border: '1px solid cyan', borderRadius: '4px', padding: '5px' };
@@ -175,7 +176,7 @@ const MyDonors = () => {
     }
   }, [address]);
 
-  const renderCampaings = (campaing: 'active' | 'completed' | 'canceled' | 'wins') => {
+  const renderCampaings = campaing => {
     if (campaing === 'active') {
       setShowActiveCampaings(true);
       setShowCompletedCampaings(false);
@@ -202,7 +203,7 @@ const MyDonors = () => {
     }
   };
 
-  const withdraw = async (erc20: string) => {
+  const withdraw = async erc20 => {
     try {
       await performActions(async () => {
         const gasLimit = await contractSweepstake.methods.withdraw(erc20).estimateGas();

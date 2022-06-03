@@ -12,7 +12,7 @@ const RoleManager = () => {
     process.env.NEXT_PUBLIC_ERC721_ESOLIDAR_SWEEPSTAKE
   );
 
-  const grantRole = async (e: any, role: any) => {
+  const grantRole = async (e, role) => {
     e.preventDefault();
     try {
       const hasHole = await contractERC721EsolidarSweepstake.methods
@@ -34,12 +34,12 @@ const RoleManager = () => {
 
         sweetAlertSuccess('Success', 'You have been granted the role');
       });
-    } catch (e: any) {
+    } catch (e) {
       sweetAlertError('Error', e.message);
     }
   };
 
-  const revokeRole = async (e: any, role: any) => {
+  const revokeRole = async (e, role) => {
     e.preventDefault();
     try {
       const hasHole = await contractERC721EsolidarSweepstake.methods
@@ -61,7 +61,7 @@ const RoleManager = () => {
 
         sweetAlertSuccess('Success', 'You have revoked the role');
       });
-    } catch (e: any) {
+    } catch (e) {
       sweetAlertError('Error', e.message);
     }
   };
