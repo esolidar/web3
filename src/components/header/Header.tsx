@@ -160,13 +160,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             </a>
           </Link>
         </div>
-        {/* <div
-          className={classnames('header__menu-item', { active: locationIncludes('how-it-works') })}
-        >
-          <Link href="/how-it-works">
-            <a>How it works</a>
-          </Link>
-        </div> */}
         <div className="header__menu-connect-button">
           <Wallet
             address={address}
@@ -214,15 +207,20 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
                 </a>
               </Link>
             </div>
-            {/* <div
-              className={classnames('header__menu-item', {
-                active: locationIncludes('how-it-works'),
-              })}
-            >
-              <Link href="/how-it-works">
-                <a>How it works</a>
+            <div className="header__menu-item">
+              <Link href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL}terms`} target="_blank">
+                <a>
+                  <FormattedMessage id="web3.terms.conditions" />
+                </a>
               </Link>
-            </div> */}
+            </div>
+            <div className="header__menu-item">
+              <Link href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL}policy`} target="_blank">
+                <a>
+                  <FormattedMessage id="web3.privacy.policy" />
+                </a>
+              </Link>
+            </div>
           </nav>
         </div>
       )}

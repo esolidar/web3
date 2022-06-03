@@ -8,14 +8,17 @@ import SOCIAL_MEDIA from '../../constants/socialMedia';
 
 const footerItems = [
   {
+    id: 0,
     href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}policy`,
     text: 'web3.privacy.policy',
   },
   {
+    id: 1,
     href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}terms`,
     text: 'web3.terms.conditions',
   },
   {
+    id: 2,
     href: `${process.env.NEXT_PUBLIC_COMMUNITY_URL}cookies`,
     text: 'web3.cookie.policy',
   },
@@ -63,7 +66,7 @@ const Footer = () => {
           )}
         </div>
         {footerItems.map(item => (
-          <div className="footer-menu__item">
+          <div className="footer-menu__item" key={item.id}>
             <a href={item.href} target="_blank" rel="noreferrer">
               <FormattedMessage id={item.text} />
             </a>

@@ -1,10 +1,10 @@
 .footer {
   margin: $distance-16 $distance-7 0 $distance-7;
 
-  @media (max-width: map-get($breakpoints, md)) {
+  @media (max-width: map-get($breakpoints, xl)) {
     border-top: 1px solid map-get($neutrals, 200);
     margin: $distance-3;
-    margin-top: 0;
+    margin-top: $distance-7;
     padding-top: $distance-5;
   }
 
@@ -31,7 +31,7 @@
     color: map-get($neutrals, 700);
     padding: $distance-5 0;
 
-    @media (max-width: map-get($breakpoints, md)) {
+    @media (max-width: map-get($breakpoints, lg)) {
       flex-direction: column;
       align-items: flex-start;
       gap: $distance-3;
@@ -55,7 +55,7 @@
         width: 1px;
         height: 20px;
 
-        @media (max-width: map-get($breakpoints, md)) {
+        @media (max-width: map-get($breakpoints, lg)) {
           margin: $distance-3 0;
           width: 100%;
           height: 1px;
@@ -64,7 +64,7 @@
     }
 
     & .powered-by-esolidar {
-      @media (max-width: map-get($breakpoints, md)) {
+      @media (max-width: map-get($breakpoints, lg)) {
         display: none;
       }
 
@@ -81,7 +81,7 @@
       &.mobile {
         display: none;
 
-        @media (max-width: map-get($breakpoints, md)) {
+        @media (max-width: map-get($breakpoints, lg)) {
           display: initial !important;
         }
       }
@@ -92,7 +92,7 @@
       align-items: center;
       margin-left: auto;
 
-      @media (max-width: map-get($breakpoints, md)) {
+      @media (max-width: map-get($breakpoints, lg)) {
         justify-content: space-between;
         margin-left: unset;
         width: 100%;
@@ -104,7 +104,7 @@
         align-items: center;
         gap: $distance-2;
 
-        @media (max-width: map-get($breakpoints, md)) {
+        @media (max-width: map-get($breakpoints, lg)) {
           gap: $distance-1;
         }
       }
@@ -115,7 +115,7 @@
       gap: $distance-1;
       margin-left: $distance-8;
 
-      @media (max-width: map-get($breakpoints, md)) {
+      @media (max-width: map-get($breakpoints, lg)) {
         margin-left: unset;
       }
     }

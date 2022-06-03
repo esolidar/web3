@@ -24,7 +24,9 @@
   }
 
   &__viewport {
-    padding: 0 $distance-3;
+    @media (max-width: map-get($breakpoints, lg)) {
+      padding: 0 $distance-3;
+    }
   }
 
   &__getBalance-modal {
