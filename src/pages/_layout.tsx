@@ -128,6 +128,11 @@ const Head = () => (
     />
     <script
       dangerouslySetInnerHTML={{
+        __html: `window.STONLY_WID = "${process.env.NEXT_PUBLIC_STONLY_KEY}";`,
+      }}
+    />
+    <script
+      dangerouslySetInnerHTML={{
         __html: `
         !function(s,t,o,n,l,y,w,g){s.StonlyWidget||((w=s.StonlyWidget=function(){
           w._api?w._api.apply(w,arguments):w.queue.push(arguments)}).scriptPath=n,w.queue=[],(y=t.createElement(o)).async=!0,
