@@ -128,7 +128,7 @@ const Head = () => (
     />
     <script
       dangerouslySetInnerHTML={{
-        __html: `window.STONLY_WID = "${process.env.NEXT_PUBLIC_STONLY_KEY}";        `,
+        __html: `window.STONLY_WID = "${process.env.NEXT_PUBLIC_STONLY_KEY}";`,
       }}
     />
     <script
