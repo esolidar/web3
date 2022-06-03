@@ -40,6 +40,11 @@ const CardContribute = ({ name, address, onClickDonate, onClickShare }: Props) =
       </p>
       <img className="card-contribute__qr-code" alt={String(address)} src={qrCode} />
       <div className="card-contribute__address">
+        <img
+          src={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/web3/assets/cusd-color.svg`}
+          className="card-contribute__address-cusd-icon"
+          alt="celo-cusd"
+        />
         <Button
           extraClass="link"
           text={truncateAddress(address, 5)}
