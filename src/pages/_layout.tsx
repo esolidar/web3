@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger */
 import { useEffect, useState } from 'react';
-import Script from 'next/script';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import Viewport from '@esolidar/toolkit/build/components/viewport';
@@ -82,7 +81,7 @@ const Head = () => (
     <meta key="og:url" property="og:url" content={process.env.NEXT_PUBLIC_DOMAIN} />
     <link key="canonical" href={process.env.NEXT_PUBLIC_DOMAIN} rel="canonical" />
 
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
             window['_fs_debug'] = false;
@@ -109,28 +108,25 @@ const Head = () => (
             })(window,document,window['_fs_namespace'],'script','user');
             `,
       }}
-      strategy="beforeInteractive"
     />
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
         window.intercomSettings = {
-          api_base: ${process.env.NEXT_PUBLIC_INTERCOM},
-          app_id: ${process.env.NEXT_PUBLIC_INTERCOM_KEY}
+          api_base: "${process.env.NEXT_PUBLIC_INTERCOM}",
+          app_id: "${process.env.NEXT_PUBLIC_INTERCOM_KEY}",
         };
             `,
       }}
-      strategy="beforeInteractive"
     />
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
         (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='${process.env.NEXT_PUBLIC_WIDGET_INTERCOM}${process.env.NEXT_PUBLIC_INTERCOM_KEY}';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
             `,
       }}
-      strategy="beforeInteractive"
     />
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
         !function(s,t,o,n,l,y,w,g){s.StonlyWidget||((w=s.StonlyWidget=function(){
@@ -141,9 +137,8 @@ const Head = () => (
           }(window,document,"script","${process.env.NEXT_PUBLIC_STONLY}/widget/v2/");
         `,
       }}
-      strategy="beforeInteractive"
     />
-    <Script
+    <script
       dangerouslySetInnerHTML={{
         __html: `
         !function(s,t,o,n,l,y,_){s.stonlyTrack||((_=s.stonlyTrack=function(){
@@ -154,7 +149,6 @@ const Head = () => (
           stonlyTrack('init', '${process.env.NEXT_PUBLIC_STONLY_KEY}');
         `,
       }}
-      strategy="beforeInteractive"
     />
   </NextHead>
 );
