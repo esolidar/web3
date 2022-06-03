@@ -159,13 +159,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
             </a>
           </Link>
         </div>
-        {/* <div
-          className={classnames('header__menu-item', { active: locationIncludes('how-it-works') })}
-        >
-          <Link href="/how-it-works">
-            <a>How it works</a>
-          </Link>
-        </div> */}
         <div className="header__menu-connect-button">
           <Wallet
             address={address}
@@ -213,15 +206,6 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
                 </a>
               </Link>
             </div>
-            {/* <div
-              className={classnames('header__menu-item', {
-                active: locationIncludes('how-it-works'),
-              })}
-            >
-              <Link href="/how-it-works">
-                <a>How it works</a>
-              </Link>
-            </div> */}
           </nav>
         </div>
       )}
