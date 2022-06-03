@@ -36,4 +36,10 @@
     margin-top: $distance-1;
     margin-bottom: $distance-3;
   }
+
+  .card-project-detail__ods-section--list .tooltipOverlay > img {
+    height: 40px;
+    width: 40px;
+    border-radius: calc(#{$border-radius-1} / 2);
+  }
 }

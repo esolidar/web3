@@ -1233,17 +1233,17 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@esolidar/i18n@^0.345.0":
-  version "0.345.0"
-  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.345.0/d4feece02d057f7ca8fcf81a652a31156cea40bf6445719cf5e49b4b01907509#76c1f094fb247a388520269779d616a36a121477"
-  integrity sha512-4KUhtWqSM0grZK8Ke2B1M2YY8n7ovDm6DYB+Jk+SQIpk0a3Bi56+xJYavZP15IgNERTS41cHyjzDC0nGIShw9A==
+"@esolidar/i18n@^0.347.0":
+  version "0.347.0"
+  resolved "https://npm.pkg.github.com/download/@esolidar/i18n/0.347.0/93707da95ad3118c7de9dcaa6de315e315a2ae5ccb3b015fe2824b3d6121c4b8#b66d0c14963d38ac490bd98834bb30f96fa180dd"
+  integrity sha512-AM6D05fq9xwFFXFSBY+ziP+3eiPhoM2JMvjKougpQs06DVnJ+oO6UHZUk9tJ78FWqch/K4leVXISu4YEOExgnw==
   dependencies:
     readline-sync "^1.4.10"
 
-"@esolidar/toolkit@^4.135.00":
-  version "4.135.0"
-  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.135.0/c51a3aed0563cc32ac64d03ac8f4a9d0416db164c1fd6918c4112c828f9696a6#d9d5c038fe50cbb55aedb7b00c7f28125b4c9658"
-  integrity sha512-2Ze+MTtqVCH6PbFt6JmL7dXYLAzn6nakBjV0kM+ztG3Ii28b0hYF182UCduVvY6Z/hMoV6grosjT73UsCG7AMQ==
+"@esolidar/toolkit@^4.135.1":
+  version "4.135.1"
+  resolved "https://npm.pkg.github.com/download/@esolidar/toolkit/4.135.1/a74ecadfc8233719d0b3615c04c34269c701f97a435b1c713212dd34f63d7498#d11633952743b07eeeb9766f6a08365637399f25"
+  integrity sha512-ib+LOIF9rIHKeT+epF/cIwiYRUc4M28MnLh8h6/xVYX3H4aoLHywveCQd1bd3y6gZS+kFcBm46JEXXsBwOybEg==
   dependencies:
     "@rollup/plugin-typescript" "^8.3.0"
     react-loading-skeleton "^3.0.3"
