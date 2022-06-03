@@ -26,6 +26,7 @@ import { Sdg } from '../../interfaces/sdg';
 import getRoute from '../../routes';
 import Modals from '../../components/donationModal/Modals';
 import odsExternasLinks from '../../constants/odsExternalLinks';
+import useIsSSR from '../../hooks/useIsSSR/useIsSSR';
 
 interface SdgOption {
   value: number;
@@ -46,6 +47,7 @@ const List = () => {
   const nonProfitName = useRef('');
   const nonProfitId = useRef(null);
   const router = useRouter();
+  const isSSR = useIsSSR();
 
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string | undefined>(getUrlParam('search') || '');
@@ -177,28 +179,30 @@ const List = () => {
           />
         </div>
         <div className="filters__field">
-          <MultiSelectField
-            name="sdg"
-            onChange={handleFilterOds}
-            showSelectAll={false}
-            valueText={intl.formatMessage({ id: 'projects.filter.ods' })}
-            size="md"
-            menuWidth="450px"
-            value={osdFilterValue}
-            options={odsFilterOptions}
-            labelHeader={
-              <span className="sdg-description-title">
-                <FormattedMessage id="sdg.description.1" />
-                <Icon
-                  name="InfoBold"
-                  size="sm"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                />
-              </span>
-            }
-          />
+          {!isSSR && (
+            <MultiSelectField
+              name="sdg"
+              onChange={handleFilterOds}
+              showSelectAll={false}
+              valueText={intl.formatMessage({ id: 'projects.filter.ods' })}
+              size="md"
+              menuWidth="450px"
+              value={osdFilterValue}
+              options={odsFilterOptions}
+              labelHeader={
+                <span className="sdg-description-title">
+                  <FormattedMessage id="sdg.description.1" />
+                  <Icon
+                    name="InfoBold"
+                    size="sm"
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
+                  />
+                </span>
+              }
+            />
+          )}
         </div>
       </div>
       {isLoading && search === '' && (
