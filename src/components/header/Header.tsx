@@ -206,6 +206,20 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
                 </a>
               </Link>
             </div>
+            <div className="header__menu-item">
+              <Link href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL}terms`} target="_blank">
+                <a>
+                  <FormattedMessage id="web3.terms.conditions" />
+                </a>
+              </Link>
+            </div>
+            <div className="header__menu-item">
+              <Link href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL}policy`} target="_blank">
+                <a>
+                  <FormattedMessage id="web3.privacy.policy" />
+                </a>
+              </Link>
+            </div>
           </nav>
         </div>
       )}

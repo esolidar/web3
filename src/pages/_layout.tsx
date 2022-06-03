@@ -130,6 +130,32 @@ const Head = () => (
       }}
       strategy="beforeInteractive"
     />
+    <Script
+      dangerouslySetInnerHTML={{
+        __html: `
+        !function(s,t,o,n,l,y,w,g){s.StonlyWidget||((w=s.StonlyWidget=function(){
+          w._api?w._api.apply(w,arguments):w.queue.push(arguments)}).scriptPath=n,w.queue=[],(y=t.createElement(o)).async=!0,
+          (g=new XMLHttpRequest).open("GET",n+"version?v="+Date.now(),!0),g.onreadystatechange=function(){
+          4===g.readyState&&(y.src=n+"stonly-widget.js?v="+(200===g.status?g.responseText:Date.now()),
+          (l=t.getElementsByTagName(o)[0]).parentNode.insertBefore(y,l))},g.send())
+          }(window,document,"script","${process.env.NEXT_PUBLIC_STONLY}/widget/v2/");
+        `,
+      }}
+      strategy="beforeInteractive"
+    />
+    <Script
+      dangerouslySetInnerHTML={{
+        __html: `
+        !function(s,t,o,n,l,y,_){s.stonlyTrack||((_=s.stonlyTrack=function(){
+          _._api?_._api.apply(_,arguments):_.queue.push(arguments)
+          }).queue=[],(y=t.createElement(o)).async=!0,
+          y.src=n,(l=t.getElementsByTagName(o)[0]).parentNode.insertBefore(y,l))
+          }(window,document,"script","${process.env.NEXT_PUBLIC_STONLY}/tracker/stn.js");
+          stonlyTrack('init', '${process.env.NEXT_PUBLIC_STONLY_KEY}');
+        `,
+      }}
+      strategy="beforeInteractive"
+    />
   </NextHead>
 );
 
