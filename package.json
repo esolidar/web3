@@ -37,7 +37,7 @@
     "rc-tooltip": "^5.1.1",
     "react": "^18.1.0",
     "react-audio-player": "^0.17.0",
-    "react-bootstrap": "^2.4.0",
+    "react-bootstrap": "^1.5.1",
     "react-countdown": "^2.3.2",
     "react-currency-input-field": "^3.6.4",
     "react-dom": "^18.1.0",

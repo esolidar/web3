@@ -4,6 +4,7 @@ import Countdown from 'react-countdown';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { Card } from 'react-bootstrap';
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
+import Button from '@esolidar/toolkit/build/elements/button';
 import { ethers } from 'ethers';
 import Swal from 'sweetalert2';
 import truncateAddress from '../../utils/truncateAddress';
@@ -31,15 +32,6 @@ const tokenMap = {
   pEUR: String(process.env.NEXT_PUBLIC_CEUR),
   pUSD: String(process.env.NEXT_PUBLIC_CUSD),
   pBRL: String(process.env.NEXT_PUBLIC_CBRL),
-};
-
-const buttonStyle = {
-  backgroundColor: 'gray',
-  color: 'white',
-  width: '100%',
-  borderRadius: '10px',
-  padding: '10px',
-  margin: '2px',
 };
 
 const getAddressToken = address => {
@@ -89,7 +81,7 @@ const CustomCard = ({ sweepstake, beforeStake, address, draw }) => {
           )}
         </Card.Subtitle>
         <Card.Text>Token: {getAddressToken(sweepstake[3])}</Card.Text>
-        <Card.Text>Total Staked: {ethers.utils.formatEther(sweepstake[5])}</Card.Text>
+        <Card.Text>Total Donated: {ethers.utils.formatEther(sweepstake[5])}</Card.Text>
         <Card.Text>
           Time:{' '}
           {CountdownTimer(
@@ -99,22 +91,29 @@ const CustomCard = ({ sweepstake, beforeStake, address, draw }) => {
         <Card.Text>
           <span>Metadata: {sweepstake[1]}</span>
         </Card.Text>
-        <button
-          type="button"
-          style={buttonStyle}
+        <Button
+          extraClass="primary-full"
           onClick={() => beforeStake(nftID, getAddressToken(sweepstake[3]))}
-        >
-          STAKE
-        </button>
+          text="Donate"
+          fullWidth
+        />
         {sweepstake[2] === address ? (
-          <button style={buttonStyle} onClick={() => draw(sweepstake[0])} type="button">
-            DRAW
-          </button>
+          <Button
+            extraClass="primary-full"
+            onClick={() => draw(sweepstake[0])}
+            text="Draw"
+            fullWidth
+          />
         ) : null}
+        <Button
+          extraClass="primary-full"
+          className="mt-2"
+          href={`/sweepstake/${nftID}`}
+          text="NFT Details"
+          fullWidth
+          ghost
+        />
       </Card.Body>
-      <div className="d-flex justify-content-center">
-        <Card.Link href={`/sweepstake/${nftID}`}>NFT Details</Card.Link>
-      </div>
     </Card>
   );
 };
@@ -174,12 +173,12 @@ const Home = () => {
         if (res.status === true)
           sweetAlertSuccess(
             'Success',
-            `Stake on NFT ${nftID} with amount ${amount} was successful`
+            `Donate on NFT ${nftID} with amount ${amount} was successful`
           );
         else
           sweetAlertError(
             'Error',
-            `Stake on NFT ${nftID} with amount ${amount} was not successful`
+            `Donate on NFT ${nftID} with amount ${amount} was not successful`
           );
 
         getAllSweepstakesContract();
@@ -216,7 +215,7 @@ const Home = () => {
           sweetAlertSuccess('Success', 'Allowance was added successfully');
 
           setTimeout(async () => {
-            const question = await SwalQuestion('Do you want to stake now?', '');
+            const question = await SwalQuestion('Do you want to donate now?', '');
             if (question === true) {
               StakeNFT(nftID, String(amount));
             }
@@ -233,7 +232,7 @@ const Home = () => {
     await Swal.fire({
       title: token,
       input: 'text',
-      inputLabel: 'Amount to stake',
+      inputLabel: 'Amount to donate',
       inputPlaceholder: '0.00',
 
       preConfirm: async amount => {
@@ -267,7 +266,7 @@ const Home = () => {
 
         try {
           if (Number(amount) > Number(amountOfToken)) {
-            sweetAlertError('Insufficient Balance', 'You need to have more balance to stake');
+            sweetAlertError('Insufficient Balance', 'You need to have more balance to donate');
             return;
           }
           if (Number(amount) > Number(amountOfAllowance)) {
@@ -305,7 +304,7 @@ const Home = () => {
           <Navbar />
         </div>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <h1 style={{ textAlign: 'center' }}>Active campaings</h1>
+          <h1 style={{ textAlign: 'center' }}>Active campaigns</h1>
         </div>
         {sweepstakesList.length > 0 &&
           sweepstakesList
