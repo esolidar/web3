@@ -27,7 +27,7 @@ import { sweetAlertError, sweetAlertSuccess } from '../../../utils/sweepstake/sw
 // interface CardProps {
 //   nft: NFT;
 //   draw(nftID: number): void;
-//   cancelCampaing(nftID: number): void;
+//   cancelCampaign(nftID: number): void;
 // }
 
 const tokenMap = {
@@ -81,7 +81,7 @@ const CountdownTimer = date => (
 
 const buttonStyle = { border: '1px solid cyan', borderRadius: '4px', padding: '5px' };
 
-const Card = ({ nft, draw, cancelCampaing }) => {
+const Card = ({ nft, draw, cancelCampaign }) => {
   const {
     nftID,
     nftTokenURI,
@@ -111,7 +111,7 @@ const Card = ({ nft, draw, cancelCampaing }) => {
           {CountdownTimer(Number(nftDuration) * 1000)}
         </div>
         <div>
-          <span className="font-bold mr-3">Total Staked:</span>
+          <span className="font-bold mr-3">Total Donated:</span>
           {nftTotalStaked}
         </div>
         <div>
@@ -143,7 +143,7 @@ const Card = ({ nft, draw, cancelCampaing }) => {
             <button
               type="button"
               className="mr-2 mt-2"
-              onClick={() => cancelCampaing(Number(nftID))}
+              onClick={() => cancelCampaign(Number(nftID))}
             >
               CANCEL
             </button>
@@ -163,16 +163,16 @@ const MySweepstakes = () => {
   const [tokensToWithDraw, setTokensToWithDraw] = useState([]);
   const [allSweepstakes, setAllSweepstakes] = useState([]);
 
-  const renderCampaings = campaing => {
-    if (campaing === 'active') {
+  const renderCampaigns = campaign => {
+    if (campaign === 'active') {
       setShowActive(true);
       setShowCompleted(false);
       setShowCanceled(false);
-    } else if (campaing === 'completed') {
+    } else if (campaign === 'completed') {
       setShowActive(false);
       setShowCompleted(true);
       setShowCanceled(false);
-    } else if (campaing === 'canceled') {
+    } else if (campaign === 'canceled') {
       setShowActive(false);
       setShowCompleted(false);
       setShowCanceled(true);
@@ -224,7 +224,7 @@ const MySweepstakes = () => {
     process.env.NEXT_PUBLIC_ERC721_ESOLIDAR_SWEEPSTAKE
   );
 
-  const createCampaing = async () => {
+  const createCampaign = async () => {
     await Swal.fire({
       title: 'Create a new campaign',
       showCancelButton: true,
@@ -269,14 +269,14 @@ const MySweepstakes = () => {
               '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
             )
           ) {
-            sweetAlertError('You need to be a Charity to create a campaing', '');
+            sweetAlertError('You need to be a Charity to create a campaign', '');
           }
         }
       },
     });
   };
 
-  const cancelCampaing = async nftID => {
+  const cancelCampaign = async nftID => {
     try {
       await performActions(async () => {
         const gasLimit = await contractERC721EsolidarSweepstake.methods.burn(nftID).estimateGas();
@@ -361,7 +361,7 @@ const MySweepstakes = () => {
         </button>
       ))}
 
-      {/* Create Campaing button */}
+      {/* Create Campaign button */}
       <div
         style={{
           display: 'flex',
@@ -370,20 +370,20 @@ const MySweepstakes = () => {
           marginBottom: '50px',
         }}
       >
-        <button type="button" style={buttonStyle} onClick={() => createCampaing()}>
-          Create Campaing
+        <button type="button" style={buttonStyle} onClick={() => createCampaign()}>
+          Create campaign
         </button>
       </div>
 
       {/* Switch buttons */}
       <div className="flex justify-around mt-10">
-        <button type="button" className="border mx-1" onClick={() => renderCampaings('active')}>
+        <button type="button" className="border mx-1" onClick={() => renderCampaigns('active')}>
           Active
         </button>
-        <button type="button" className="border mx-1" onClick={() => renderCampaings('completed')}>
+        <button type="button" className="border mx-1" onClick={() => renderCampaigns('completed')}>
           Completed
         </button>
-        <button type="button" className="border mx-1" onClick={() => renderCampaings('canceled')}>
+        <button type="button" className="border mx-1" onClick={() => renderCampaigns('canceled')}>
           Cancelled
         </button>
       </div>
@@ -410,7 +410,7 @@ const MySweepstakes = () => {
                 nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
               }}
               draw={draw}
-              cancelCampaing={cancelCampaing}
+              cancelCampaign={cancelCampaign}
             />
           ))}
 
@@ -436,7 +436,7 @@ const MySweepstakes = () => {
                 nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
               }}
               draw={draw}
-              cancelCampaing={cancelCampaing}
+              cancelCampaign={cancelCampaign}
             />
           ))}
 
@@ -462,7 +462,7 @@ const MySweepstakes = () => {
                 nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
               }}
               draw={draw}
-              cancelCampaing={cancelCampaing}
+              cancelCampaign={cancelCampaign}
             />
           ))}
     </div>

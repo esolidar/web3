@@ -75,10 +75,10 @@ const RoleManager = () => {
           <span>Add role admin</span>
           <form
             onSubmit={e => grantRole(e, process.env.NEXT_PUBLIC_ADMIN_ROLE)}
-            className="d-flex flex-column"
+            className="d-flex flex-column mb-3"
           >
             <input type="text" name="address" placeholder="address" />
-            <button type="button">Add</button>
+            <button type="submit">Add</button>
           </form>
           <span>Remove role admin</span>
           <form
@@ -86,7 +86,7 @@ const RoleManager = () => {
             className="d-flex flex-column"
           >
             <input type="text" name="address" placeholder="address" />
-            <button type="button">Remove</button>
+            <button type="submit">Remove</button>
           </form>
         </div>
 
@@ -94,10 +94,10 @@ const RoleManager = () => {
           <span>Add role minter</span>
           <form
             onSubmit={e => grantRole(e, process.env.NEXT_PUBLIC_MINTER_ROLE)}
-            className="d-flex flex-column"
+            className="d-flex flex-column  mb-3"
           >
             <input type="text" name="address" placeholder="address" />
-            <button type="button">Add</button>
+            <button type="submit">Add</button>
           </form>
           <span>Remove role minter</span>
           <form
@@ -105,7 +105,7 @@ const RoleManager = () => {
             className="d-flex flex-column"
           >
             <input type="text" name="address" placeholder="address" />
-            <button type="button">Remove</button>
+            <button type="submit">Remove</button>
           </form>
         </div>
       </div>

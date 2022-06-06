@@ -44,7 +44,7 @@ const searchTokenByID = () => {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>Duration: {currentNft[4]}</ListGroupItem>
-            <ListGroupItem>Total Staked: {currentNft[5]}</ListGroupItem>
+            <ListGroupItem>Total Donated: {currentNft[5]}</ListGroupItem>
             <ListGroupItem>Winner: {currentNft[6]}</ListGroupItem>
             <ListGroupItem>DrawTimeStamp: {currentNft[7]}</ListGroupItem>
             <ListGroupItem>Active: {currentNft[9] ? 'Active' : 'Deactive'}</ListGroupItem>
@@ -60,7 +60,7 @@ const searchTokenByID = () => {
         <thead>
           <tr>
             <th>Address:</th>
-            <th>Value staked:</th>
+            <th>Value donated:</th>
           </tr>
         </thead>
         <tbody>

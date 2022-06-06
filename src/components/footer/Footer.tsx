@@ -101,6 +101,7 @@ const Footer = () => {
                     iconRight={<Icon name="ChevronDown" />}
                     size="sm"
                     ghost
+                    onClick={() => {}}
                   />
                 }
                 items={[

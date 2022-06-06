@@ -4,6 +4,7 @@ import { useContractKit } from '@celo-tools/use-contractkit';
 // import Countdown from 'react-countdown';
 import { ethers } from 'ethers';
 import NumberFormat from 'react-number-format';
+import Tabs from '@esolidar/toolkit/build/elements/tabs';
 import truncateAddress from '../../../utils/truncateAddress';
 import Navbar from '../../../components/sweepstake/Navbar';
 import Sweepstake from '../../../abi/EsolidarSweepstake.json';
@@ -86,7 +87,7 @@ const Card = ({ nft }) => {
           </div>
         ) : null} */}
         <div>
-          <span className="font-bold mr-3">Total Staked:</span>
+          <span className="font-bold mr-3">Total Donated:</span>
           {nftTotalStaked}
         </div>
         <div>
@@ -128,15 +129,10 @@ const MyDonors = () => {
   const [allSweepstakes, setAllSweepstakes] = useState([]);
   const [tokensToWithDraw, setTokensToWithDraw] = useState([]);
 
-  const [showActiveCampaings, setShowActiveCampaings] = useState(true);
-  const [showCompletedCampaings, setShowCompletedCampaings] = useState(false);
-  const [showWinsCampaings, setShowWinsCampaings] = useState(false);
-  const [showCanceledCampaings, setShowCanceledCampaings] = useState(false);
-
-  const [haveActiveTokens, setHaveActiveTokens] = useState(true);
-  const [haveCompletedTokens, setHaveCompletedTokens] = useState(true);
-  const [haveWinsTokens, setHaveWinsTokens] = useState(true);
-  const [haveCanceledTokens, setHaveCanceledTokens] = useState(true);
+  const [activeDonations, setActiveDonations] = useState([]);
+  const [completedDonations, setCompletedDonations] = useState([]);
+  const [winningDonations, setWinningDonations] = useState([]);
+  const [canceledDonations, setCanceledDonations] = useState([]);
 
   const getAllSweepstakesContract = async () => {
     try {
@@ -176,32 +172,42 @@ const MyDonors = () => {
     }
   }, [address]);
 
-  const renderCampaings = campaing => {
-    if (campaing === 'active') {
-      setShowActiveCampaings(true);
-      setShowCompletedCampaings(false);
-      setShowCanceledCampaings(false);
-      setShowWinsCampaings(false);
-    }
-    if (campaing === 'completed') {
-      setShowCompletedCampaings(true);
-      setShowActiveCampaings(false);
-      setShowCanceledCampaings(false);
-      setShowWinsCampaings(false);
-    }
-    if (campaing === 'wins') {
-      setShowWinsCampaings(true);
-      setShowActiveCampaings(false);
-      setShowCompletedCampaings(false);
-      setShowCanceledCampaings(false);
-    }
-    if (campaing === 'canceled') {
-      setShowCanceledCampaings(true);
-      setShowActiveCampaings(false);
-      setShowCompletedCampaings(false);
-      setShowWinsCampaings(false);
-    }
-  };
+  useEffect(() => {
+    setActiveDonations(
+      allSweepstakes?.filter(
+        token =>
+          token[8].length >= 1 &&
+          arrayColumn(token[8], 0).includes(address) &&
+          !!token[9] &&
+          !token[10]
+      )
+    );
+
+    setCompletedDonations(
+      allSweepstakes?.filter(
+        token =>
+          token[8].length >= 1 &&
+          !token[10] &&
+          !token[9] &&
+          arrayColumn(token[8], 0).includes(address)
+      )
+    );
+    setWinningDonations(
+      allSweepstakes?.filter(
+        token => token[8].length >= 1 && !token[9] && !token[10] && token[6] === address
+      )
+    );
+
+    setCanceledDonations(
+      allSweepstakes?.filter(
+        token =>
+          token[8].length >= 1 &&
+          !!token[10] &&
+          !token[9] &&
+          arrayColumn(token[8], 0).includes(address)
+      )
+    );
+  }, [allSweepstakes]);
 
   const withdraw = async erc20 => {
     try {
@@ -245,55 +251,19 @@ const MyDonors = () => {
             </button>
           ))}
         </div>
-
-        <div className="flex justify-around mt-10">
-          <button
-            type="button"
-            className="btn btn-outline btn-sm"
-            onClick={() => renderCampaings('active')}
-          >
-            Active
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline btn-sm"
-            onClick={() => renderCampaings('completed')}
-          >
-            Completed
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline btn-sm"
-            onClick={() => renderCampaings('wins')}
-          >
-            My Wins
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline btn-sm"
-            onClick={() => renderCampaings('canceled')}
-          >
-            Cancelled
-          </button>
-        </div>
       </div>
 
-      {/* Active */}
-      {showActiveCampaings && (
-        <div>
-          {haveActiveTokens ? (
-            <div>
-              {address &&
-                allSweepstakes?.map(token => {
-                  if (token[8].length < 1) return;
-                  if (!arrayColumn(token[8], 0).includes(address)) {
-                    setHaveActiveTokens(false);
-                    return;
-                  }
-                  if (token[9] !== true) return;
-                  if (token[10] !== false) return;
-
-                  return (
+      <Tabs
+        defaultActiveKey="active"
+        onChange={() => {}}
+        tabsList={[
+          {
+            key: 'active',
+            title: 'Active',
+            content: (
+              <>
+                {address && activeDonations.length > 0 ? (
+                  activeDonations?.map(token => (
                     <Card
                       nft={{
                         nftID: token[0],
@@ -308,31 +278,20 @@ const MyDonors = () => {
                         nftDestroyed: token[10] ? 'Destoyed' : 'Not destroyed',
                       }}
                     />
-                  );
-                })}
-            </div>
-          ) : (
-            <h1>You dont have active tokens</h1>
-          )}
-        </div>
-      )}
-
-      {/* Completed */}
-      {showCompletedCampaings && (
-        <div>
-          {haveCompletedTokens ? (
-            <div>
-              {address &&
-                allSweepstakes?.map(token => {
-                  if (token[8].length < 1) return;
-                  if (token[10] !== false) return;
-                  if (token[9] !== false) return;
-                  if (!arrayColumn(token[8], 0).includes(address)) {
-                    setHaveCompletedTokens(false);
-                    return;
-                  }
-
-                  return (
+                  ))
+                ) : (
+                  <h2>You dont have active donations</h2>
+                )}
+              </>
+            ),
+          },
+          {
+            key: 'completed',
+            title: 'Completed',
+            content: (
+              <>
+                {address && completedDonations.length > 0 ? (
+                  completedDonations?.map(token => (
                     <Card
                       nft={{
                         nftID: token[0],
@@ -347,31 +306,20 @@ const MyDonors = () => {
                         nftDestroyed: token[10] ? 'Destoyed' : 'Not destroyed',
                       }}
                     />
-                  );
-                })}
-            </div>
-          ) : (
-            <h1>You dont have completed tokens</h1>
-          )}
-        </div>
-      )}
-
-      {/* My wins */}
-      {showWinsCampaings && (
-        <div>
-          {haveWinsTokens ? (
-            <div>
-              {address &&
-                allSweepstakes?.map(token => {
-                  if (token[8].length < 1) return;
-                  if (token[9] !== false) return;
-                  if (token[10] !== false) return;
-                  if (token[6] !== address) {
-                    setHaveWinsTokens(false);
-                    return;
-                  }
-
-                  return (
+                  ))
+                ) : (
+                  <h2>You dont have completed donations</h2>
+                )}
+              </>
+            ),
+          },
+          {
+            key: 'wins',
+            title: 'My wins',
+            content: (
+              <>
+                {address && winningDonations.length > 0 ? (
+                  winningDonations?.map(token => (
                     <Card
                       nft={{
                         nftID: token[0],
@@ -386,31 +334,20 @@ const MyDonors = () => {
                         nftDestroyed: token[10] ? 'Destoyed' : 'Not destroyed',
                       }}
                     />
-                  );
-                })}
-            </div>
-          ) : (
-            <h1>You dont have win tokens</h1>
-          )}
-        </div>
-      )}
-
-      {/* Cancelled */}
-      {showCanceledCampaings && (
-        <div>
-          {haveCanceledTokens ? (
-            <div>
-              {address &&
-                allSweepstakes?.map(token => {
-                  if (token[8].length < 1) return;
-                  if (token[10] !== true) return;
-                  if (token[9] !== false) return;
-                  if (!arrayColumn(token[8], 0).includes(address)) {
-                    setHaveCanceledTokens(false);
-                    return;
-                  }
-
-                  return (
+                  ))
+                ) : (
+                  <h2>You dont have winning donations</h2>
+                )}
+              </>
+            ),
+          },
+          {
+            key: 'cancelled',
+            title: 'Cancelled',
+            content: (
+              <>
+                {address && canceledDonations.length > 0 ? (
+                  canceledDonations?.map(token => (
                     <Card
                       nft={{
                         nftID: token[0],
@@ -425,14 +362,15 @@ const MyDonors = () => {
                         nftDestroyed: token[10] ? 'Destoyed' : 'Not destroyed',
                       }}
                     />
-                  );
-                })}
-            </div>
-          ) : (
-            <h1>You dont have canceled tokens</h1>
-          )}
-        </div>
-      )}
+                  ))
+                ) : (
+                  <h2>You dont have canceled donations</h2>
+                )}
+              </>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };
