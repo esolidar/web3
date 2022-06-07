@@ -195,11 +195,6 @@
       font-size: 18px;
       line-height: 28px;
       color: map-get($base, Black);
-
-      @media (max-width: map-get($breakpoints, xs)) {
-        // font-size: 17px;
-        // line-height: 24px;
-      }
     }
 
     &__footer {
