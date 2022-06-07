@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AbiItem } from 'web3-utils';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import { ethers } from 'ethers';
@@ -10,10 +11,10 @@ const searchTokenByID = () => {
   const { query } = useRouter();
   const { kit } = useContractKit();
 
-  const [currentNft, setCurrentNft] = useState(0);
+  const [currentNft, setCurrentNft] = useState<any>([]);
 
   const contractSweepstake = new kit.web3.eth.Contract(
-    Sweepstake,
+    Sweepstake as AbiItem[],
     process.env.NEXT_PUBLIC_ESOLIDAR_SWEEPSTAKE
   );
 
@@ -64,7 +65,7 @@ const searchTokenByID = () => {
           </tr>
         </thead>
         <tbody>
-          {currentNft[8]?.map(donor => (
+          {currentNft[8]?.map((donor: any) => (
             <tr>
               <td>{donor[0]}</td>
               <td>{ethers.utils.formatEther(donor[1])}</td>
