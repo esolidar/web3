@@ -19,17 +19,6 @@
     },
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/pages/sweepstake/index.jsx",
-    "src/pages/sweepstake/[id].jsx",
-    "src/pages/sweepstake/rolemanager/index.jsx",
-    "src/pages/sweepstake/mysweepstakes/index.jsx",
-    "src/pages/sweepstake/mydonations/index.jsx",
-    "src/pages/sweepstake/mintform/index.jsx",
-    "src/pages/api/ipfs.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
