@@ -121,8 +121,7 @@ const Header = ({ isHeaderTransparent, isBottonsTransparent }: Props) => {
     if (address) getBalances();
   }, [address]);
 
-  const locationIncludes = (path: string) =>
-    typeof window !== 'undefined' ? window.location.href.includes(path) : '';
+  const locationIncludes = (path: string) => router.asPath.includes(path);
 
   return (
     <header

@@ -6,6 +6,7 @@ import Icon from '@esolidar/toolkit/build/elements/icon';
 import Button from '@esolidar/toolkit/build/elements/button';
 import CustomModal from '@esolidar/toolkit/build/elements/customModal';
 import getOdsList from '@esolidar/toolkit/build/utils/getOdsList';
+import Tooltip from '@esolidar/toolkit/build/elements/tooltip';
 import odsExternasLinks from '../../constants/odsExternalLinks';
 
 interface Props {
@@ -34,12 +35,19 @@ const CardSDG = ({ sdgList }: Props) => {
         </a>
       </h3>
       <p className="card-sdg__header-description body-small">
-        This charity or cause supports the following UN SDGs to achieve a better and more
-        sustainable future for all
+        {intl.formatMessage({ id: 'web3.card.sdg.description' })}
       </p>
       <div className="card-project-detail__ods-section--list">
         {formattedSDGs.map((sdg: any) => (
-          <img key={sdg.id} src={sdg.image} alt={sdg.name} data-testid="ods-image" />
+          <Tooltip
+            key={sdg.id}
+            overlay={sdg.name}
+            trigger={['hover', 'click']}
+            tooltipBodyChild={
+              <img key={sdg.id} src={sdg.image} alt={sdg.name} data-testid="ods-image" />
+            }
+            placement="top"
+          />
         ))}
       </div>
       <CustomModal

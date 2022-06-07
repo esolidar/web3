@@ -163,6 +163,10 @@
       height: 352px;
     }
 
+    @media (max-width: map-get($breakpoints, xs)) {
+      height: 375px;
+    }
+
     &--green {
       background-color: get-rgba(map-get($turquoise, 500));
 

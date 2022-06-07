@@ -1,10 +1,12 @@
 import Icon from '@esolidar/toolkit/build/elements/icon';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
+import classnames from 'classnames';
 import Dropdown from '@esolidar/toolkit/build/elements/dropdown';
 import Button from '@esolidar/toolkit/build/elements/button';
 import { SUPPORTED_LOCALES } from '../../constants/locales';
 import SOCIAL_MEDIA from '../../constants/socialMedia';
+import useIsSSR from '../../hooks/useIsSSR/useIsSSR';
 
 const footerItems = [
   {
@@ -27,6 +29,7 @@ const footerItems = [
 const Footer = () => {
   const router = useRouter();
   const intl = useIntl();
+  const isSSR = useIsSSR();
   const {
     query: { id },
     pathname,
@@ -51,7 +54,7 @@ const Footer = () => {
   )?.name;
 
   return (
-    <footer className={`footer ${isInstitutionDetailPage && 'footer-detail'}`}>
+    <footer className={classnames('footer', { 'footer-detail': isInstitutionDetailPage })}>
       <div className="footer-copyright">
         <FormattedMessage id="web3.copyright.note" />
       </div>
@@ -87,37 +90,40 @@ const Footer = () => {
               esolidar
             </a>
           </div>
-          <div className="footer-menu__lang--dropdown">
-            <Icon name="Language" />
-            <Dropdown
-              customButton={
-                <Button
-                  extraClass="primary-full"
-                  text={currentLocale}
-                  iconRight={<Icon name="ChevronDown" />}
-                  size="sm"
-                  ghost
-                />
-              }
-              items={[
-                {
-                  id: 0,
-                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.PT.id),
-                  text: SUPPORTED_LOCALES.PT.name,
-                },
-                {
-                  id: 1,
-                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.BR.id),
-                  text: SUPPORTED_LOCALES.BR.name,
-                },
-                {
-                  id: 2,
-                  onClick: () => handleChangeLang(SUPPORTED_LOCALES.EN.id),
-                  text: SUPPORTED_LOCALES.EN.name,
-                },
-              ]}
-            />
-          </div>
+          {!isSSR && (
+            <div className="footer-menu__lang--dropdown">
+              <Icon name="Language" />
+              <Dropdown
+                customButton={
+                  <Button
+                    extraClass="primary-full"
+                    text={currentLocale}
+                    iconRight={<Icon name="ChevronDown" />}
+                    size="sm"
+                    ghost
+                    onClick={() => {}}
+                  />
+                }
+                items={[
+                  {
+                    id: 0,
+                    onClick: () => handleChangeLang(SUPPORTED_LOCALES.PT.id),
+                    text: SUPPORTED_LOCALES.PT.name,
+                  },
+                  {
+                    id: 1,
+                    onClick: () => handleChangeLang(SUPPORTED_LOCALES.BR.id),
+                    text: SUPPORTED_LOCALES.BR.name,
+                  },
+                  {
+                    id: 2,
+                    onClick: () => handleChangeLang(SUPPORTED_LOCALES.EN.id),
+                    text: SUPPORTED_LOCALES.EN.name,
+                  },
+                ]}
+              />
+            </div>
+          )}
         </div>
         <div className="footer-menu__social">
           <Button
@@ -134,22 +140,6 @@ const Footer = () => {
             onClick={() => window.open(SOCIAL_MEDIA.linkedin, '_blank')}
             ghost
           />
-          {/* <Button
-            href={SOCIAL_MEDIA.twitter}
-            target="_blank"
-            rel="noreferrer"
-            size="sm"
-            type="link"
-            icon={<Icon name="Twitter" size="md" />}
-          />
-          <Button
-            href={SOCIAL_MEDIA.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            size="sm"
-            type="link"
-            icon={<Icon name="Linkedin" size="md" />}
-          /> */}
         </div>
       </div>
     </footer>

@@ -27,12 +27,12 @@
     z-index: 3;
 
     &--illustration {
-      & > svg {
+      & > img {
         position: absolute;
+        left: 540px;
 
-        &:nth-of-type(2) {
-          top: 160px;
-          left: 540px;
+        @media (max-width: map-get($breakpoints, lg)) {
+          left: 380px;
         }
       }
 

@@ -21,6 +21,12 @@ const Head = () => (
     />
     <link rel="stylesheet" href="https://use.typekit.net/xse0hrt.css" />
     <link rel="manifest" href="/manifest.json" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/apple-touch-icon.png?favicon-32=favicon`}
+    />
     <link
       rel="icon"
       type="image/png"
@@ -33,32 +39,39 @@ const Head = () => (
       sizes="16x16"
       href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/favicon-16x16.png?favicon-32=favicon`}
     />
-    <link rel="apple-touch-icon" href="/apple-icon.png" />
-    <meta name="theme-color" content="#317EFB" />
-    <title>{ DAPP_NAME }</title>
-    <meta
-      name="description"
-      content={ DAPP_DESCRIPTION }
+    <link
+      rel="manifest"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/site.webmanifest?favicon-32=favicon`}
     />
+    <link
+      rel="mask-icon"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/safari-pinned-tab.svg?favicon-32=favicon`}
+      color="#17c3b2"
+    />
+    <link
+      rel="shortcut icon"
+      href={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/favicon.ico?favicon-32=favicon`}
+    />
+    <meta name="msapplication-TileColor" content="#17c3b2" />
+    <meta
+      name="msapplication-config"
+      content={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/logo/esolidar/browserconfig.xml?favicon-32=favicon`}
+    />
+    <meta name="theme-color" content="#17c3b2" />
+    <title>{DAPP_NAME}</title>
+    <meta name="description" content={DAPP_DESCRIPTION} />
     <meta name="keywords" content="esolidar" />
-    <meta name="twitter:card" content={ DAPP_DESCRIPTION } />
+    <meta name="twitter:card" content={DAPP_DESCRIPTION} />
     <meta name="twitter:site" content="@esolidar" />
-    <meta name="twitter:title" content={ DAPP_NAME } />
-    <meta
-      name="twitter:description"
-      content={ DAPP_DESCRIPTION }
-    />
+    <meta name="twitter:title" content={DAPP_NAME} />
+    <meta name="twitter:description" content={DAPP_DESCRIPTION} />
     <meta name="twitter:creator" content="@esolidar" />
     <meta
       name="twitter:image:src"
       content={`${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/assets/web3-social-share.png`}
     />
-    <meta key="og:title" property="og:title" content={ DAPP_NAME } />
-    <meta
-      key="og:description"
-      property="og:description"
-      content={ DAPP_DESCRIPTION }
-    />
+    <meta key="og:title" property="og:title" content={DAPP_NAME} />
+    <meta key="og:description" property="og:description" content={DAPP_DESCRIPTION} />
     <meta
       key="og:image"
       property="og:image"

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import Head from 'next/head';
 import { dehydrate, QueryClient } from 'react-query';
@@ -38,6 +38,7 @@ const InstitutionDetail = () => {
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
+  const [windowLocationHref, setWindowLocationHref] = useState<string>('');
 
   const { address, connect } = useContractKit();
   const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
@@ -54,6 +55,8 @@ const InstitutionDetail = () => {
   const intl: IntlShape = useIntl();
   const nonProfitName = useRef(institution.name || '');
   const nonProfitId = useRef(institution.id || null);
+
+  useEffect(() => setWindowLocationHref(window.location.href), []);
 
   const handleClickDonate = useCallback(() => {
     if (address) {
@@ -192,7 +195,7 @@ const InstitutionDetail = () => {
       <ShareModal
         openModal={isOpenShareModal}
         title={institution?.name}
-        windowLocationHref={typeof window !== 'undefined' ? window.location.href : ''}
+        windowLocationHref={windowLocationHref}
         onCloseModal={() => setIsOpenShareModal(false)}
         onClickCopyToClipboard={() => toast.success(intl.formatMessage({ id: 'web3.copied' }))}
       />

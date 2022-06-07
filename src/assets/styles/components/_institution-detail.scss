@@ -28,7 +28,6 @@
 
       @media (max-width: map-get($breakpoints, md)) {
         max-width: unset;
-        border-bottom: 1px solid map-get($neutrals, 200);
         padding-top: $distance-7;
       }
     }
