@@ -6,7 +6,7 @@ import FormData from 'form-data';
 
 const aws = require('aws-sdk');
 
-console.log('S3_kEY: ' + process.env.S3_UPLOAD_KEY);
+console.log(`S3_kEY: ${process.env.S3_UPLOAD_KEY}`);
 
 const s3 = new aws.S3({
   accessKeyId: process.env.S3_UPLOAD_KEY,
