@@ -5,8 +5,6 @@ import { useContractKit } from '@celo-tools/use-contractkit';
 import Button from '@esolidar/toolkit/build/elements/button';
 import ReactPlayer from 'react-player';
 import ReactAudioPlayer from 'react-audio-player';
-import { String } from 'aws-sdk/clients/acm';
-import { string0To255 } from 'aws-sdk/clients/customerprofiles';
 import ERC721EsolidarSweepstake from '../../../abi/ERC721EsolidarSweepstake.json';
 import { sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert';
 import Navbar from '../../../components/sweepstake/Navbar';
@@ -20,7 +18,7 @@ const MintForm = () => {
   );
 
   const [file, setFile] = useState<any>(null);
-  const [mediaSrc, setMediaSrc] = useState<String>('');
+  const [mediaSrc, setMediaSrc] = useState<string>('');
   const [urlPreviewFile, setUrlPreviewFile] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -28,7 +26,7 @@ const MintForm = () => {
   const [propTwo, setPropTwo] = useState<string>('');
   const [propThree, setPropThree] = useState<string>('');
   const [duration, setDuration] = useState<number>(0);
-  const [token, setToken] = useState<string0To255>('');
+  const [token, setToken] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const fileHandleChange = (event: any) => {
