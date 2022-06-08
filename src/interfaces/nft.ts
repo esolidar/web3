@@ -1,14 +1,14 @@
 interface NFT {
-  nftID: string;
+  nftID: number;
   nftTokenURI: string;
   nftOwner: string;
   nftErc20token: string;
-  nftDuration: string;
+  nftDuration: number;
   nftTotalStaked: string;
   nftWinner: string;
   nftDrawTimestamp: string;
-  nftActive: string;
-  nftDestroyed: string;
+  nftActive: boolean;
+  nftDestroyed: boolean;
 }
 
 export default NFT;
