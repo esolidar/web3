@@ -91,6 +91,7 @@ const sendFileToS3 = async (file, newFileName) => {
     Bucket: process.env.S3_UPLOAD_BUCKET,
     Key: newFileName,
     Body: fileContent,
+    ACL: 'public-read'
   };
 
   s3.upload(params, (err, data) => {
@@ -104,6 +105,7 @@ const sendJsonToS3 = async (json, newFileName) => {
     Bucket: process.env.S3_UPLOAD_BUCKET,
     Key: newFileName,
     Body: json,
+    ACL: 'public-read'
   };
 
   s3.upload(params, (err, data) => {
