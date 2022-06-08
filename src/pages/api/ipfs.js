@@ -39,11 +39,10 @@ const post = async (req, res) => {
   const form = new formidable.IncomingForm();
 
   form.parse(req, async (err, fields, files) => {
-    if (err) {
+    if (err)
       return res
         .status(500)
         .json({ status: 500, response: 'Forma parse error', error: String(err) });
-    }
 
     if ('file' in files) {
       const responseAxios = await sendFileToIPFS(files.file);

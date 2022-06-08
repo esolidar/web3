@@ -1,4 +1,5 @@
 import React from 'react';
+import { AbiItem } from 'web3-utils';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import ERC721EsolidarSweepstake from '../../../abi/ERC721EsolidarSweepstake.json';
 import { sweetAlertError, sweetAlertSuccess } from '../../../utils/sweepstake/sweetalert';
@@ -8,11 +9,11 @@ const RoleManager = () => {
   const { performActions, address, kit } = useContractKit();
 
   const contractERC721EsolidarSweepstake = new kit.web3.eth.Contract(
-    ERC721EsolidarSweepstake,
+    ERC721EsolidarSweepstake as AbiItem[],
     process.env.NEXT_PUBLIC_ERC721_ESOLIDAR_SWEEPSTAKE
   );
 
-  const grantRole = async (e, role) => {
+  const grantRole = async (e: any, role: string) => {
     e.preventDefault();
     try {
       const hasHole = await contractERC721EsolidarSweepstake.methods
@@ -34,12 +35,12 @@ const RoleManager = () => {
 
         sweetAlertSuccess('Success', 'You have been granted the role');
       });
-    } catch (e) {
+    } catch (e: any) {
       sweetAlertError('Error', e.message);
     }
   };
 
-  const revokeRole = async (e, role) => {
+  const revokeRole = async (e: any, role: string) => {
     e.preventDefault();
     try {
       const hasHole = await contractERC721EsolidarSweepstake.methods
@@ -61,7 +62,7 @@ const RoleManager = () => {
 
         sweetAlertSuccess('Success', 'You have revoked the role');
       });
-    } catch (e) {
+    } catch (e: any) {
       sweetAlertError('Error', e.message);
     }
   };
@@ -74,7 +75,7 @@ const RoleManager = () => {
         <div className="d-flex flex-column justify-content-center align-items-center mx-3">
           <span>Add role admin</span>
           <form
-            onSubmit={e => grantRole(e, process.env.NEXT_PUBLIC_ADMIN_ROLE)}
+            onSubmit={e => grantRole(e, String(process.env.NEXT_PUBLIC_ADMIN_ROLE))}
             className="d-flex flex-column mb-3"
           >
             <input type="text" name="address" placeholder="address" />
@@ -82,7 +83,7 @@ const RoleManager = () => {
           </form>
           <span>Remove role admin</span>
           <form
-            onSubmit={e => revokeRole(e, process.env.NEXT_PUBLIC_ADMIN_ROLE)}
+            onSubmit={e => revokeRole(e, String(process.env.NEXT_PUBLIC_ADMIN_ROLE))}
             className="d-flex flex-column"
           >
             <input type="text" name="address" placeholder="address" />
@@ -93,7 +94,7 @@ const RoleManager = () => {
         <div className="d-flex flex-column justify-content-center align-items-center mx-3">
           <span>Add role minter</span>
           <form
-            onSubmit={e => grantRole(e, process.env.NEXT_PUBLIC_MINTER_ROLE)}
+            onSubmit={e => grantRole(e, String(process.env.NEXT_PUBLIC_MINTER_ROLE))}
             className="d-flex flex-column  mb-3"
           >
             <input type="text" name="address" placeholder="address" />
@@ -101,7 +102,7 @@ const RoleManager = () => {
           </form>
           <span>Remove role minter</span>
           <form
-            onSubmit={e => revokeRole(e, process.env.NEXT_PUBLIC_MINTER_ROLE)}
+            onSubmit={e => revokeRole(e, String(process.env.NEXT_PUBLIC_MINTER_ROLE))}
             className="d-flex flex-column"
           >
             <input type="text" name="address" placeholder="address" />
