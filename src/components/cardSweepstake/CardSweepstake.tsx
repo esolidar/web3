@@ -14,13 +14,14 @@ interface Props {
 
 const CardSweepstake = ({ sweepstake, beforeStake, address, onClickDraw }: Props) => {
   const nftID = typeof sweepstake[0] === 'object' ? Number(sweepstake[0]) : sweepstake[0];
+  const isOwner = sweepstake[2] === address;
 
   return (
     <Card style={{ width: '18rem', borderRadius: '10px' }}>
       <Card.Body>
         <Card.Title>NFT ID: {nftID}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          {sweepstake[2] === address ? (
+          {isOwner ? (
             <span>You are the owner</span>
           ) : (
             <span>Owner: {truncateAddress(sweepstake[2], 5)}</span>
@@ -47,7 +48,7 @@ const CardSweepstake = ({ sweepstake, beforeStake, address, onClickDraw }: Props
           text="Donate"
           fullWidth
         />
-        {sweepstake[2] === address && (
+        {isOwner && (
           <Button
             extraClass="primary-full"
             className="mt-2"

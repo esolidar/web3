@@ -132,6 +132,8 @@ const MyDonors = () => {
   }, [address]);
 
   useEffect(() => {
+    if (allSweepstakes.length === 0) return;
+
     setActiveDonations(
       allSweepstakes?.filter(
         (token: any) =>
@@ -151,6 +153,7 @@ const MyDonors = () => {
           arrayColumn(token[8], 0).includes(address)
       )
     );
+
     setWinningDonations(
       allSweepstakes?.filter(
         (token: any) => token[8].length >= 1 && !token[9] && !token[10] && token[6] === address

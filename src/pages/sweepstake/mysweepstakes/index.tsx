@@ -18,19 +18,7 @@ import getAddressToken from '../../../utils/getAddressToken';
 import getERC20Token from '../../../utils/getERC20Token';
 import useWithdraw from '../../../hooks/useWithdraw/useWithdraw';
 import useCancelCampaign from '../../../hooks/useCancelCampaign/useCancelCampaign';
-
-interface NFT {
-  nftID: string;
-  nftTokenURI: string;
-  nftOwner: string;
-  nftErc20token: string;
-  nftDuration: string;
-  nftTotalStaked: string;
-  nftWinner: string;
-  nftDrawTimestamp: string;
-  nftActive: string;
-  nftDestroyed: string;
-}
+import NFT from '../../../interfaces/nft';
 
 interface CardProps {
   nft: NFT;
@@ -124,6 +112,9 @@ const MySweepstakes = () => {
 
   const [tokensToWithDraw, setTokensToWithDraw] = useState<any>([]);
   const [allSweepstakes, setAllSweepstakes] = useState<any>([]);
+  const [activeSweepstakes, setActiveSweepstakes] = useState([]);
+  const [completedSweepstakes, setCompletedSweepstakes] = useState([]);
+  const [canceledSweepstakes, setCanceledSweepstakes] = useState([]);
 
   const contractSweepstake = new kit.web3.eth.Contract(
     Sweepstake as AbiItem[],
@@ -161,6 +152,24 @@ const MySweepstakes = () => {
     });
 
     setTokensToWithDraw(balanceOfTokens);
+
+    setActiveSweepstakes(
+      allSweepstakes?.filter(
+        (sweepstake: any) => sweepstake[2] === address && !!sweepstake[9] && !sweepstake[10]
+      )
+    );
+
+    setCompletedSweepstakes(
+      allSweepstakes?.filter(
+        (sweepstake: any) => sweepstake[2] === address && !sweepstake[9] && !sweepstake[10]
+      )
+    );
+
+    setCanceledSweepstakes(
+      allSweepstakes?.filter(
+        (sweepstake: any) => sweepstake[2] === address && !sweepstake[9] && !!sweepstake[10]
+      )
+    );
   }, [allSweepstakes]);
 
   const createCampaign = async () => {
@@ -239,7 +248,6 @@ const MySweepstakes = () => {
 
   return (
     <div>
-      {/* Navbar */}
       <div>
         <Navbar />
       </div>
@@ -259,7 +267,6 @@ const MySweepstakes = () => {
           }
         >
           <span>Claim {getAddressToken(token[0])}</span>
-
           <NumberFormat
             value={ethers.utils.formatEther(token[1])}
             displayType="text"
@@ -269,7 +276,6 @@ const MySweepstakes = () => {
         </button>
       ))}
 
-      {/* Create Campaign button */}
       <div
         style={{
           display: 'flex',
@@ -288,85 +294,73 @@ const MySweepstakes = () => {
             key: 'active',
             title: 'Active',
             content:
-              allSweepstakes.length > 0 &&
-              allSweepstakes
-                .filter((sweepstake: any) => sweepstake[2] === address)
-                .filter((sweepstake: any) => !!sweepstake[9])
-                .filter((sweepstake: any) => !sweepstake[10])
-                .map((sweepstake: any) => (
-                  <Card
-                    nft={{
-                      nftID: sweepstake[0],
-                      nftTokenURI: sweepstake[1],
-                      nftOwner: sweepstake[2],
-                      nftErc20token: sweepstake[3],
-                      nftDuration: sweepstake[4],
-                      nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
-                      nftWinner: sweepstake[6],
-                      nftDrawTimestamp: sweepstake[7],
-                      nftActive: sweepstake[9] ? 'Active' : 'Inactive',
-                      nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
-                    }}
-                    onClickDraw={handleClickDraw}
-                    onClickCancelCampaign={handleClickCancelCampaign}
-                  />
-                )),
+              activeSweepstakes.length > 0 &&
+              activeSweepstakes.map((sweepstake: any) => (
+                <Card
+                  nft={{
+                    nftID: sweepstake[0],
+                    nftTokenURI: sweepstake[1],
+                    nftOwner: sweepstake[2],
+                    nftErc20token: sweepstake[3],
+                    nftDuration: sweepstake[4],
+                    nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
+                    nftWinner: sweepstake[6],
+                    nftDrawTimestamp: sweepstake[7],
+                    nftActive: sweepstake[9] ? 'Active' : 'Inactive',
+                    nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
+                  }}
+                  onClickDraw={handleClickDraw}
+                  onClickCancelCampaign={handleClickCancelCampaign}
+                />
+              )),
           },
           {
             key: 'completed',
             title: 'Completed',
             content:
-              allSweepstakes.length > 0 &&
-              allSweepstakes
-                .filter((sweepstake: any) => sweepstake[2] === address)
-                .filter((sweepstake: any) => !sweepstake[9])
-                .filter((sweepstake: any) => !sweepstake[10])
-                .map((sweepstake: any) => (
-                  <Card
-                    nft={{
-                      nftID: sweepstake[0],
-                      nftTokenURI: sweepstake[1],
-                      nftOwner: sweepstake[2],
-                      nftErc20token: sweepstake[3],
-                      nftDuration: sweepstake[4],
-                      nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
-                      nftWinner: sweepstake[6],
-                      nftDrawTimestamp: sweepstake[7],
-                      nftActive: sweepstake[9] ? 'Active' : 'Inactive',
-                      nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
-                    }}
-                    onClickDraw={handleClickDraw}
-                    onClickCancelCampaign={handleClickCancelCampaign}
-                  />
-                )),
+              completedSweepstakes.length > 0 &&
+              completedSweepstakes.map((sweepstake: any) => (
+                <Card
+                  nft={{
+                    nftID: sweepstake[0],
+                    nftTokenURI: sweepstake[1],
+                    nftOwner: sweepstake[2],
+                    nftErc20token: sweepstake[3],
+                    nftDuration: sweepstake[4],
+                    nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
+                    nftWinner: sweepstake[6],
+                    nftDrawTimestamp: sweepstake[7],
+                    nftActive: sweepstake[9] ? 'Active' : 'Inactive',
+                    nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
+                  }}
+                  onClickDraw={handleClickDraw}
+                  onClickCancelCampaign={handleClickCancelCampaign}
+                />
+              )),
           },
           {
             key: 'cancelled',
             title: 'Cancelled',
             content:
-              allSweepstakes.length > 0 &&
-              allSweepstakes
-                .filter((sweepstake: any) => sweepstake[2] === address)
-                .filter((sweepstake: any) => !sweepstake[9])
-                .filter((sweepstake: any) => !!sweepstake[10])
-                .map((sweepstake: any) => (
-                  <Card
-                    nft={{
-                      nftID: sweepstake[0],
-                      nftTokenURI: sweepstake[1],
-                      nftOwner: sweepstake[2],
-                      nftErc20token: sweepstake[3],
-                      nftDuration: sweepstake[4],
-                      nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
-                      nftWinner: sweepstake[6],
-                      nftDrawTimestamp: sweepstake[7],
-                      nftActive: sweepstake[9] ? 'Active' : 'Inactive',
-                      nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
-                    }}
-                    onClickDraw={handleClickDraw}
-                    onClickCancelCampaign={handleClickCancelCampaign}
-                  />
-                )),
+              canceledSweepstakes.length > 0 &&
+              canceledSweepstakes.map((sweepstake: any) => (
+                <Card
+                  nft={{
+                    nftID: sweepstake[0],
+                    nftTokenURI: sweepstake[1],
+                    nftOwner: sweepstake[2],
+                    nftErc20token: sweepstake[3],
+                    nftDuration: sweepstake[4],
+                    nftTotalStaked: ethers.utils.formatEther(sweepstake[5]),
+                    nftWinner: sweepstake[6],
+                    nftDrawTimestamp: sweepstake[7],
+                    nftActive: sweepstake[9] ? 'Active' : 'Inactive',
+                    nftDestroyed: sweepstake[10] ? 'Destoyed' : 'Not destroyed',
+                  }}
+                  onClickDraw={handleClickDraw}
+                  onClickCancelCampaign={handleClickCancelCampaign}
+                />
+              )),
           },
         ]}
       />
