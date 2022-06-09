@@ -6,8 +6,6 @@ import FormData from 'form-data';
 
 const aws = require('aws-sdk');
 
-console.log(`S3_kEY: ${process.env.S3_UPLOAD_KEY}`);
-
 const s3 = new aws.S3({
   accessKeyId: process.env.S3_UPLOAD_KEY,
   secretAccessKey: process.env.S3_UPLOAD_SECRET,
@@ -63,9 +61,9 @@ const post = async (req, res) => {
     }
     if ('metadata' in fields) {
       const responseAxios = await sendJSONToIPFS(fields.metadata);
-      sendJsonToS3(fields.metadata, `${responseAxios?.Ipfs.Hash}.json`);
+      sendJsonToS3(fields.metadata, `${responseAxios.Ipfs.Hash}.json`);
       return res.status(200).json({
-        tokenUri: responseAxios?.Ipfs.Hash,
+        tokenUri: responseAxios.Ipfs.Hash,
       });
     }
   });
@@ -134,13 +132,13 @@ const get = async (req, res) => {
 };
 
 export default (req, res) => {
-  req.method === 'POST'
-    ? post(req, res)
-    : req.method === 'PUT'
-    ? console.log('PUT')
-    : req.method === 'DELETE'
-    ? console.log('DELETE')
-    : req.method === 'GET'
-    ? get(req, res)
-    : res.status(404).send('');
+  req.method === 'POST' ?
+    post(req, res) :
+    req.method === 'PUT' ?
+    console.log('PUT') :
+    req.method === 'DELETE' ?
+    console.log('DELETE') :
+    req.method === 'GET' ?
+    get(req, res) :
+    res.status(404).send('');
 };
