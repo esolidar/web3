@@ -51,7 +51,8 @@
     "react-swipeable": "^7.0.0",
     "sass": "^1.51.0",
     "sweetalert2": "^11.4.17",
-    "web3": "^1.7.3"
+    "web3": "^1.7.3",
+    "web3-utils": "^1.7.3"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.2.1",
