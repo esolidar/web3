@@ -4,9 +4,10 @@ import { CeloProvider } from '@celo-tools/celo-ethers-wrapper';
 import { ethers } from 'ethers';
 import { AbiItem } from 'web3-utils';
 import Sweepstake from '../../abi/EsolidarSweepstake.json';
+import { ISweepstake } from '../../pages/sweepstake/mysweepstakes';
 
 interface Args {
-  onSuccess: (res: any) => void;
+  onSuccess: (res: ISweepstake[]) => void;
   onError?: (e: any) => void;
 }
 
