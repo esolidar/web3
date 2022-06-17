@@ -15,6 +15,7 @@ import useGetAllSweepstakesContract from '../../api/hooks/useGetAllSweepstakesCo
 import useStakeNFT from '../../hooks/useStakeNFT/useStakeNFT';
 import CardSweepstake from '../../components/cardSweepstake/CardSweepstake';
 import tokenMap from '../../constants/sweepstake';
+import { ISweepstake } from './mysweepstakes';
 
 const Home = () => {
   const draw = useDrawSweepstake();
@@ -22,7 +23,7 @@ const Home = () => {
   const stakeNFT = useStakeNFT();
   const { performActions, address, kit } = useContractKit();
 
-  const [sweepstakesList, setSweepstakesList] = useState([]);
+  const [sweepstakesList, setSweepstakesList] = useState<ISweepstake[]>([]);
 
   useEffect(() => {
     getAllSweepstakesContract({ onSuccess: res => setSweepstakesList(res) });
@@ -42,7 +43,7 @@ const Home = () => {
         `You need to add ${remaining} more allowance to continue. Do you want to add more?`
       );
 
-      if (question === true)
+      if (question)
         await performActions(async () => {
           const gasLimit = await token.methods
             .increaseAllowance(
@@ -156,8 +157,8 @@ const Home = () => {
         {sweepstakesList.length > 0 &&
           sweepstakesList
             .filter(sweepstake => !!sweepstake[9])
-            .map((sweepstake: any) => (
-              <div key={sweepstake.tokenId} className="col-md-4 my-4">
+            .map((sweepstake: ISweepstake) => (
+              <div key={Number(sweepstake[0])} className="col-md-4 my-4">
                 <CardSweepstake
                   sweepstake={sweepstake}
                   beforeStake={beforeStake}

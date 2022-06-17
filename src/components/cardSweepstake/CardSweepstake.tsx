@@ -4,9 +4,10 @@ import Button from '@esolidar/toolkit/build/elements/button';
 import CountdownTimer from '../countdownTimer/CountdownTimer';
 import truncateAddress from '../../utils/truncateAddress';
 import getAddressToken from '../../utils/getAddressToken';
+import { ISweepstake } from '../../pages/sweepstake/mysweepstakes';
 
 interface Props {
-  sweepstake: any;
+  sweepstake: ISweepstake;
   beforeStake(nftID: number, token: string): any;
   address: string;
   onClickDraw(nftID: number): any;
@@ -30,21 +31,14 @@ const CardSweepstake = ({ sweepstake, beforeStake, address, onClickDraw }: Props
         <Card.Text>Token: {getAddressToken(sweepstake[3])}</Card.Text>
         <Card.Text>Total Donated: {ethers.utils.formatEther(sweepstake[5])}</Card.Text>
         <Card.Text>
-          Time:{' '}
-          <CountdownTimer
-            date={
-              typeof sweepstake[4] === 'object'
-                ? Number(sweepstake[4]) * 1000
-                : sweepstake[4] * 1000
-            }
-          />
+          Time: <CountdownTimer date={Number(sweepstake[4]) * 1000} />
         </Card.Text>
         <Card.Text>
           <span>Metadata: {sweepstake[1]}</span>
         </Card.Text>
         <Button
           extraClass="primary-full"
-          onClick={() => beforeStake(nftID, getAddressToken(sweepstake[3]))}
+          onClick={() => beforeStake(Number(nftID), getAddressToken(sweepstake[3]))}
           text="Donate"
           fullWidth
         />
@@ -52,7 +46,7 @@ const CardSweepstake = ({ sweepstake, beforeStake, address, onClickDraw }: Props
           <Button
             extraClass="primary-full"
             className="mt-2"
-            onClick={() => onClickDraw(sweepstake[0])}
+            onClick={() => onClickDraw(Number(sweepstake[0]))}
             text="Draw"
             fullWidth
           />
