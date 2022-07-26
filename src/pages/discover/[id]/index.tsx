@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import Head from 'next/head';
-import { dehydrate, QueryClient } from 'react-query';
+import { dehydrate, QueryClient, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import Icon from '@esolidar/toolkit/build/elements/icon';
@@ -33,6 +33,7 @@ const InstitutionDetail = () => {
     query: { id },
     push,
   } = router;
+  const queryClient = useQueryClient();
   const toast = useToast();
   const isSSR = useIsSSR();
 
@@ -55,6 +56,10 @@ const InstitutionDetail = () => {
   const intl: IntlShape = useIntl();
   const nonProfitName = useRef(institution.name || '');
   const nonProfitId = useRef(institution.id || null);
+
+  useEffect(() => {
+    queryClient.removeQueries('celoWalletBalance', { exact: true });
+  }, []);
 
   useEffect(() => setWindowLocationHref(window.location.href), []);
 
