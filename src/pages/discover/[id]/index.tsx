@@ -58,6 +58,7 @@ const InstitutionDetail = () => {
   const nonProfitId = useRef(institution.id || null);
 
   useEffect(() => {
+    queryClient.removeQueries('getInstitutionDetail', { exact: true });
     queryClient.removeQueries('celoWalletBalance', { exact: true });
   }, []);
 
