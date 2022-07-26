@@ -30,3 +30,4 @@ declare module '@esolidar/toolkit/build/utils/getUrlParam';
 declare module '@esolidar/toolkit/build/utils/removeUrlParam';
 declare module '@esolidar/toolkit/build/elements/tabs';
 declare module '@esolidar/toolkit/build/utils/isDefined';
+declare module '@esolidar/toolkit/build/utils/isEmpty';
