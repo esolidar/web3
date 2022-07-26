@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import Head from 'next/head';
-import { dehydrate, QueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useContractKit } from '@celo-tools/use-contractkit';
 import Icon from '@esolidar/toolkit/build/elements/icon';
@@ -10,12 +10,12 @@ import Breadcrumbs from '@esolidar/toolkit/build/elements/breadcrumbs';
 import Title from '@esolidar/toolkit/build/unreleased/title';
 import ProfileAvatar from '@esolidar/toolkit/build/components/profileAvatar';
 import ShareModal from '@esolidar/toolkit/build/components/shareModal';
+import Loading from '@esolidar/toolkit/build/components/loading';
+import isEmpty from '@esolidar/toolkit/build/utils/isEmpty';
 import CardContribute from '../../../components/cardContribute/CardContribute';
 import CardSDG from '../../../components/cardSDG/CardSDG';
 import DonateFooter from '../../../components/donateFooter/DonateFooter';
-import useGetInstitutionDetail, {
-  useGetInstitutionDetailPrefetch,
-} from '../../../api/hooks/useGetInstitutionDetail';
+import useGetInstitutionDetail from '../../../api/hooks/useGetInstitutionDetail';
 import useToast from '../../../hooks/useToast/useToast';
 import getRoute from '../../../routes';
 import useIsSSR from '../../../hooks/useIsSSR/useIsSSR';
@@ -33,28 +33,39 @@ const InstitutionDetail = () => {
     query: { id },
     push,
   } = router;
+  const queryClient = useQueryClient();
   const toast = useToast();
   const isSSR = useIsSSR();
 
   const [isOpenShareModal, setIsOpenShareModal] = useState<Boolean>(false);
   const [isOpenDonationModal, setIsOpenDonationModal] = useState<boolean>(false);
   const [windowLocationHref, setWindowLocationHref] = useState<string>('');
+  const [institutionWalletAddress, setInstitutionWalletAddress] = useState<string>('');
 
   const { address, connect } = useContractKit();
-  const { data: institution } = useGetInstitutionDetail({ institutionId: String(id) });
-
-  const institutionWalletAddress = institution.celo_wallet.find(
-    (item: any) => item.default
-  ).wallet_address;
+  const { data: institution } = useGetInstitutionDetail({
+    institutionId: String(id),
+    onSuccess: data => {
+      setInstitutionWalletAddress(
+        data?.celo_wallet?.find((item: any) => item.default).wallet_address
+      );
+    },
+  });
 
   const { data: nonprofitBalance } = useCeloWalletBalance({
     wallet: institutionWalletAddress,
     balanceOf: 'cusd',
+    enabled: institutionWalletAddress !== '',
   });
 
   const intl: IntlShape = useIntl();
-  const nonProfitName = useRef(institution.name || '');
-  const nonProfitId = useRef(institution.id || null);
+  const nonProfitName = useRef(institution?.name || '');
+  const nonProfitId = useRef(institution?.id || null);
+
+  useEffect(() => {
+    queryClient.removeQueries('getInstitutionDetail', { exact: true });
+    queryClient.removeQueries('celoWalletBalance', { exact: true });
+  }, []);
 
   useEffect(() => setWindowLocationHref(window.location.href), []);
 
@@ -69,6 +80,8 @@ const InstitutionDetail = () => {
   }, [isOpenDonationModal]);
 
   const urlNoImage: string = `${process.env.NEXT_PUBLIC_CDN_STATIC_URL}/frontend/assets/placeholders/image.svg`;
+
+  if (isEmpty(institution)) return <Loading />;
 
   return (
     <>
@@ -86,7 +99,7 @@ const InstitutionDetail = () => {
           name="twitter:image:src"
           content={
             institution?.s3_cover_key
-              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution?.s3_cover_key}`
               : urlNoImage
           }
         />
@@ -107,7 +120,7 @@ const InstitutionDetail = () => {
           property="og:image"
           content={
             institution?.s3_cover_key
-              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+              ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution?.s3_cover_key}`
               : urlNoImage
           }
         />
@@ -150,7 +163,7 @@ const InstitutionDetail = () => {
               listItems={[
                 {
                   url: institution?.s3_cover_key
-                    ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution.s3_cover_key}`
+                    ? `${process.env.NEXT_PUBLIC_CDN_UPLOADS_URL}/${institution?.s3_cover_key}`
                     : urlNoImage,
                   altTag: institution?.name,
                   type: 'photo',
@@ -159,12 +172,12 @@ const InstitutionDetail = () => {
             />
             <div className="nonprofit-detail__balance">
               <ProfileAvatar
-                buttonText={institution?.link ? institution.link.replace(/(^\w+:|^)\/\//, '') : ''}
+                buttonText={institution?.link ? institution?.link.replace(/(^\w+:|^)\/\//, '') : ''}
                 buttonUrl={institution?.link}
                 buttonIconRight={<Icon name="ExternalLink" size="xs" />}
                 isNameBold
                 name={institution?.name}
-                thumb={institution?.s3_image_key === '0' ? urlNoImage : institution?.thumbs.thumb}
+                thumb={institution?.s3_image_key === '0' ? urlNoImage : institution?.thumbs?.thumb}
               />
 
               {nonprofitBalance !== undefined && nonprofitBalance > 0 && (
@@ -213,24 +226,5 @@ const InstitutionDetail = () => {
     </>
   );
 };
-
-export const getStaticProps = async (context: any) => {
-  const id = context.params?.id as string;
-  const queryClient = new QueryClient();
-
-  await useGetInstitutionDetailPrefetch(queryClient, id);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-    revalidate: 10,
-  };
-};
-
-export const getStaticPaths = async () => ({
-  paths: [],
-  fallback: 'blocking',
-});
 
 export default InstitutionDetail;
