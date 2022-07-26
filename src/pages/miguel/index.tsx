@@ -20,7 +20,11 @@ const Home = () => {
   const { data: institutionList } = useGetInstitutionList({});
   console.log(institutionList);
 
-  const { data: nonprofitBalance } = useCeloWalletBalance({ wallet: toMitch, balanceOf: 'cusd' });
+  const { data: nonprofitBalance } = useCeloWalletBalance({
+    wallet: toMitch,
+    balanceOf: 'cusd',
+    enabled: true,
+  });
   console.log(nonprofitBalance);
 
   const getTotalBalance = async () => {

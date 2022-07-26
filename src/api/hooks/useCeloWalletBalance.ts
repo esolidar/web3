@@ -23,7 +23,7 @@ const celoContractAddresses: CeloContractAddress[] = [
   { address: String(process.env.NEXT_PUBLIC_CONTRACT_CEUR_ADDRES), name: 'ceur' },
 ];
 
-const useCeloWalletBalance = ({ wallet, balanceOf, enabled = true, onSuccess }: Args) =>
+const useCeloWalletBalance = ({ wallet, balanceOf, enabled = false, onSuccess }: Args) =>
   useQuery(
     'celoWalletBalance',
     async () => {
